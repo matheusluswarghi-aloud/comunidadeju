@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<meta name="robots" content="noindex,nofollow" />
+<title>Comunidade da Ju</title>
+
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', 'SEU_PIXEL_ID_AQUI');
+fbq('track', 'PageView');
+</script>
+<!-- End Meta Pixel Code -->
+
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Inter","Segoe UI",Roboto,sans-serif;
+  background:#0c0910;
+  color:#f3edf7;
+  line-height:1.55;
+  min-height:100vh;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+
+/* fundo vivo */
+.bg-glow{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.bg-glow::before,.bg-glow::after{
+  content:"";position:absolute;border-radius:50%;filter:blur(90px);opacity:.5;
+}
+.bg-glow::before{
+  width:60vw;height:60vw;background:#ff2d78;top:-20vw;left:-15vw;
+  animation:drift1 18s ease-in-out infinite alternate;
+}
+.bg-glow::after{
+  width:55vw;height:55vw;background:#8b3ff5;bottom:-20vw;right:-15vw;
+  animation:drift2 22s ease-in-out infinite alternate;
+}
+@keyframes drift1{to{transform:translate(8vw,10vh) scale(1.15)}}
+@keyframes drift2{to{transform:translate(-8vw,-8vh) scale(1.1)}}
+
+/* progresso */
+.progress-container{
+  position:sticky;top:0;width:100%;height:5px;
+  background:rgba(255,255,255,.07);z-index:120;
+}
+.progress-bar{
+  height:100%;width:0%;border-radius:0 4px 4px 0;
+  background:linear-gradient(90deg,#ff2d78,#ff6ba8,#c084fc);
+  transition:width .55s cubic-bezier(.22,1,.36,1);
+  box-shadow:0 0 14px rgba(255,45,120,.75);
+}
+
+.container{position:relative;z-index:2;max-width:520px;margin:0 auto;padding:20px 18px 70px}
+
+.back-btn{
+  display:inline-flex;align-items:center;gap:6px;
+  color:#a99fb3;font-size:13px;margin-bottom:14px;
+  padding:6px 10px;border-radius:8px;transition:.2s;
+}
+.back-btn:hover{background:rgba(255,255,255,.07);color:#fff}
+
+/* steps */
+.step{display:none}
+.step.active{display:block;animation:stepIn .5s cubic-bezier(.22,1,.36,1)}
+@keyframes stepIn{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
+
+/* entrada em cascata */
+.reveal{opacity:0;transform:translateY(14px);animation:revealUp .55s cubic-bezier(.22,1,.36,1) forwards}
+@keyframes revealUp{to{opacity:1;transform:none}}
+.d1{animation-delay:.1s}.d2{animation-delay:.28s}.d3{animation-delay:.46s}
+.d4{animation-delay:.64s}.d5{animation-delay:.9s}.d6{animation-delay:1.2s}
+
+h1{font-size:29px;line-height:1.2;font-weight:800;letter-spacing:-.02em;margin-bottom:14px}
+h2{font-size:23px;line-height:1.25;font-weight:800;letter-spacing:-.015em;margin-bottom:14px}
+p{font-size:16.5px;color:#ddd3e6;margin-bottom:14px}
+.lead{font-size:18px;color:#f3edf7}
+.muted{color:#a99fb3;font-size:13.5px}
+.hl{color:#ff5c96;font-weight:700}
+.money{color:#3ddc84;font-weight:800}
+strong{color:#fff}
+
+.eyebrow{
+  display:inline-block;font-size:11.5px;font-weight:700;letter-spacing:.11em;
+  text-transform:uppercase;color:#ff5c96;
+  background:rgba(255,45,120,.11);border:1px solid rgba(255,45,120,.28);
+  padding:6px 12px;border-radius:999px;margin-bottom:16px;
+}
+
+/* opções */
+.opt{
+  display:flex;align-items:center;gap:13px;width:100%;text-align:left;
+  background:rgba(255,255,255,.045);
+  border:1.5px solid rgba(255,255,255,.11);
+  border-radius:15px;padding:16px 17px;margin-bottom:11px;
+  font-size:16px;font-weight:600;color:#f3edf7;
+  transition:transform .16s,border-color .2s,background .2s;
+}
+.opt:hover{background:rgba(255,45,120,.1);border-color:rgba(255,45,120,.5);transform:translateX(4px)}
+.opt:active{transform:scale(.975)}
+.opt .emo{font-size:21px;flex-shrink:0}
+.opt.picked{background:rgba(255,45,120,.2);border-color:#ff2d78}
+
+/* CTA */
+.cta{
+  display:block;width:100%;text-align:center;
+  background:linear-gradient(135deg,#ff2d78,#ff5c96);
+  color:#fff;font-size:17.5px;font-weight:800;letter-spacing:-.01em;
+  padding:18px 20px;border-radius:15px;margin-top:20px;
+  box-shadow:0 10px 30px rgba(255,45,120,.4);
+  animation:pulseCta 2.4s ease-in-out infinite;
+  transition:transform .16s;
+}
+.cta:active{transform:scale(.97)}
+@keyframes pulseCta{
+  0%,100%{box-shadow:0 10px 30px rgba(255,45,120,.4)}
+  50%{box-shadow:0 10px 42px rgba(255,45,120,.68)}
+}
+/* CTA que tambem entra em cascata: precisa rodar as DUAS animacoes.
+   sem isso o .cta sobrescreve o .reveal e o botao fica invisivel. */
+.cta.reveal{
+  animation:revealUp .55s cubic-bezier(.22,1,.36,1) forwards,
+            pulseCta 2.4s ease-in-out infinite;
+}
+/* o delay unico vale pras duas animacoes da lista.
+   vem depois do .cta.reveal de proposito, pra vencer no desempate. */
+.cta.d1{animation-delay:.1s}
+.cta.d2{animation-delay:.28s}
+.cta.d3{animation-delay:.46s}
+.cta.d4{animation-delay:.64s}
+.cta.d5{animation-delay:.9s}
+.cta.d6{animation-delay:1.2s}
+.cta-sub{text-align:center;font-size:12.5px;color:#8f8699;margin-top:11px}
+
+/* cartões */
+.card{
+  background:rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.1);
+  border-radius:17px;padding:18px;margin-bottom:14px;
+  backdrop-filter:blur(8px);
+}
+.chat{
+  background:rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.09);
+  border-left:3px solid #ff2d78;
+  border-radius:5px 15px 15px 5px;
+  padding:14px 16px;margin-bottom:11px;font-size:16.5px;color:#e8dff0;
+}
+
+/* placeholder de imagem */
+.ph{
+  width:100%;border-radius:15px;border:1.5px dashed rgba(255,45,120,.45);
+  background:repeating-linear-gradient(45deg,rgba(255,45,120,.05) 0 10px,transparent 10px 20px);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  min-height:190px;color:#ff8ab5;font-size:13px;text-align:center;padding:18px;margin-bottom:14px;gap:6px;
+}
+.ph .ico{font-size:26px}
+.ph b{color:#ffb3ce;font-size:13.5px}
+
+/* demo de geração */
+.demo-box{
+  background:#151019;border:1px solid rgba(255,255,255,.12);
+  border-radius:17px;padding:16px;margin-bottom:15px;
+}
+.demo-label{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:#8f8699;margin-bottom:9px}
+.prompt-line{
+  font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+  font-size:13.5px;color:#3ddc84;background:#0a070d;
+  border:1px solid rgba(61,220,132,.25);border-radius:10px;
+  padding:13px;min-height:74px;line-height:1.6;word-break:break-word;
+}
+.caret{display:inline-block;width:8px;height:15px;background:#3ddc84;vertical-align:-2px;animation:blink .9s steps(2) infinite}
+@keyframes blink{50%{opacity:0}}
+
+.gen-area{margin-top:14px;position:relative;min-height:210px;border-radius:14px;overflow:hidden;background:#0a070d;display:flex;align-items:center;justify-content:center}
+.gen-img{
+  position:absolute;inset:0;
+  background:linear-gradient(140deg,#f2b8c6,#c98ba5 30%,#8a5f7d 60%,#3d2b3f);
+  filter:blur(26px) saturate(1.25);
+  opacity:0;transform:scale(1.08);
+  transition:opacity 1s ease,transform 1.4s ease;
+}
+.gen-img.on{opacity:1;transform:scale(1)}
+.gen-noise{
+  position:absolute;inset:0;opacity:0;
+  background:repeating-linear-gradient(0deg,rgba(255,255,255,.045) 0 2px,transparent 2px 4px);
+  transition:opacity .5s;
+}
+.gen-noise.on{opacity:1}
+.gen-status{position:relative;z-index:3;font-size:13.5px;color:#cfc4d9;display:flex;align-items:center;gap:9px;font-weight:600}
+.gen-status.hide{opacity:0;transition:opacity .4s}
+.spinner{width:17px;height:17px;border:2.5px solid rgba(255,255,255,.2);border-top-color:#ff5c96;border-radius:50%;animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.nsfw-tag{
+  position:absolute;z-index:4;bottom:11px;left:11px;
+  background:rgba(0,0,0,.66);backdrop-filter:blur(6px);
+  border:1px solid rgba(255,255,255,.2);
+  font-size:10.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+  padding:5px 10px;border-radius:7px;color:#ffb3ce;opacity:0;transition:opacity .5s .6s;
+}
+.nsfw-tag.on{opacity:1}
+.sell-btn{
+  width:100%;margin-top:13px;padding:14px;border-radius:13px;
+  background:linear-gradient(135deg,#3ddc84,#1faa5f);color:#04240f;
+  font-weight:800;font-size:16px;opacity:0;transform:translateY(10px);
+  transition:opacity .5s,transform .5s;pointer-events:none;
+}
+.sell-btn.on{opacity:1;transform:none;pointer-events:auto}
+
+/* notificacoes de venda */
+#toast-wrap{position:fixed;left:0;right:0;top:12px;z-index:200;pointer-events:none;padding:0 14px;display:flex;flex-direction:column;align-items:center;gap:8px}
+.toast{
+  width:100%;max-width:360px;display:flex;align-items:center;gap:11px;
+  background:rgba(20,15,24,.93);backdrop-filter:blur(14px);
+  border:1px solid rgba(61,220,132,.4);
+  border-radius:13px;padding:11px 14px;
+  box-shadow:0 10px 32px rgba(0,0,0,.55);
+  opacity:0;transform:translateY(-24px) scale(.94);
+  animation:toastIn .45s cubic-bezier(.22,1,.36,1) forwards;
+}
+.toast.out{animation:toastOut .35s ease forwards}
+@keyframes toastIn{to{opacity:1;transform:none}}
+@keyframes toastOut{to{opacity:0;transform:translateY(-14px) scale(.96)}}
+.toast .dot{width:9px;height:9px;border-radius:50%;background:#3ddc84;flex-shrink:0;box-shadow:0 0 10px #3ddc84;animation:blip 1.4s infinite}
+@keyframes blip{50%{opacity:.35}}
+.toast .txt{font-size:13.5px;line-height:1.35}
+.toast .txt b{color:#3ddc84}
+.toast .time{margin-left:auto;font-size:11px;color:#8f8699;flex-shrink:0}
+
+/* contador */
+.counter-box{text-align:center;padding:22px 18px;margin-bottom:15px;
+  background:linear-gradient(160deg,rgba(61,220,132,.13),rgba(61,220,132,.03));
+  border:1px solid rgba(61,220,132,.3);border-radius:17px}
+.counter-num{font-size:41px;font-weight:900;color:#3ddc84;letter-spacing:-.03em;line-height:1;font-variant-numeric:tabular-nums}
+.counter-lab{font-size:12.5px;color:#a99fb3;margin-top:7px;text-transform:uppercase;letter-spacing:.07em}
+
+/* objecoes */
+.obj{border-bottom:1px solid rgba(255,255,255,.09);padding:15px 0}
+.obj:last-child{border-bottom:none}
+.obj-q{font-weight:700;font-size:16px;margin-bottom:6px;color:#fff}
+.obj-a{font-size:15px;color:#c4b9cf;margin:0}
+
+/* oferta */
+.offer-card{
+  background:linear-gradient(165deg,rgba(255,45,120,.15),rgba(139,63,245,.07));
+  border:1.5px solid rgba(255,45,120,.42);
+  border-radius:21px;padding:23px 20px;margin-bottom:16px;
+  box-shadow:0 18px 50px rgba(255,45,120,.16);
+}
+.price-old{font-size:16px;color:#8f8699;text-decoration:line-through}
+.price{font-size:47px;font-weight:900;letter-spacing:-.035em;line-height:1;margin:5px 0}
+.price small{font-size:19px;font-weight:700;vertical-align:super;margin-right:2px}
+.incl{list-style:none;margin:17px 0}
+.incl li{display:flex;gap:11px;align-items:flex-start;font-size:15.5px;margin-bottom:11px;color:#e8dff0}
+.incl .chk{color:#3ddc84;font-weight:900;flex-shrink:0}
+
+.scarcity{
+  display:flex;align-items:center;gap:11px;
+  background:rgba(255,45,120,.13);border:1px solid rgba(255,45,120,.36);
+  border-radius:13px;padding:13px 15px;margin-bottom:15px;
+}
+.scarcity .pulse{width:10px;height:10px;border-radius:50%;background:#ff2d78;flex-shrink:0;animation:pulseDot 1.3s infinite}
+@keyframes pulseDot{0%{box-shadow:0 0 0 0 rgba(255,45,120,.7)}70%{box-shadow:0 0 0 11px rgba(255,45,120,0)}100%{box-shadow:0 0 0 0 rgba(255,45,120,0)}}
+.scarcity-txt{font-size:14.5px;font-weight:600}
+.vagas-num{color:#ff5c96;font-weight:900}
+
+.disclaimer{font-size:11.5px;color:#78707f;line-height:1.55;margin-top:22px;padding-top:16px;border-top:1px solid rgba(255,255,255,.08)}
+
+@media(max-width:400px){
+  h1{font-size:25.5px}h2{font-size:21px}p{font-size:16px}
+  .price{font-size:42px}.counter-num{font-size:36px}
+}
+</style>
+</head>
+<body>
+<div class="bg-glow"></div>
+<div class="progress-container"><div class="progress-bar" id="pbar"></div></div>
+<div id="toast-wrap"></div>
+<div class="container">
+<button class="back-btn" id="backBtn" onclick="goBack()" style="display:none">← voltar</button>
+
+<!-- ============ 0. HOOK ============ -->
+<section class="step active" id="lp" data-step="0">
+  <span class="eyebrow reveal d1">só pra meninas</span>
+  <h1 class="reveal d1">descubra como garotas comuns estão fazendo até <span class="money">R$8.700 por semana</span> sem sair de casa e sem acordar cedo</h1>
+  <p class="lead reveal d2">elas aprenderam a criar modelos de IA tão realistas que os homens pagam pra ver.</p>
+  <div class="chat reveal d3">e não, não é foto delas. é de uma mulher que <strong>não existe</strong>.</div>
+  <button class="cta reveal d4" onclick="goToStep('q1')">quero entender como funciona</button>
+  <p class="cta-sub reveal d4">leva menos de 1 minuto · conteúdo pra maiores de 18 anos</p>
+</section>
+
+<!-- ============ 1. DESEJO ============ -->
+<section class="step" id="q1" data-step="1">
+  <span class="eyebrow reveal d1">pergunta 1 de 4</span>
+  <h2 class="reveal d1">quanto entrar por semana já mudaria a sua vida?</h2>
+  <p class="muted reveal d2" style="margin-bottom:20px">responde sincero, ninguém tá vendo</p>
+  <div class="reveal d3">
+    <button class="opt" onclick="answer('meta','500','q2')"><span class="emo">💸</span> R$500 por semana já ajudaria muito</button>
+    <button class="opt" onclick="answer('meta','1000','q2')"><span class="emo">💰</span> R$1.000 por semana</button>
+    <button class="opt" onclick="answer('meta','2000','q2')"><span class="emo">🔥</span> R$2.000 por semana</button>
+    <button class="opt" onclick="answer('meta','5000','q2')"><span class="emo">👑</span> R$5.000 ou mais, quero mudar de vida mesmo</button>
+  </div>
+</section>
+
+<!-- ============ 2. DOR: DEPENDENCIA ============ -->
+<section class="step" id="q2" data-step="2">
+  <span class="eyebrow reveal d1">pergunta 2 de 4</span>
+  <h2 class="reveal d1">amiga, vc já teve que pedir dinheiro pra alguém que vc não queria pedir?</h2>
+  <div class="reveal d3">
+    <button class="opt" onclick="answer('dor','humilhante','q3')"><span class="emo">😔</span> já, e foi humilhante</button>
+    <button class="opt" onclick="answer('dor','sempre','q3')"><span class="emo">😩</span> já, e acontece direto</button>
+    <button class="opt" onclick="answer('dor','quase','q3')"><span class="emo">😬</span> ainda não, mas tô quase</button>
+    <button class="opt" onclick="answer('dor','nunca','q3')"><span class="emo">🙏</span> nunca precisei</button>
+  </div>
+</section>
+
+<!-- ============ 3. DOR: TRABALHO ============ -->
+<section class="step" id="q3" data-step="3">
+  <span class="eyebrow reveal d1">pergunta 3 de 4</span>
+  <h2 class="reveal d1">e o seu trabalho hoje, como tá?</h2>
+  <div class="reveal d3">
+    <button class="opt" onclick="answer('trampo','cedo','historia')"><span class="emo">⏰</span> acordo cedo e odeio cada segundo</button>
+    <button class="opt" onclick="answer('trampo','gente','historia')"><span class="emo">🙄</span> aguento gente insuportável todo dia</button>
+    <button class="opt" onclick="answer('trampo','desempregada','historia')"><span class="emo">📉</span> tô desempregada agora</button>
+    <button class="opt" onclick="answer('trampo','estudo','historia')"><span class="emo">🚌</span> trabalho, estudo, e não sobra nada</button>
+  </div>
+</section>
+
+<!-- ============ 4. HISTORIA (DOR) ============ -->
+<section class="step" id="historia" data-step="4">
+  <span class="eyebrow reveal d1">a ju</span>
+  <h2 class="reveal d1">então deixa eu te contar minha história rapidinho</h2>
+  <div class="chat reveal d2">pq eu já estive exatamente onde vc tá.</div>
+  <div class="chat reveal d3">eu fui abandonada grávida pelo meu ex namorado.</div>
+  <div class="ph reveal d3">
+    <span class="ico">🖼️</span>
+    <b>[IMAGEM 1]</b>
+    <span>foto da Ju no ônibus / cansada / clima de rotina pesada</span>
+  </div>
+  <div class="chat reveal d4">acordava cedo, pegava ônibus lotado todo dia, e ainda ia pra faculdade de noite.</div>
+  <div class="chat reveal d5">e mesmo assim não sobrava <strong>um puto</strong> no bolso.</div>
+  <div class="chat reveal d6">enquanto isso eu tinha uma prima ganhando rios de dinheiro vendendo foto na internet.</div>
+  <button class="cta reveal d6" onclick="goToStep('virada')">e aí o que aconteceu?</button>
+</section>
+
+<!-- ============ 5. A VIRADA ============ -->
+<section class="step" id="virada" data-step="5">
+  <span class="eyebrow reveal d1">a virada</span>
+  <h2 class="reveal d1">eu cheguei a cogitar vender foto nua também. e é aí que a história muda</h2>
+  <div class="chat reveal d2">de uma semana pra outra eu comecei a fazer <span class="money">R$2.000 toda semana</span> no mesmo site que a minha prima. privacy e onlyfans.</div>
+  <div class="chat reveal d3">só que tinha uma diferença.</div>
+  <div class="chat reveal d4"><strong>eu nunca vendi nenhuma foto minha. nenhuma.</strong></div>
+  <div class="chat reveal d5">pq eu aprendi a criar uma modelo de inteligência artificial. uma mulher que não existe.</div>
+  <div class="chat reveal d6">mesmo rosto, roupas diferentes, poses diferentes. ou melhor, sem roupa né 😏</div>
+  <button class="cta reveal d6" onclick="goToStep('demo')">me mostra isso funcionando</button>
+</section>
+
+<!-- ============ 6. DEMONSTRACAO ============ -->
+<section class="step" id="demo" data-step="6">
+  <span class="eyebrow reveal d1">ao vivo</span>
+  <h2 class="reveal d1">olha só como é rápido criar uma</h2>
+  <p class="muted reveal d2" style="margin-bottom:16px">vou criar uma modelo do zero aqui na sua frente</p>
+  <div class="demo-box reveal d3">
+    <div class="demo-label">prompt</div>
+    <div class="prompt-line" id="promptLine"><span class="caret"></span></div>
+    <div class="gen-area">
+      <div class="gen-img" id="genImg"></div>
+      <div class="gen-noise" id="genNoise"></div>
+      <div class="gen-status" id="genStatus"><span class="spinner"></span> aguardando...</div>
+      <div class="nsfw-tag" id="nsfwTag">🔒 censurado pra vc ver aqui</div>
+    </div>
+    <button class="sell-btn" id="sellBtn" onclick="fakeSellDemo()">💵 vender foto</button>
+  </div>
+  <div id="demoAfter" style="display:none">
+    <div class="chat reveal d1">levou <strong>6 segundos</strong>. e essa mulher não existe.</div>
+    <div class="chat reveal d2">agora imagina isso com 30 fotos, um perfil montado e o preço certo.</div>
+    <button class="cta reveal d3" onclick="goToStep('escala')">quero ver o resto</button>
+  </div>
+</section>
+
+<!-- ============ 7. ESCALA + PERGUNTA ============ -->
+<section class="step" id="escala" data-step="7">
+  <span class="eyebrow reveal d1">pergunta 4 de 4</span>
+  <h2 class="reveal d1">e o melhor: vc escolhe o público</h2>
+  <div class="chat reveal d2">tem homem procurando <strong>todo</strong> tipo de mulher. e criadora de menos pra atender.</div>
+  <div class="chat reveal d3">eu tenho <strong>3 modelos</strong> trabalhando pra mim agora. uma gordinha, uma baixinha, e já criei até de uma anã.</div>
+  <div class="chat reveal d4">vc não briga pelo mesmo público de um milhão de menina. vc escolhe onde tem procura e pouca gente.</div>
+  <h2 class="reveal d5" style="margin-top:24px;font-size:20px">qual vc criaria primeiro?</h2>
+  <div class="reveal d5">
+    <button class="opt" onclick="answer('modelo','loira','prova')"><span class="emo">👱‍♀️</span> uma loirinha</button>
+    <button class="opt" onclick="answer('modelo','morena','prova')"><span class="emo">👩</span> uma morena</button>
+    <button class="opt" onclick="answer('modelo','gordinha','prova')"><span class="emo">🍑</span> uma gordinha (tem MUITA procura)</button>
+    <button class="opt" onclick="answer('modelo','ruiva','prova')"><span class="emo">👩‍🦰</span> uma ruiva</button>
+    <button class="opt" onclick="answer('modelo','ju','prova')"><span class="emo">🤝</span> deixa vc escolher pra mim, Ju</button>
+  </div>
+</section>
+
+<!-- ============ 8. PROVA ============ -->
+<section class="step" id="prova" data-step="8">
+  <span class="eyebrow reveal d1">quanto entra</span>
+  <h2 class="reveal d1">já faz 4 meses que eu vivo só disso</h2>
+  <div class="counter-box reveal d2">
+    <div class="counter-num" id="counter">R$0</div>
+    <div class="counter-lab">faturado nos últimos 30 dias</div>
+  </div>
+  <div class="chat reveal d3">4 meses que eu larguei meu emprego. nunca mais acordei cedo, nunca mais olhei preço de nada.</div>
+  <div class="ph reveal d3">
+    <span class="ico">📸</span>
+    <b>[PRINT 1 e 2]</b>
+    <span>prints reais dos seus saques / extrato da plataforma</span>
+  </div>
+  <div class="chat reveal d4">ninguém faz a mínima ideia do meu nome de verdade. nem do meu rosto. e ninguém precisa saber de onde vem esse dinheiro.</div>
+  <h2 class="reveal d5" style="margin-top:26px;font-size:20px">e não é só comigo</h2>
+  <p class="reveal d5">as meninas que aplicaram o passo a passo costumam fazer <span class="money">mais de R$1.000 no primeiro mês</span>. algumas já na primeira semana viram os primeiros R$400, R$600 cair.</p>
+  <div class="ph reveal d5">
+    <span class="ico">💬</span>
+    <b>[PRINTS DAS ALUNAS]</b>
+    <span>prints reais dos depoimentos e resultados que vc já recebeu</span>
+  </div>
+  <button class="cta reveal d6" onclick="goToStep('objecao')">como eu começo?</button>
+</section>
+
+<!-- ============ 9. OBJECOES ============ -->
+<section class="step" id="objecao" data-step="9">
+  <span class="eyebrow reveal d1">antes que vc pergunte</span>
+  <h2 class="reveal d1">as dúvidas que toda menina me manda</h2>
+  <div class="card reveal d2">
+    <div class="obj"><div class="obj-q">preciso aparecer em alguma foto?</div><p class="obj-a">não. nenhuma. em nenhum momento. o rosto que vai no perfil é gerado do zero.</p></div>
+    <div class="obj"><div class="obj-q">isso é permitido?</div><p class="obj-a">é. o privacy tem a categoria oficial de criadora de IA. vc marca lá e tá tudo certo. pouca gente usa pq pouca gente sabe que existe.</p></div>
+    <div class="obj"><div class="obj-q">preciso saber mexer com inteligência artificial?</div><p class="obj-a">zero. o passo a passo é clicar onde eu mando clicar. tem menina de 40 anos na comunidade que não sabia nem usar canva.</p></div>
+    <div class="obj"><div class="obj-q">alguém pode descobrir quem eu sou?</div><p class="obj-a">descobrir como? a menina do perfil não existe. não tem foto sua, não tem rosto seu, não tem nada seu.</p></div>
+    <div class="obj"><div class="obj-q">quanto tempo toma por semana?</div><p class="obj-a">eu crio as imagens uma vez na semana e depois só vou postando e vendendo no privado. configura uma vez e replica.</p></div>
+  </div>
+  <button class="cta reveal d4" onclick="goToStep('oferta')">beleza, quero entrar</button>
+</section>
+
+<!-- ============ 10. OFERTA ============ -->
+<section class="step" id="oferta" data-step="10">
+  <span class="eyebrow reveal d1">comunidade da ju</span>
+  <h2 class="reveal d1">o passo a passo completo tá tudo aqui dentro</h2>
+  <div class="offer-card reveal d2">
+    <ul class="incl">
+      <li><span class="chk">✓</span> qual ferramenta usar (e a configuração exata)</li>
+      <li><span class="chk">✓</span> o método pra criar modelos realistas de verdade</li>
+      <li><span class="chk">✓</span> como manter o mesmo rosto em todas as fotos</li>
+      <li><span class="chk">✓</span> como criar e marcar o perfil nas plataformas</li>
+      <li><span class="chk">✓</span> em quais comunidades postar pra pegar os primeiros assinantes</li>
+      <li><span class="chk">✓</span> do zero até o seu primeiro saque</li>
+      <li><span class="chk">✓</span> a comunidade só de meninas, pra tirar dúvida e trocar resultado</li>
+    </ul>
+    <div style="text-align:center;margin-top:20px">
+      <div class="muted">taxa de entrada hoje</div>
+      <div class="price"><small>R$</small>97</div>
+      <div class="muted">acesso imediato</div>
+    </div>
+    <button class="cta" onclick="goToCheckout()">entrar na comunidade da Ju</button>
+    <p class="cta-sub">vc cai direto no grupo depois do pagamento</p>
+  </div>
+  <div class="scarcity reveal d3">
+    <span class="pulse"></span>
+    <span class="scarcity-txt">restam <span class="vagas-num" id="vagas">14</span> vagas nessa turma. depois disso o preço sobe.</span>
+  </div>
+  <div class="chat reveal d4">e não me entenda mal. vc mesma viu quanto dinheiro entra com isso. se eu ensinasse de graça eu ia só aumentar a minha concorrência, né?</div>
+  <div class="chat reveal d5">então a barreira tem que existir. mas R$97 não é nada perto do que vc tira já no primeiro mês.</div>
+  <div class="chat reveal d5">te vejo lá dentro, amiga 💗</div>
+  <p class="disclaimer">os resultados citados são reais e foram obtidos pela criadora do método e por alunas da comunidade. eles não representam garantia de ganho: o resultado de cada pessoa depende de aplicação, dedicação e do mercado. conteúdo destinado exclusivamente a maiores de 18 anos. o método ensina criação de personagens de inteligência artificial, sem uso de imagem de pessoas reais, e orienta a identificação do perfil como criadora de IA conforme as regras das plataformas.</p>
+</section>
+
+</div>
+
+<script>
+/* ==========================================================
+   CONFIGURE AQUI  (troque pelos seus dados reais)
+   ========================================================== */
+const CHECKOUT_URL = "https://SEU-CHECKOUT-AQUI.com";
+
+// valor real faturado nos ultimos 30 dias (aparece no contador animado)
+const FATURAMENTO_30D = 34900;
+
+// vagas restantes na turma. feche a turma de verdade quando chegar a zero.
+const VAGAS_RESTANTES = 14;
+
+// FEED DE VENDAS: preencha com vendas reais suas / das alunas.
+// e o texto do rotulo ja deixa claro que sao vendas do metodo, nao "ao vivo agora".
+const VENDAS = [
+  ["Camila", "R$ 47,00", "há 2 min"],
+  ["assinante novo", "R$ 29,90", "há 5 min"],
+  ["Bruna", "R$ 89,00", "há 8 min"],
+  ["pack vendido no privado", "R$ 150,00", "há 12 min"],
+  ["Rafa", "R$ 34,90", "há 15 min"],
+  ["assinatura renovada", "R$ 29,90", "há 21 min"],
+  ["Duda", "R$ 74,00", "há 26 min"],
+  ["pack personalizado", "R$ 220,00", "há 33 min"]
+];
+
+/* ==========================================================
+   ESTADO E NAVEGACAO
+   ========================================================== */
+const state = {};
+const order = ["lp","q1","q2","q3","historia","virada","demo","escala","prova","objecao","oferta"];
+let current = "lp";
+let toastTimer = null;
+
+function saveState(){
+  try{ localStorage.setItem("quiz_ju", JSON.stringify(state)); }catch(e){}
+}
+
+function updateProgress(id){
+  const i = order.indexOf(id);
+  const pct = (i / (order.length - 1)) * 100;
+  document.getElementById("pbar").style.width = pct + "%";
+  document.getElementById("backBtn").style.display = i > 0 ? "inline-flex" : "none";
+}
+
+function goToStep(id, push){
+  const cur = document.querySelector(".step.active");
+  if(cur) cur.classList.remove("active");
+  const nxt = document.getElementById(id);
+  nxt.classList.add("active");
+  current = id;
+  updateProgress(id);
+  window.scrollTo({top:0,behavior:"instant"});
+
+  // reinicia as animacoes de entrada em cascata
+  nxt.querySelectorAll(".reveal").forEach(el=>{
+    el.style.animation = "none";
+    void el.offsetWidth;
+    el.style.animation = "";
+  });
+
+  if(push !== false){
+    try{ history.pushState({step:id}, "", "#" + id); }catch(e){}
+  }
+
+  if(typeof fbq === "function"){
+    fbq("trackCustom","QuizStep",{step:id, index:order.indexOf(id)});
+  }
+
+  // gatilhos por etapa
+  stopToasts();
+  if(id === "demo") runDemo();
+  if(id === "prova"){ animateCounter(); startToasts(2600); }
+  if(id === "oferta"){ startToasts(6000); }
+  if(id === "oferta" && typeof fbq === "function") fbq("track","InitiateCheckout");
+}
+
+function goBack(){
+  const i = order.indexOf(current);
+  if(i > 0) goToStep(order[i-1]);
+}
+
+window.addEventListener("popstate", e=>{
+  if(e.state && e.state.step) goToStep(e.state.step, false);
+});
+
+function answer(key, value, next){
+  state[key] = value;
+  saveState();
+  if(event && event.currentTarget){
+    event.currentTarget.classList.add("picked");
+  }
+  setTimeout(()=>{
+    document.querySelectorAll(".opt.picked").forEach(o=>o.classList.remove("picked"));
+    goToStep(next);
+  }, 230);
+}
+
+function goToCheckout(){
+  if(typeof fbq === "function") fbq("track","AddToCart");
+  const q = new URLSearchParams(state).toString();
+  window.location.href = CHECKOUT_URL + (q ? "?" + q : "");
+}
+
+/* ==========================================================
+   DEMO DE GERACAO
+   ========================================================== */
+const PROMPT_TXT = "photorealistic brazilian woman, 22yo, blonde, bedroom, soft window light, 85mm, ultra detailed skin --nsfw";
+let demoRan = false;
+
+function runDemo(){
+  if(demoRan) return;
+  demoRan = true;
+
+  const line   = document.getElementById("promptLine");
+  const img    = document.getElementById("genImg");
+  const noise  = document.getElementById("genNoise");
+  const status = document.getElementById("genStatus");
+  const tag    = document.getElementById("nsfwTag");
+  const sell   = document.getElementById("sellBtn");
+
+  line.innerHTML = '<span id="ptxt"></span><span class="caret"></span>';
+  const ptxt = document.getElementById("ptxt");
+  let i = 0;
+
+  const type = setInterval(()=>{
+    ptxt.textContent = PROMPT_TXT.slice(0, ++i);
+    if(i >= PROMPT_TXT.length){
+      clearInterval(type);
+      setTimeout(gerar, 320);
+    }
+  }, 17);
+
+  function gerar(){
+    status.innerHTML = '<span class="spinner"></span> gerando imagem...';
+    noise.classList.add("on");
+    setTimeout(()=>{ status.innerHTML = '<span class="spinner"></span> renderizando pele e luz...'; }, 1400);
+    setTimeout(()=>{
+      img.classList.add("on");
+      tag.classList.add("on");
+      status.classList.add("hide");
+      noise.classList.remove("on");
+      sell.classList.add("on");
+    }, 2600);
+  }
+}
+
+function fakeSellDemo(){
+  showToast("modelo nova", "R$ 47,00", "agora");
+  document.getElementById("sellBtn").textContent = "✓ foto no ar";
+  document.getElementById("sellBtn").style.pointerEvents = "none";
+  const after = document.getElementById("demoAfter");
+  after.style.display = "block";
+  after.querySelectorAll(".reveal").forEach(el=>{ el.style.animation="none"; void el.offsetWidth; el.style.animation=""; });
+  setTimeout(()=>{ showToast("assinante novo", "R$ 29,90", "agora"); }, 1500);
+}
+
+/* ==========================================================
+   NOTIFICACOES DE VENDA
+   ========================================================== */
+function showToast(nome, valor, quando){
+  const wrap = document.getElementById("toast-wrap");
+  const t = document.createElement("div");
+  t.className = "toast";
+  t.innerHTML = '<span class="dot"></span>' +
+                '<span class="txt">' + nome + ' · <b>' + valor + '</b></span>' +
+                '<span class="time">' + quando + '</span>';
+  wrap.appendChild(t);
+  setTimeout(()=>{
+    t.classList.add("out");
+    setTimeout(()=>t.remove(), 400);
+  }, 3600);
+  while(wrap.children.length > 2) wrap.firstChild.remove();
+}
+
+let vIdx = 0;
+function startToasts(intervalo){
+  stopToasts();
+  const fire = ()=>{
+    const v = VENDAS[vIdx % VENDAS.length];
+    vIdx++;
+    showToast(v[0], v[1], v[2]);
+  };
+  setTimeout(fire, 700);
+  toastTimer = setInterval(fire, intervalo);
+}
+function stopToasts(){
+  if(toastTimer){ clearInterval(toastTimer); toastTimer = null; }
+}
+
+/* ==========================================================
+   CONTADOR ANIMADO
+   ========================================================== */
+let counterRan = false;
+function animateCounter(){
+  if(counterRan) return;
+  counterRan = true;
+  const el = document.getElementById("counter");
+  const alvo = FATURAMENTO_30D;
+  const dur = 1900;
+  const t0 = performance.now();
+  function frame(t){
+    const p = Math.min((t - t0) / dur, 1);
+    const eased = 1 - Math.pow(1 - p, 3);
+    const val = Math.floor(alvo * eased);
+    el.textContent = "R$" + val.toLocaleString("pt-BR");
+    if(p < 1) requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+}
+
+/* ==========================================================
+   INIT
+   ========================================================== */
+document.getElementById("vagas").textContent = VAGAS_RESTANTES;
+updateProgress("lp");
+try{ history.replaceState({step:"lp"}, "", "#lp"); }catch(e){}
+</script>
+</body>
+</html>
