@@ -154,6 +154,37 @@ strong{color:#fff}
   opacity:0;transform:translateY(10px);transition:opacity .5s,transform .5s;pointer-events:none}
 .sell-btn.on{opacity:1;transform:none;pointer-events:auto}
 
+/* foto real da modelo */
+.modelo-foto{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:2;
+  opacity:0;transform:scale(1.06);transition:opacity .9s ease,transform 1.3s ease;display:none}
+.modelo-foto.on{opacity:1;transform:none}
+.modelo-selo{position:absolute;z-index:4;bottom:10px;left:10px;background:rgba(0,0,0,.72);
+  border:1px solid rgba(255,255,255,.25);font-size:11px;font-weight:800;padding:6px 11px;
+  border-radius:8px;color:#ffd1e2;opacity:0;transition:opacity .5s}
+.modelo-selo.on{opacity:1}
+
+/* garantia */
+.guarantee{display:flex;gap:12px;align-items:flex-start;margin-top:18px;padding:14px;
+  background:rgba(61,220,132,.09);border:1px solid rgba(61,220,132,.3);border-radius:14px;text-align:left}
+.guarantee .ic{font-size:21px;flex-shrink:0}
+.guarantee b{display:block;color:#3ddc84;font-size:15px;margin-bottom:3px}
+.guarantee div{font-size:14px;color:#c4b9cf}
+
+/* calculo de tempo */
+.tempo-calc{text-align:center;padding:24px 18px;background:rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.12);border-radius:17px;margin-bottom:15px}
+.tempo-linha{font-size:15px;color:#a99fb3;margin-bottom:10px;opacity:0;transition:opacity .5s}
+.tempo-linha.on{opacity:1;color:#e8dff0}
+.tempo-num{font-size:44px;font-weight:900;color:#3ddc84;letter-spacing:-.03em;line-height:1;
+  font-variant-numeric:tabular-nums;margin:12px 0}
+
+/* meses da conta */
+.mes-row{display:flex;justify-content:space-between;align-items:center;padding:14px 0;
+  border-bottom:1px solid rgba(255,255,255,.08)}
+.mes-lab{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:#8f8699;font-weight:700}
+.mes-det{font-size:13.5px;color:#a99fb3;margin-top:2px}
+.mes-val{font-weight:900;color:#fff;font-size:19px;font-variant-numeric:tabular-nums}
+
 /* input nome da modelo */
 .name-input{width:100%;background:rgba(255,255,255,.06);border:1.5px solid rgba(255,45,120,.4);
   border-radius:14px;padding:16px;font-size:17px;color:#fff;text-align:center;font-weight:700;margin-bottom:12px}
@@ -297,9 +328,15 @@ strong{color:#fff}
       <div class="muted">pra vc bater <b data-bind="metaSemana" style="color:#fff"></b> por semana vc precisa de</div>
       <div class="big-num" id="assinNum" style="margin:10px 0">0</div>
       <div class="muted">assinantes pagando R$29,90 por mês</div>
+      <div style="margin-top:18px;padding-top:16px;border-top:1px solid rgba(61,220,132,.25)">
+        <div class="muted">isso seria</div>
+        <div class="big-num" id="mensalNum" style="margin:6px 0">R$0</div>
+        <div class="muted">por mês caindo no automático pra vc</div>
+      </div>
     </div>
     <div class="chat reveal d2">só isso, amiga. <strong data-bind="assinantes"></strong> pessoas. e tem site com milhões de homens procurando.</div>
-    <button class="cta reveal d3" onclick="goToStep('q_dor')">continua</button>
+    <div class="chat reveal d3">e antes de vc fechar isso aqui achando que é conversa fiada, me dá o benefício da dúvida. só até o final. depois vc decide.</div>
+    <button class="cta reveal d4" onclick="goToStep('q_dor')">continua</button>
   </div>
 </section>
 
@@ -368,6 +405,7 @@ strong{color:#fff}
   <h2 class="reveal d1">olha como é rápido criar uma</h2>
   <p class="muted reveal d2" style="margin-bottom:16px">vou criar uma modelo do zero aqui na sua frente</p>
   <div class="demo-box reveal d3">
+    <p class="muted" style="margin-bottom:12px;font-size:12.5px">(essa IA é gratuita pra quem tá dentro da comunidade da Ju)</p>
     <div class="demo-label">prompt</div>
     <div class="prompt-line" id="promptLine"><span class="caret"></span></div>
     <div class="gen-area">
@@ -406,6 +444,7 @@ strong{color:#fff}
   <span class="eyebrow reveal d1">sua modelo</span>
   <h2 class="reveal d1">então vamos criar a sua <span data-bind="modeloTxt"></span> agora</h2>
   <p class="reveal d2">dá um nome pra ela. esse vai ser o nome do perfil que vai te pagar todo mês.</p>
+  <p class="muted reveal d2" style="margin-bottom:14px">só um apelido fictício mesmo, de exemplo. vc muda depois lá dentro.</p>
   <div class="reveal d3" id="batismoForm">
     <input class="name-input" id="nomeModelo" placeholder="ex: Manu, Bibi, Lari..." maxlength="18" />
     <button class="cta" onclick="batizar()">criar a <span data-bind="modeloTxt"></span></button>
@@ -413,10 +452,10 @@ strong{color:#fff}
   <div id="batismoAfter" style="display:none">
     <div class="demo-box reveal d1" style="margin-top:18px">
       <div class="demo-label">gerando <span data-bind="nomeModelo"></span></div>
-      <div class="gen-area">
+      <div class="gen-area" style="min-height:340px">
         <div class="gen-img v2" id="genImg2"></div>
+        <img class="modelo-foto" id="modeloFoto" alt="" />
         <div class="gen-status" id="genStatus2"><span class="spinner"></span> criando...</div>
-        <div class="nsfw-tag" id="nsfwTag2">🔒 censurado</div>
       </div>
     </div>
     <div class="chat reveal d2"><strong data-bind="nomeModelo"></strong> tá pronta. agora ela é sua, e ela não existe em lugar nenhum do mundo.</div>
@@ -467,28 +506,56 @@ strong{color:#fff}
 <!-- 15. DEPOIMENTOS PERSONALIZADOS -->
 <section class="step" id="depoimentos" data-step="14">
   <span class="eyebrow reveal d1">meninas da comunidade</span>
-  <h2 class="reveal d1">olha as que começaram querendo <span data-bind="metaSemana"></span> por semana igual vc</h2>
+  <h2 class="reveal d1">olha o que as meninas fizeram na primeira semana</h2>
   <p class="muted reveal d2" style="margin-bottom:16px">esses são os resultados da <strong>primeira semana</strong> delas</p>
   <div id="depoWrap" class="reveal d3"></div>
   <div class="ph reveal d5"><span class="ico">💬</span><b>[PRINTS DOS DEPOIMENTOS]</b><span>prints reais das conversas e resultados dessas meninas</span></div>
   <div class="chat reveal d6">e olha que nenhuma delas sabia nada disso antes. nenhuma.</div>
-  <button class="cta reveal d6" onclick="goToStep('matematica')">quero fazer as contas</button>
+  <button class="cta reveal d6" onclick="goToStep('q_tempo')">quero fazer as contas</button>
+</section>
+
+<!-- 15b. TEMPO POR DIA -->
+<section class="step" id="q_tempo" data-step="15">
+  <span class="eyebrow reveal d1">última pergunta</span>
+  <h2 class="reveal d1">quantos minutos por dia vc consegue separar pra isso?</h2>
+  <p class="muted reveal d2" style="margin-bottom:20px">criar as fotos e postar na plataforma. sê realista aqui.</p>
+  <div class="reveal d3" id="tempoOpts">
+    <button class="opt" onclick="responderTempo('15')"><span class="emo">⚡</span> uns 15 minutinhos, no máximo</button>
+    <button class="opt" onclick="responderTempo('30')"><span class="emo">⏱️</span> uns 30 minutos</button>
+    <button class="opt" onclick="responderTempo('60')"><span class="emo">🕐</span> 1 hora por dia</button>
+    <button class="opt" onclick="responderTempo('120')"><span class="emo">🔥</span> 2 horas ou mais, tô com tudo</button>
+  </div>
+  <div id="tempoResult" style="display:none">
+    <div class="tempo-calc">
+      <div class="tempo-linha" id="tl1">com <b id="tlMin" style="color:#fff"></b> por dia vc consegue</div>
+      <div class="tempo-num" id="tlPosts">0</div>
+      <div class="tempo-linha" id="tl2">postagens por semana</div>
+      <div class="tempo-linha" id="tl3" style="margin-top:16px"><span class="spinner" style="display:inline-block;vertical-align:-3px"></span> calculando seu faturamento inicial...</div>
+      <div class="tempo-linha" id="tl4" style="margin-top:8px;color:#3ddc84;font-weight:700">pronto ✓</div>
+    </div>
+    <button class="cta reveal d1" id="tempoCta" onclick="goToStep('matematica')" style="display:none">ver quanto isso dá</button>
+  </div>
 </section>
 
 <!-- 16. A CONTA -->
 <section class="step" id="matematica" data-step="15">
   <span class="eyebrow reveal d1">a conta</span>
-  <h2 class="reveal d1">deixa eu te mostrar como fecha <span data-bind="metaSemana"></span> por semana</h2>
+  <h2 class="reveal d1">a <span data-bind="nomeModelo"></span> pode te gerar isso nos 3 primeiros meses:</h2>
   <div class="card reveal d2">
-    <div class="calc-row"><span>assinantes no perfil</span><span class="v" data-bind="calcAssin"></span></div>
+    <div class="calc-row"><span>assinantes no perfil dela</span><span class="v" data-bind="calcAssin"></span></div>
     <div class="calc-row"><span>assinatura mensal</span><span class="v">R$ 29,90</span></div>
-    <div class="calc-row"><span>packs vendidos no privado</span><span class="v" data-bind="calcPacks"></span></div>
+    <div class="calc-row"><span>packs que vc vende no privado</span><span class="v" data-bind="calcPacks"></span></div>
     <div class="calc-row"><span>valor médio do pack</span><span class="v">R$ 80,00</span></div>
-    <div class="calc-total"><span>por mês</span><span class="v" data-bind="calcTotal"></span></div>
   </div>
-  <div class="chat reveal d3">e isso é com <strong>uma</strong> modelo só. eu tenho três.</div>
-  <div class="chat reveal d4">quer dobrar? cria outra. o trabalho é o mesmo, vc só replica o que já funciona.</div>
-  <button class="cta reveal d5" onclick="goToStep('q_sonho')">continua</button>
+  <div class="card reveal d3">
+    <div class="mes-row"><div><div class="mes-lab">mês 1</div><div class="mes-det" id="det1"></div></div><div class="mes-val" id="mes1">R$ 0</div></div>
+    <div class="mes-row"><div><div class="mes-lab">mês 2</div><div class="mes-det" id="det2"></div></div><div class="mes-val" id="mes2">R$ 0</div></div>
+    <div class="mes-row"><div><div class="mes-lab">mês 3</div><div class="mes-det" id="det3"></div></div><div class="mes-val" id="mes3">R$ 0</div></div>
+    <div class="calc-total"><span>total em 3 meses</span><span class="v" id="mesTotal">R$ 0</span></div>
+  </div>
+  <div class="chat reveal d4">e isso é com <strong>uma</strong> modelo só. eu tenho três.</div>
+  <div class="chat reveal d5">quer dobrar? cria outra. o trabalho é o mesmo, vc só replica o que já funciona.</div>
+  <button class="cta reveal d6" onclick="goToStep('q_sonho')">continua</button>
 </section>
 
 <!-- 17. O SONHO -->
@@ -529,7 +596,7 @@ strong{color:#fff}
   <div class="perk reveal d2"><span class="ic">🕵️‍♀️</span><div><h4>vc entra anônima</h4><p>vc escolhe um apelido. ninguém lá dentro sabe seu nome, seu rosto, nem sua cidade. nem eu preciso saber.</p></div></div>
   <div class="perk reveal d3"><span class="ic">💸</span><div><h4>a gente mostra os ganhos</h4><p>todo dia tem menina postando print do que entrou. vc vê exatamente o que tá funcionando e copia.</p></div></div>
   <div class="perk reveal d4"><span class="ic">🔄</span><div><h4>estratégia atualizada toda semana</h4><p>o que funciona hoje muda rápido. quando muda, eu aviso lá dentro no mesmo dia. quem tá fora fica pra trás.</p></div></div>
-  <div class="perk reveal d5"><span class="ic">🤝</span><div><h4>ninguém compete com ninguém</h4><p>cada uma pega um nicho diferente. a gente se ajuda, troca prompt, troca comunidade boa pra postar.</p></div></div>
+  <div class="perk reveal d5"><span class="ic">🤝</span><div><h4>não é qualquer uma que entra</h4><p>é comunidade fechada. tem que pagar pra entrar e a vaga é limitada. por isso lá dentro todo mundo troca de verdade, sem medo de espalhar o que funciona.</p></div></div>
   <button class="cta reveal d6" onclick="goToStep('dentro')">quero ver como é lá dentro</button>
 </section>
 
@@ -570,9 +637,13 @@ strong{color:#fff}
       <li><span class="chk">✓</span><span><b>atualização toda vez que o jogo muda</b>vc nunca fica pra trás</span></li>
     </ul>
     <div class="center" style="margin-top:22px">
-      <div class="muted">taxa de entrada hoje</div>
-      <div class="price"><small>R$</small>97</div>
-      <div class="muted">pagamento único · acesso imediato</div>
+      <div class="muted">sua vaga na comunidade</div>
+      <div class="price"><small>R$</small>97<span style="font-size:20px;font-weight:700;letter-spacing:-.01em">/mês</span></div>
+      <div class="muted">cancela quando quiser · acesso imediato</div>
+      <div class="guarantee">
+        <span class="ic">🛡️</span>
+        <div><b>7 dias de garantia</b>entrou, olhou tudo por dentro e achou que não é pra vc? me chama que eu devolvo os R$97. sem pergunta, sem enrolação.</div>
+      </div>
     </div>
     <button class="cta" onclick="goToCheckout()">entrar na comunidade da Ju</button>
     <p class="cta-sub">vc cai direto no grupo depois do pagamento</p>
@@ -585,14 +656,14 @@ strong{color:#fff}
     </div>
   </div>
   <div class="chat reveal d4">e não me entenda mal. vc mesma viu quanto dinheiro entra com isso. se eu ensinasse de graça eu ia só aumentar a minha concorrência, né?</div>
-  <div class="chat reveal d5">então a barreira tem que existir. mas R$97 não é nada perto do que vc tira já no primeiro mês.</div>
+  <div class="chat reveal d5">então a barreira tem que existir. mas R$97 não é nada perto do que vc tira já no primeiro mês. é menos que um delivery de sexta.</div>
   <div class="card reveal d5" style="margin-top:16px">
     <div class="obj"><div class="obj-q">preciso aparecer em alguma foto?</div><p class="obj-a">nenhuma. em nenhum momento. o rosto do perfil é gerado do zero.</p></div>
     <div class="obj"><div class="obj-q">isso é permitido?</div><p class="obj-a">é. o privacy tem a categoria oficial de criadora de IA. vc marca lá e tá tudo certo.</p></div>
     <div class="obj"><div class="obj-q">preciso saber mexer com IA?</div><p class="obj-a">zero. é clicar onde eu mando clicar. tem menina lá que não sabia nem usar canva.</p></div>
     <div class="obj"><div class="obj-q">quanto tempo toma?</div><p class="obj-a">eu crio as imagens uma vez por semana e depois só posto e vendo no privado.</p></div>
   </div>
-  <button class="cta reveal d6" onclick="goToCheckout()">quero minha vaga por R$97</button>
+  <button class="cta reveal d6" onclick="goToCheckout()">quero minha vaga por R$97/mês</button>
   <p class="cta-sub reveal d6">te vejo lá dentro, amiga 💗</p>
   <p class="disclaimer">os resultados citados são reais e foram obtidos pela criadora do método e por alunas da comunidade. eles não representam garantia de ganho: o resultado de cada pessoa depende de aplicação, dedicação e do mercado. conteúdo destinado exclusivamente a maiores de 18 anos. o método ensina criação de personagens de inteligência artificial, sem uso de imagem de pessoas reais, e orienta a identificação do perfil como criadora de IA conforme as regras das plataformas.</p>
 </section>
@@ -606,52 +677,38 @@ strong{color:#fff}
 const CHECKOUT_URL   = "https://SEU-CHECKOUT-AQUI.com";
 const FATURAMENTO_30D = 34900;   // seu faturamento real dos ultimos 30 dias
 const VAGAS_TOTAL     = 50;      // tamanho da turma
-const VAGAS_RESTANTES = 14;      // feche a turma de verdade quando zerar
+const VAGAS_RESTANTES = 14;      // atualize esse numero conforme for vendendo, e feche
+                                 // a turma de verdade quando zerar. quem voltar na pagina
+                                 // ve o numero ter caido de verdade.
 const MEMBROS_ONLINE  = 87;      // numero real aproximado de gente ativa na comunidade
 
-// feed de vendas: troque pelas suas vendas reais
+// feed de vendas: tipos de venda, sem nome de pessoa
 const VENDAS = [
-  ["Camila","R$ 47,00","há 2 min"],
-  ["assinante novo","R$ 29,90","há 5 min"],
-  ["Bruna","R$ 89,00","há 8 min"],
-  ["pack vendido no privado","R$ 150,00","há 12 min"],
-  ["Rafa","R$ 34,90","há 15 min"],
+  ["nova assinatura","R$ 29,90","há 2 min"],
+  ["foto avulsa vendida","R$ 47,00","há 5 min"],
+  ["pack vendido no privado","R$ 150,00","há 8 min"],
+  ["nova assinatura","R$ 29,90","há 12 min"],
+  ["pack personalizado","R$ 220,00","há 16 min"],
   ["assinatura renovada","R$ 29,90","há 21 min"],
-  ["Duda","R$ 74,00","há 26 min"],
-  ["pack personalizado","R$ 220,00","há 33 min"]
+  ["foto avulsa vendida","R$ 34,90","há 26 min"],
+  ["pack vendido no privado","R$ 180,00","há 33 min"]
 ];
 
-// DEPOIMENTOS POR FAIXA DE META  <<< TROQUE PELOS REAIS
-// a menina so ve os depoimentos da faixa que ela escolheu.
-const DEPOIMENTOS = {
-  "500": [
-    {nome:"[NOME]", meta:"queria R$500/sem", valor:"R$ 410", txt:"[cole aqui o depoimento real dela sobre a primeira semana]"},
-    {nome:"[NOME]", meta:"queria R$500/sem", valor:"R$ 630", txt:"[depoimento real]"},
-    {nome:"[NOME]", meta:"queria R$500/sem", valor:"R$ 380", txt:"[depoimento real]"}
-  ],
-  "1000": [
-    {nome:"[NOME]", meta:"queria R$1.000/sem", valor:"R$ 890", txt:"[depoimento real]"},
-    {nome:"[NOME]", meta:"queria R$1.000/sem", valor:"R$ 1.140", txt:"[depoimento real]"},
-    {nome:"[NOME]", meta:"queria R$1.000/sem", valor:"R$ 720", txt:"[depoimento real]"}
-  ],
-  "2000": [
-    {nome:"[NOME]", meta:"queria R$2.000/sem", valor:"R$ 1.560", txt:"[depoimento real]"},
-    {nome:"[NOME]", meta:"queria R$2.000/sem", valor:"R$ 2.230", txt:"[depoimento real]"},
-    {nome:"[NOME]", meta:"queria R$2.000/sem", valor:"R$ 1.890", txt:"[depoimento real]"}
-  ],
-  "5000": [
-    {nome:"[NOME]", meta:"queria R$5.000/sem", valor:"R$ 3.400", txt:"[depoimento real]"},
-    {nome:"[NOME]", meta:"queria R$5.000/sem", valor:"R$ 4.900", txt:"[depoimento real]"},
-    {nome:"[NOME]", meta:"queria R$5.000/sem", valor:"R$ 2.750", txt:"[depoimento real]"}
-  ]
-};
+// DEPOIMENTOS: relatos reais de alunas, nomes trocados porque elas sao anonimas.
+// os VALORES sao os reais de cada uma, entao nao mudam conforme a faixa da lead.
+// tem relato de aluna de faixa mais alta? e so acrescentar aqui.
+const DEPOIMENTOS = [
+  {nome:"Bruna", quando:"primeira semana", valor:"R$ 800", txt:"minha semana mais fraca até agora foi 800 reais"},
+  {nome:"Lívia", quando:"primeira semana", valor:"1º saque", txt:"na primeira semana fiz mais do que meu salário de estagiária de RH kkkk"},
+  {nome:"Vic",   quando:"primeira semana", valor:"R$ 720", txt:"não botei fé que alguém compraria foto de mulher pelada de IA, até eu sacar R$720 na primeira semana"}
+];
 
-// MENSAGENS DO GRUPO  <<< TROQUE POR MENSAGENS REAIS DA SUA COMUNIDADE
+// MENSAGENS DO GRUPO: conversa ilustrativa do tipo de troca que rola la dentro
 const MENSAGENS = [
-  {nome:"[apelido]", txt:"[mensagem real do grupo]"},
-  {nome:"[apelido]", txt:"[mensagem real do grupo]"},
-  {nome:"[apelido]", txt:"[mensagem real do grupo]"},
-  {nome:"Ju", txt:"[sua resposta no grupo]"}
+  {nome:"Duda", txt:"gente eu tô até indignada de tá dando certo kkkkk fiz 3 vendas dormindo"},
+  {nome:"Tati", txt:"meninas descobri um jeito de deixar os posts programados, faço tudo domingo e a semana inteira roda sozinha"},
+  {nome:"Nina", txt:"Ju como que eu faço pra criar imagem estilo selfie? as minhas tão saindo muito de estúdio"},
+  {nome:"Ju",   txt:"peraí que eu mando aqui o prompt que eu uso 👇"}
 ];
 
 /* ==========================================================
@@ -724,7 +781,7 @@ const SONHO_TXT = {
    ========================================================== */
 const state = {};
 const order = ["lp","q_meta","analise","q_dor","q_trampo","espelho","historia","virada","demo",
-               "q_modelo","batismo","prova_ju","q_medo","quebra","depoimentos","matematica",
+               "q_modelo","batismo","prova_ju","q_medo","quebra","depoimentos","q_tempo","matematica",
                "q_sonho","projecao","comunidade","dentro","urgencia","oferta"];
 let current = "lp";
 let toastTimer = null;
@@ -739,16 +796,9 @@ function personalizar(){
   if(state.meta){
     const f = FAIXAS[state.meta];
     bind("metaSemana", f.label);
-    const mensal   = f.semana * 4;
-    const assinPuro = Math.round(mensal / 29.9);
-    bind("assinantes", assinPuro);
-    // mix: 55% assinatura + 45% pack no privado
-    const assin = Math.round((mensal * .55) / 29.9);
-    const packs = Math.round((mensal * .45) / 80);
-    const total = assin * 29.9 + packs * 80;
-    bind("calcAssin", assin);
-    bind("calcPacks", packs + " por mês");
-    bind("calcTotal", "R$ " + Math.round(total).toLocaleString("pt-BR"));
+    bind("assinantes", assinantesNecessarios());
+    bind("calcAssin", assinantesNecessarios());
+    bind("calcPacks", packsPorMes() + " por mês");
   }
   if(state.dor)    bind("dorTxt", DOR_TXT[state.dor]);
   if(state.trampo) bind("trampoTxt", TRAMPO_TXT[state.trampo]);
@@ -759,6 +809,20 @@ function personalizar(){
     const m = MEDOS[state.medo];
     bind("medoTitulo", m.t); bind("medoResp1", m.a); bind("medoResp2", m.b);
   }
+}
+
+// quantos assinantes pra bater a meta (mesmo numero usado na analise e na conta)
+function assinantesNecessarios(){
+  const f = FAIXAS[state.meta] || FAIXAS["1000"];
+  return Math.round((f.semana * 4) / 29.9);
+}
+// cada foto leva ~5 min pra gerar e postar; a cada 6 posts sai 1 pack vendido
+function postsPorSemana(){
+  const min = parseInt(state.tempo || "30", 10);
+  return Math.round(min / 5) * 7;
+}
+function packsPorMes(){
+  return Math.round((postsPorSemana() / 6) * 4);
 }
 
 function updateProgress(id){
@@ -785,6 +849,7 @@ function goToStep(id, push){
   if(id === "demo")        rodarDemo();
   if(id === "prova_ju")   { animarContador(); startToasts(2600); }
   if(id === "depoimentos") montarDepoimentos();
+  if(id === "matematica")   montarConta();
   if(id === "comunidade")  animarOnline();
   if(id === "dentro")      montarChat();
   if(id === "oferta")     { animarVagas(); startToasts(6500);
@@ -821,7 +886,8 @@ function rodarAnalise(){
   setTimeout(()=>{
     document.getElementById("analiseResult").style.display = "block";
     const mensal = FAIXAS[state.meta].semana * 4;
-    contarAte(document.getElementById("assinNum"), Math.round(mensal/29.9), 1500, "");
+    contarAte(document.getElementById("assinNum"), assinantesNecessarios(), 1500, "");
+    setTimeout(()=> contarAte(document.getElementById("mensalNum"), mensal, 1400, "R$"), 700);
   }, 3100);
 }
 
@@ -879,12 +945,61 @@ function batizar(){
   state.nomeModelo = nome; saveState(); personalizar();
   document.getElementById("batismoForm").style.display = "none";
   document.getElementById("batismoAfter").style.display = "block";
+
+  // tenta carregar a foto real da modelo; se nao existir, fica o fundo desfocado
+  const foto = document.getElementById("modeloFoto");
+  foto.onload  = ()=>{ foto.style.display = "block"; setTimeout(()=> foto.classList.add("on"), 2100); };
+  foto.onerror = ()=>{ foto.style.display = "none"; };
+  foto.src = "img/modelos/" + state.modelo + ".jpg";
+
   setTimeout(()=>{
     document.getElementById("genImg2").classList.add("on");
     document.getElementById("genStatus2").classList.add("hide");
-    document.getElementById("nsfwTag2").classList.add("on");
   }, 2100);
   setTimeout(()=> showToast(nome + " tá pronta","perfil criado","agora"), 2600);
+}
+
+/* ============ TEMPO POR DIA ============ */
+function responderTempo(min){
+  state.tempo = min; saveState();
+  if(window.event && window.event.currentTarget) window.event.currentTarget.classList.add("picked");
+  document.getElementById("tempoOpts").style.display = "none";
+  document.getElementById("tempoResult").style.display = "block";
+  document.getElementById("tlMin").textContent = (min === "120" ? "2 horas" : min + " min");
+
+  const seq = ["tl1","tl2","tl3","tl4"];
+  seq.forEach(id => document.getElementById(id).classList.remove("on"));
+  document.getElementById("tl4").style.display = "none";
+
+  setTimeout(()=> document.getElementById("tl1").classList.add("on"), 300);
+  setTimeout(()=> contarAte(document.getElementById("tlPosts"), postsPorSemana(), 1100, ""), 600);
+  setTimeout(()=> document.getElementById("tl2").classList.add("on"), 900);
+  setTimeout(()=> document.getElementById("tl3").classList.add("on"), 1800);
+  setTimeout(()=>{
+    document.getElementById("tl3").style.display = "none";
+    const t4 = document.getElementById("tl4");
+    t4.style.display = "block"; t4.classList.add("on");
+    const cta = document.getElementById("tempoCta");
+    cta.style.display = "block";
+    cta.style.animation = "none"; void cta.offsetWidth; cta.style.animation = "";
+  }, 4200);
+}
+
+/* ============ A CONTA: 3 MESES ============ */
+function montarConta(){
+  const assin = assinantesNecessarios();
+  const packs = packsPorMes();
+  const rampa = [[.45,.60],[.75,.85],[1,1]];
+  let total = 0;
+  rampa.forEach((r,i)=>{
+    const a = Math.round(assin * r[0]);
+    const pk = Math.round(packs * r[1]);
+    const v = a * 29.9 + pk * 80;
+    total += v;
+    document.getElementById("det"+(i+1)).textContent = a + " assinantes + " + pk + " packs";
+    contarAte(document.getElementById("mes"+(i+1)), Math.round(v), 1100 + i*220, "R$ ");
+  });
+  setTimeout(()=> contarAte(document.getElementById("mesTotal"), Math.round(total), 1500, "R$ "), 900);
 }
 
 /* ============ DEPOIMENTOS ============ */
@@ -892,12 +1007,11 @@ function montarDepoimentos(){
   const wrap = document.getElementById("depoWrap");
   if(wrap.dataset.done) return;
   wrap.dataset.done = "1";
-  const lista = DEPOIMENTOS[state.meta] || DEPOIMENTOS["500"];
-  wrap.innerHTML = lista.map((d,i)=>
+  wrap.innerHTML = DEPOIMENTOS.map((d,i)=>
     '<div class="depo reveal" style="animation-delay:'+(.15+i*.22)+'s">'+
       '<div class="depo-top">'+
         '<div class="depo-av">'+ d.nome.replace(/[^A-Za-zÀ-ú]/g,"").charAt(0).toUpperCase() +'</div>'+
-        '<div><div class="depo-nome">'+d.nome+'</div><div class="depo-meta">'+d.meta+'</div></div>'+
+        '<div><div class="depo-nome">'+d.nome+'</div><div class="depo-meta">'+d.quando+'</div></div>'+
         '<div class="depo-val">'+d.valor+'</div>'+
       '</div>'+
       '<div class="depo-txt">"'+d.txt+'"</div>'+

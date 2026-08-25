@@ -1,0 +1,11 @@
+COLOQUE AQUI AS IMAGENS DAS MODELOS (com roupa, so pra mostrar que a modelo ficou pronta)
+
+nomes exatos dos arquivos:
+  loira.jpg
+  morena.jpg
+  gordinha.jpg
+  ruiva.jpg
+  madura.jpg
+
+formato: jpg ou png, de preferencia quadrada ou vertical (ex: 800x1000)
+se o arquivo nao existir, o quiz cai automaticamente no fundo desfocado.
