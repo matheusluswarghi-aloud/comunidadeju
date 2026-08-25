@@ -23,7 +23,9 @@ PROVAS DE GANHO
 12-saques-1   ate   12-saques-5
    Etapa "ja faz 4 meses que eu vivo so disso".
    Prints dos seus saques / extrato.
-   Pode subir de 1 a 5. Nao precisa subir todas.
+   Pode subir de 1 a 5. Nao precisa subir todas,
+   MAS numere sem pular: 1, 2, 3... Se faltar a -2,
+   o quiz para na -1 e ignora o resto.
 
 12-dashboard
    Mesma etapa, logo abaixo.

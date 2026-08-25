@@ -14,9 +14,12 @@ n.queue=[];t=b.createElement(e);t.async=!0;
 t.src=v;s=b.getElementsByTagName(e)[0];
 s.parentNode.insertBefore(t,s)}(window, document,'script',
 'https://connect.facebook.net/en_US/fbevents.js');
-fbq('init', 'SEU_PIXEL_ID_AQUI');
+fbq('init', '1583309593342549');
 fbq('track', 'PageView');
 </script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1583309593342549&ev=PageView&noscript=1"
+/></noscript>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{-webkit-text-size-adjust:100%}
@@ -1115,22 +1118,23 @@ function carregarSlot(el){
     return;
   }
 
+  // busca sequencial: para no primeiro numero que faltar.
+  // evita disparar dezenas de 404 quando as imagens ainda nao foram subidas.
   const achadas = [];
-  let pendentes = multi;
-  for(let i = 1; i <= multi; i++){
-    (function(idx){
-      tentarCarregar(base + "-" + idx, src=>{
-        if(src) achadas[idx] = src;
-        if(--pendentes === 0) montar();
-      });
-    })(i);
-  }
+  (function proximo(i){
+    if(i > multi) return montar();
+    tentarCarregar(base + "-" + i, src=>{
+      if(!src) return montar();
+      achadas.push(src);
+      proximo(i + 1);
+    });
+  })(1);
+
   function montar(){
-    const lista = achadas.filter(Boolean);
-    if(!lista.length) return;
+    if(!achadas.length) return;
     el.dataset.carregado = "1";
-    el.className = "galeria " + (lista.length === 1 ? "g1" : "g2") + " reveal";
-    el.innerHTML = lista.map(src=>'<img src="'+src+'" alt="" />').join("");
+    el.className = "galeria " + (achadas.length === 1 ? "g1" : "g2") + " reveal";
+    el.innerHTML = achadas.map(src=>'<img src="'+src+'" alt="" />').join("");
   }
 }
 
