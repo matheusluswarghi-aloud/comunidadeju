@@ -5,8 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 <meta name="robots" content="noindex,nofollow" />
 <title>Comunidade da Ju</title>
-
-<!-- Meta Pixel Code -->
 <script>
 !function(f,b,e,v,n,t,s)
 {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -19,217 +17,154 @@ s.parentNode.insertBefore(t,s)}(window, document,'script',
 fbq('init', 'SEU_PIXEL_ID_AQUI');
 fbq('track', 'PageView');
 </script>
-<!-- End Meta Pixel Code -->
-
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+html{-webkit-text-size-adjust:100%}
 body{
   font-family:-apple-system,BlinkMacSystemFont,"Inter","Segoe UI",Roboto,sans-serif;
-  background:#0c0910;
-  color:#f3edf7;
-  line-height:1.55;
-  min-height:100vh;
-  -webkit-font-smoothing:antialiased;
-  overflow-x:hidden;
+  background:#0c0910;color:#f3edf7;line-height:1.55;min-height:100vh;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden;
 }
-button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+button,input{font-family:inherit}
+button{cursor:pointer;border:none;background:none;color:inherit}
 
-/* fundo vivo */
 .bg-glow{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
-.bg-glow::before,.bg-glow::after{
-  content:"";position:absolute;border-radius:50%;filter:blur(90px);opacity:.5;
-}
-.bg-glow::before{
-  width:60vw;height:60vw;background:#ff2d78;top:-20vw;left:-15vw;
-  animation:drift1 18s ease-in-out infinite alternate;
-}
-.bg-glow::after{
-  width:55vw;height:55vw;background:#8b3ff5;bottom:-20vw;right:-15vw;
-  animation:drift2 22s ease-in-out infinite alternate;
-}
+.bg-glow::before,.bg-glow::after{content:"";position:absolute;border-radius:50%;filter:blur(90px);opacity:.45}
+.bg-glow::before{width:60vw;height:60vw;background:#ff2d78;top:-20vw;left:-15vw;animation:drift1 18s ease-in-out infinite alternate}
+.bg-glow::after{width:55vw;height:55vw;background:#8b3ff5;bottom:-20vw;right:-15vw;animation:drift2 22s ease-in-out infinite alternate}
 @keyframes drift1{to{transform:translate(8vw,10vh) scale(1.15)}}
 @keyframes drift2{to{transform:translate(-8vw,-8vh) scale(1.1)}}
 
-/* progresso */
-.progress-container{
-  position:sticky;top:0;width:100%;height:5px;
-  background:rgba(255,255,255,.07);z-index:120;
-}
-.progress-bar{
-  height:100%;width:0%;border-radius:0 4px 4px 0;
+.progress-container{position:sticky;top:0;width:100%;height:5px;background:rgba(255,255,255,.07);z-index:120}
+.progress-bar{height:100%;width:0%;border-radius:0 4px 4px 0;
   background:linear-gradient(90deg,#ff2d78,#ff6ba8,#c084fc);
-  transition:width .55s cubic-bezier(.22,1,.36,1);
-  box-shadow:0 0 14px rgba(255,45,120,.75);
-}
+  transition:width .55s cubic-bezier(.22,1,.36,1);box-shadow:0 0 14px rgba(255,45,120,.75)}
 
+#toast-wrap{position:fixed;left:0;right:0;top:12px;z-index:200;pointer-events:none;padding:0 14px;display:flex;flex-direction:column;align-items:center;gap:8px}
 .container{position:relative;z-index:2;max-width:520px;margin:0 auto;padding:20px 18px 70px}
 
-.back-btn{
-  display:inline-flex;align-items:center;gap:6px;
-  color:#a99fb3;font-size:13px;margin-bottom:14px;
-  padding:6px 10px;border-radius:8px;transition:.2s;
-}
+.back-btn{display:inline-flex;align-items:center;gap:6px;color:#a99fb3;font-size:13px;margin-bottom:14px;padding:6px 10px;border-radius:8px;transition:.2s}
 .back-btn:hover{background:rgba(255,255,255,.07);color:#fff}
 
-/* steps */
 .step{display:none}
 .step.active{display:block;animation:stepIn .5s cubic-bezier(.22,1,.36,1)}
 @keyframes stepIn{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
 
-/* entrada em cascata */
 .reveal{opacity:0;transform:translateY(14px);animation:revealUp .55s cubic-bezier(.22,1,.36,1) forwards}
 @keyframes revealUp{to{opacity:1;transform:none}}
 .d1{animation-delay:.1s}.d2{animation-delay:.28s}.d3{animation-delay:.46s}
-.d4{animation-delay:.64s}.d5{animation-delay:.9s}.d6{animation-delay:1.2s}
+.d4{animation-delay:.64s}.d5{animation-delay:.9s}.d6{animation-delay:1.2s}.d7{animation-delay:1.5s}
 
 h1{font-size:29px;line-height:1.2;font-weight:800;letter-spacing:-.02em;margin-bottom:14px}
 h2{font-size:23px;line-height:1.25;font-weight:800;letter-spacing:-.015em;margin-bottom:14px}
+h3{font-size:18px;font-weight:800;margin-bottom:10px}
 p{font-size:16.5px;color:#ddd3e6;margin-bottom:14px}
 .lead{font-size:18px;color:#f3edf7}
 .muted{color:#a99fb3;font-size:13.5px}
 .hl{color:#ff5c96;font-weight:700}
 .money{color:#3ddc84;font-weight:800}
 strong{color:#fff}
+.center{text-align:center}
 
-.eyebrow{
-  display:inline-block;font-size:11.5px;font-weight:700;letter-spacing:.11em;
-  text-transform:uppercase;color:#ff5c96;
-  background:rgba(255,45,120,.11);border:1px solid rgba(255,45,120,.28);
-  padding:6px 12px;border-radius:999px;margin-bottom:16px;
-}
+.eyebrow{display:inline-block;font-size:11.5px;font-weight:700;letter-spacing:.11em;text-transform:uppercase;
+  color:#ff5c96;background:rgba(255,45,120,.11);border:1px solid rgba(255,45,120,.28);
+  padding:6px 12px;border-radius:999px;margin-bottom:16px}
 
-/* opções */
-.opt{
-  display:flex;align-items:center;gap:13px;width:100%;text-align:left;
-  background:rgba(255,255,255,.045);
-  border:1.5px solid rgba(255,255,255,.11);
-  border-radius:15px;padding:16px 17px;margin-bottom:11px;
-  font-size:16px;font-weight:600;color:#f3edf7;
-  transition:transform .16s,border-color .2s,background .2s;
-}
+.opt{display:flex;align-items:center;gap:13px;width:100%;text-align:left;
+  background:rgba(255,255,255,.045);border:1.5px solid rgba(255,255,255,.11);
+  border-radius:15px;padding:16px 17px;margin-bottom:11px;font-size:16px;font-weight:600;color:#f3edf7;
+  transition:transform .16s,border-color .2s,background .2s}
 .opt:hover{background:rgba(255,45,120,.1);border-color:rgba(255,45,120,.5);transform:translateX(4px)}
 .opt:active{transform:scale(.975)}
 .opt .emo{font-size:21px;flex-shrink:0}
 .opt.picked{background:rgba(255,45,120,.2);border-color:#ff2d78}
 
-/* CTA */
-.cta{
-  display:block;width:100%;text-align:center;
-  background:linear-gradient(135deg,#ff2d78,#ff5c96);
-  color:#fff;font-size:17.5px;font-weight:800;letter-spacing:-.01em;
-  padding:18px 20px;border-radius:15px;margin-top:20px;
-  box-shadow:0 10px 30px rgba(255,45,120,.4);
-  animation:pulseCta 2.4s ease-in-out infinite;
-  transition:transform .16s;
-}
+.cta{display:block;width:100%;text-align:center;
+  background:linear-gradient(135deg,#ff2d78,#ff5c96);color:#fff;font-size:17.5px;font-weight:800;
+  letter-spacing:-.01em;padding:18px 20px;border-radius:15px;margin-top:20px;
+  box-shadow:0 10px 30px rgba(255,45,120,.4);animation:pulseCta 2.4s ease-in-out infinite;transition:transform .16s}
 .cta:active{transform:scale(.97)}
-@keyframes pulseCta{
-  0%,100%{box-shadow:0 10px 30px rgba(255,45,120,.4)}
-  50%{box-shadow:0 10px 42px rgba(255,45,120,.68)}
-}
-/* CTA que tambem entra em cascata: precisa rodar as DUAS animacoes.
-   sem isso o .cta sobrescreve o .reveal e o botao fica invisivel. */
-.cta.reveal{
-  animation:revealUp .55s cubic-bezier(.22,1,.36,1) forwards,
-            pulseCta 2.4s ease-in-out infinite;
-}
-/* o delay unico vale pras duas animacoes da lista.
-   vem depois do .cta.reveal de proposito, pra vencer no desempate. */
-.cta.d1{animation-delay:.1s}
-.cta.d2{animation-delay:.28s}
-.cta.d3{animation-delay:.46s}
-.cta.d4{animation-delay:.64s}
-.cta.d5{animation-delay:.9s}
-.cta.d6{animation-delay:1.2s}
+@keyframes pulseCta{0%,100%{box-shadow:0 10px 30px rgba(255,45,120,.4)}50%{box-shadow:0 10px 42px rgba(255,45,120,.68)}}
+.cta.reveal{animation:revealUp .55s cubic-bezier(.22,1,.36,1) forwards,pulseCta 2.4s ease-in-out infinite}
+.cta.d1{animation-delay:.1s}.cta.d2{animation-delay:.28s}.cta.d3{animation-delay:.46s}
+.cta.d4{animation-delay:.64s}.cta.d5{animation-delay:.9s}.cta.d6{animation-delay:1.2s}.cta.d7{animation-delay:1.5s}
 .cta-sub{text-align:center;font-size:12.5px;color:#8f8699;margin-top:11px}
+.cta-ghost{display:block;width:100%;text-align:center;font-size:14px;color:#8f8699;margin-top:14px;text-decoration:underline}
 
-/* cartões */
-.card{
-  background:rgba(255,255,255,.05);
-  border:1px solid rgba(255,255,255,.1);
-  border-radius:17px;padding:18px;margin-bottom:14px;
-  backdrop-filter:blur(8px);
-}
-.chat{
-  background:rgba(255,255,255,.05);
-  border:1px solid rgba(255,255,255,.09);
-  border-left:3px solid #ff2d78;
-  border-radius:5px 15px 15px 5px;
-  padding:14px 16px;margin-bottom:11px;font-size:16.5px;color:#e8dff0;
-}
+.card{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);
+  border-radius:17px;padding:18px;margin-bottom:14px;backdrop-filter:blur(8px)}
+.chat{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.09);border-left:3px solid #ff2d78;
+  border-radius:5px 15px 15px 5px;padding:14px 16px;margin-bottom:11px;font-size:16.5px;color:#e8dff0}
 
-/* placeholder de imagem */
-.ph{
-  width:100%;border-radius:15px;border:1.5px dashed rgba(255,45,120,.45);
+.ph{width:100%;border-radius:15px;border:1.5px dashed rgba(255,45,120,.45);
   background:repeating-linear-gradient(45deg,rgba(255,45,120,.05) 0 10px,transparent 10px 20px);
   display:flex;flex-direction:column;align-items:center;justify-content:center;
-  min-height:190px;color:#ff8ab5;font-size:13px;text-align:center;padding:18px;margin-bottom:14px;gap:6px;
-}
-.ph .ico{font-size:26px}
-.ph b{color:#ffb3ce;font-size:13.5px}
+  min-height:170px;color:#ff8ab5;font-size:12.5px;text-align:center;padding:18px;margin-bottom:14px;gap:5px}
+.ph .ico{font-size:24px}
+.ph b{color:#ffb3ce;font-size:13px}
+.ph.sm{min-height:120px}
 
-/* demo de geração */
-.demo-box{
-  background:#151019;border:1px solid rgba(255,255,255,.12);
-  border-radius:17px;padding:16px;margin-bottom:15px;
-}
+/* analise animada */
+.scan-line{display:flex;align-items:center;gap:11px;padding:12px 0;font-size:15px;color:#a99fb3;
+  opacity:0;transform:translateX(-8px);transition:opacity .4s,transform .4s,color .4s}
+.scan-line.on{opacity:1;transform:none;color:#e8dff0}
+.scan-line .mark{width:21px;height:21px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;
+  border:2px solid rgba(255,255,255,.2);font-size:12px;font-weight:900}
+.scan-line.on .mark{background:#3ddc84;border-color:#3ddc84;color:#04240f}
+.scan-bar{height:7px;border-radius:5px;background:rgba(255,255,255,.09);overflow:hidden;margin:18px 0 8px}
+.scan-fill{height:100%;width:0%;background:linear-gradient(90deg,#ff2d78,#c084fc);transition:width .5s linear}
+
+/* resultado destacado */
+.big-num{font-size:56px;font-weight:900;letter-spacing:-.04em;line-height:1;
+  background:linear-gradient(135deg,#3ddc84,#8ef5b8);-webkit-background-clip:text;background-clip:text;
+  -webkit-text-fill-color:transparent;font-variant-numeric:tabular-nums}
+.result-box{text-align:center;padding:26px 18px;margin-bottom:15px;
+  background:linear-gradient(160deg,rgba(61,220,132,.13),rgba(61,220,132,.03));
+  border:1px solid rgba(61,220,132,.3);border-radius:19px}
+.counter-box{text-align:center;padding:22px 18px;margin-bottom:15px;
+  background:linear-gradient(160deg,rgba(61,220,132,.13),rgba(61,220,132,.03));
+  border:1px solid rgba(61,220,132,.3);border-radius:17px}
+.counter-num{font-size:41px;font-weight:900;color:#3ddc84;letter-spacing:-.03em;line-height:1;font-variant-numeric:tabular-nums}
+.counter-lab{font-size:12.5px;color:#a99fb3;margin-top:7px;text-transform:uppercase;letter-spacing:.07em}
+
+/* demo */
+.demo-box{background:#151019;border:1px solid rgba(255,255,255,.12);border-radius:17px;padding:16px;margin-bottom:15px}
 .demo-label{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:#8f8699;margin-bottom:9px}
-.prompt-line{
-  font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
-  font-size:13.5px;color:#3ddc84;background:#0a070d;
-  border:1px solid rgba(61,220,132,.25);border-radius:10px;
-  padding:13px;min-height:74px;line-height:1.6;word-break:break-word;
-}
+.prompt-line{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13.5px;color:#3ddc84;
+  background:#0a070d;border:1px solid rgba(61,220,132,.25);border-radius:10px;padding:13px;min-height:74px;line-height:1.6;word-break:break-word}
 .caret{display:inline-block;width:8px;height:15px;background:#3ddc84;vertical-align:-2px;animation:blink .9s steps(2) infinite}
 @keyframes blink{50%{opacity:0}}
-
 .gen-area{margin-top:14px;position:relative;min-height:210px;border-radius:14px;overflow:hidden;background:#0a070d;display:flex;align-items:center;justify-content:center}
-.gen-img{
-  position:absolute;inset:0;
-  background:linear-gradient(140deg,#f2b8c6,#c98ba5 30%,#8a5f7d 60%,#3d2b3f);
-  filter:blur(26px) saturate(1.25);
-  opacity:0;transform:scale(1.08);
-  transition:opacity 1s ease,transform 1.4s ease;
-}
+.gen-img{position:absolute;inset:0;background:linear-gradient(140deg,#f2b8c6,#c98ba5 30%,#8a5f7d 60%,#3d2b3f);
+  filter:blur(26px) saturate(1.25);opacity:0;transform:scale(1.08);transition:opacity 1s ease,transform 1.4s ease}
 .gen-img.on{opacity:1;transform:scale(1)}
-.gen-noise{
-  position:absolute;inset:0;opacity:0;
-  background:repeating-linear-gradient(0deg,rgba(255,255,255,.045) 0 2px,transparent 2px 4px);
-  transition:opacity .5s;
-}
+.gen-img.v2{background:linear-gradient(140deg,#e8c4a0,#c9906b 30%,#7d5a49 60%,#332420)}
+.gen-noise{position:absolute;inset:0;opacity:0;background:repeating-linear-gradient(0deg,rgba(255,255,255,.045) 0 2px,transparent 2px 4px);transition:opacity .5s}
 .gen-noise.on{opacity:1}
 .gen-status{position:relative;z-index:3;font-size:13.5px;color:#cfc4d9;display:flex;align-items:center;gap:9px;font-weight:600}
 .gen-status.hide{opacity:0;transition:opacity .4s}
 .spinner{width:17px;height:17px;border:2.5px solid rgba(255,255,255,.2);border-top-color:#ff5c96;border-radius:50%;animation:spin .7s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
-.nsfw-tag{
-  position:absolute;z-index:4;bottom:11px;left:11px;
-  background:rgba(0,0,0,.66);backdrop-filter:blur(6px);
-  border:1px solid rgba(255,255,255,.2);
-  font-size:10.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
-  padding:5px 10px;border-radius:7px;color:#ffb3ce;opacity:0;transition:opacity .5s .6s;
-}
+.nsfw-tag{position:absolute;z-index:5;bottom:10px;left:10px;background:rgba(0,0,0,.8);
+  border:1px solid rgba(255,255,255,.3);font-size:11px;font-weight:800;letter-spacing:.05em;
+  padding:6px 11px;border-radius:8px;color:#ffd1e2;opacity:0;transition:opacity .45s}
 .nsfw-tag.on{opacity:1}
-.sell-btn{
-  width:100%;margin-top:13px;padding:14px;border-radius:13px;
-  background:linear-gradient(135deg,#3ddc84,#1faa5f);color:#04240f;
-  font-weight:800;font-size:16px;opacity:0;transform:translateY(10px);
-  transition:opacity .5s,transform .5s;pointer-events:none;
-}
+.sell-btn{width:100%;margin-top:13px;padding:14px;border-radius:13px;
+  background:linear-gradient(135deg,#3ddc84,#1faa5f);color:#04240f;font-weight:800;font-size:16px;
+  opacity:0;transform:translateY(10px);transition:opacity .5s,transform .5s;pointer-events:none}
 .sell-btn.on{opacity:1;transform:none;pointer-events:auto}
 
-/* notificacoes de venda */
-#toast-wrap{position:fixed;left:0;right:0;top:12px;z-index:200;pointer-events:none;padding:0 14px;display:flex;flex-direction:column;align-items:center;gap:8px}
-.toast{
-  width:100%;max-width:360px;display:flex;align-items:center;gap:11px;
-  background:rgba(20,15,24,.93);backdrop-filter:blur(14px);
-  border:1px solid rgba(61,220,132,.4);
-  border-radius:13px;padding:11px 14px;
-  box-shadow:0 10px 32px rgba(0,0,0,.55);
-  opacity:0;transform:translateY(-24px) scale(.94);
-  animation:toastIn .45s cubic-bezier(.22,1,.36,1) forwards;
-}
+/* input nome da modelo */
+.name-input{width:100%;background:rgba(255,255,255,.06);border:1.5px solid rgba(255,45,120,.4);
+  border-radius:14px;padding:16px;font-size:17px;color:#fff;text-align:center;font-weight:700;margin-bottom:12px}
+.name-input:focus{outline:none;border-color:#ff2d78;background:rgba(255,45,120,.1)}
+.name-input::placeholder{color:#8f8699;font-weight:500}
+
+/* toasts */
+.toast{width:100%;max-width:360px;display:flex;align-items:center;gap:11px;
+  background:rgba(20,15,24,.93);backdrop-filter:blur(14px);border:1px solid rgba(61,220,132,.4);
+  border-radius:13px;padding:11px 14px;box-shadow:0 10px 32px rgba(0,0,0,.55);
+  opacity:0;transform:translateY(-24px) scale(.94);animation:toastIn .45s cubic-bezier(.22,1,.36,1) forwards}
 .toast.out{animation:toastOut .35s ease forwards}
 @keyframes toastIn{to{opacity:1;transform:none}}
 @keyframes toastOut{to{opacity:0;transform:translateY(-14px) scale(.96)}}
@@ -239,49 +174,81 @@ strong{color:#fff}
 .toast .txt b{color:#3ddc84}
 .toast .time{margin-left:auto;font-size:11px;color:#8f8699;flex-shrink:0}
 
-/* contador */
-.counter-box{text-align:center;padding:22px 18px;margin-bottom:15px;
-  background:linear-gradient(160deg,rgba(61,220,132,.13),rgba(61,220,132,.03));
-  border:1px solid rgba(61,220,132,.3);border-radius:17px}
-.counter-num{font-size:41px;font-weight:900;color:#3ddc84;letter-spacing:-.03em;line-height:1;font-variant-numeric:tabular-nums}
-.counter-lab{font-size:12.5px;color:#a99fb3;margin-top:7px;text-transform:uppercase;letter-spacing:.07em}
+/* espelho */
+.mirror{display:flex;gap:12px;align-items:flex-start;background:rgba(255,255,255,.045);
+  border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:14px;margin-bottom:10px}
+.mirror .ic{font-size:20px;flex-shrink:0}
+.mirror .lab{font-size:11.5px;text-transform:uppercase;letter-spacing:.08em;color:#8f8699;margin-bottom:3px}
+.mirror .val{font-size:15.5px;font-weight:700;color:#fff}
 
-/* objecoes */
+/* depoimentos */
+.depo{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:15px;padding:15px;margin-bottom:12px}
+.depo-top{display:flex;align-items:center;gap:11px;margin-bottom:10px}
+.depo-av{width:38px;height:38px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;
+  font-weight:900;font-size:15px;color:#fff;background:linear-gradient(135deg,#ff2d78,#8b3ff5)}
+.depo-nome{font-weight:700;font-size:15px}
+.depo-meta{font-size:12px;color:#8f8699}
+.depo-val{margin-left:auto;font-weight:900;color:#3ddc84;font-size:16px;flex-shrink:0}
+.depo-txt{font-size:15px;color:#d8cee2;font-style:italic}
+
+/* calculadora */
+.calc-row{display:flex;justify-content:space-between;align-items:center;padding:13px 0;border-bottom:1px solid rgba(255,255,255,.08);font-size:15.5px}
+.calc-row:last-of-type{border-bottom:none}
+.calc-row .v{font-weight:800;color:#fff;font-variant-numeric:tabular-nums}
+.calc-total{display:flex;justify-content:space-between;align-items:center;margin-top:12px;padding-top:14px;
+  border-top:2px solid rgba(61,220,132,.35);font-size:17px;font-weight:800}
+.calc-total .v{color:#3ddc84;font-size:25px;font-variant-numeric:tabular-nums}
+
+/* timeline */
+.tl{position:relative;padding-left:30px;margin-bottom:16px}
+.tl::before{content:"";position:absolute;left:9px;top:6px;bottom:6px;width:2px;background:linear-gradient(180deg,#ff2d78,#8b3ff5)}
+.tl-item{position:relative;margin-bottom:20px}
+.tl-item::before{content:"";position:absolute;left:-26px;top:5px;width:12px;height:12px;border-radius:50%;
+  background:#ff2d78;box-shadow:0 0 0 4px rgba(255,45,120,.2)}
+.tl-when{font-size:11.5px;text-transform:uppercase;letter-spacing:.09em;color:#ff5c96;font-weight:700;margin-bottom:4px}
+.tl-what{font-size:15.5px;color:#e8dff0}
+
+/* comunidade */
+.online-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(61,220,132,.12);
+  border:1px solid rgba(61,220,132,.35);border-radius:999px;padding:7px 14px;font-size:13px;font-weight:700;margin-bottom:14px}
+.online-badge .dot{width:8px;height:8px;border-radius:50%;background:#3ddc84;box-shadow:0 0 8px #3ddc84;animation:blip 1.5s infinite}
+.msg{display:flex;gap:10px;margin-bottom:10px;opacity:0;animation:revealUp .5s forwards}
+.msg-av{width:32px;height:32px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;
+  font-weight:900;font-size:13px;color:#fff;background:linear-gradient(135deg,#8b3ff5,#ff2d78)}
+.msg-body{background:rgba(255,255,255,.06);border-radius:4px 14px 14px 14px;padding:10px 13px;font-size:14.5px;color:#e8dff0}
+.msg-nome{font-size:12px;color:#ff8ab5;font-weight:700;margin-bottom:3px}
+
+.perk{display:flex;gap:12px;align-items:flex-start;margin-bottom:14px}
+.perk .ic{font-size:22px;flex-shrink:0;line-height:1.3}
+.perk h4{font-size:16px;font-weight:800;margin-bottom:3px}
+.perk p{font-size:14.5px;color:#c4b9cf;margin:0}
+
 .obj{border-bottom:1px solid rgba(255,255,255,.09);padding:15px 0}
 .obj:last-child{border-bottom:none}
 .obj-q{font-weight:700;font-size:16px;margin-bottom:6px;color:#fff}
 .obj-a{font-size:15px;color:#c4b9cf;margin:0}
 
-/* oferta */
-.offer-card{
-  background:linear-gradient(165deg,rgba(255,45,120,.15),rgba(139,63,245,.07));
-  border:1.5px solid rgba(255,45,120,.42);
-  border-radius:21px;padding:23px 20px;margin-bottom:16px;
-  box-shadow:0 18px 50px rgba(255,45,120,.16);
-}
-.price-old{font-size:16px;color:#8f8699;text-decoration:line-through}
+.offer-card{background:linear-gradient(165deg,rgba(255,45,120,.15),rgba(139,63,245,.07));
+  border:1.5px solid rgba(255,45,120,.42);border-radius:21px;padding:23px 20px;margin-bottom:16px;
+  box-shadow:0 18px 50px rgba(255,45,120,.16)}
 .price{font-size:47px;font-weight:900;letter-spacing:-.035em;line-height:1;margin:5px 0}
 .price small{font-size:19px;font-weight:700;vertical-align:super;margin-right:2px}
 .incl{list-style:none;margin:17px 0}
-.incl li{display:flex;gap:11px;align-items:flex-start;font-size:15.5px;margin-bottom:11px;color:#e8dff0}
+.incl li{display:flex;gap:11px;align-items:flex-start;font-size:15.5px;margin-bottom:12px;color:#e8dff0}
 .incl .chk{color:#3ddc84;font-weight:900;flex-shrink:0}
+.incl b{display:block;color:#fff}
 
-.scarcity{
-  display:flex;align-items:center;gap:11px;
-  background:rgba(255,45,120,.13);border:1px solid rgba(255,45,120,.36);
-  border-radius:13px;padding:13px 15px;margin-bottom:15px;
-}
+.scarcity{display:flex;align-items:center;gap:11px;background:rgba(255,45,120,.13);
+  border:1px solid rgba(255,45,120,.36);border-radius:13px;padding:13px 15px;margin-bottom:15px}
 .scarcity .pulse{width:10px;height:10px;border-radius:50%;background:#ff2d78;flex-shrink:0;animation:pulseDot 1.3s infinite}
 @keyframes pulseDot{0%{box-shadow:0 0 0 0 rgba(255,45,120,.7)}70%{box-shadow:0 0 0 11px rgba(255,45,120,0)}100%{box-shadow:0 0 0 0 rgba(255,45,120,0)}}
 .scarcity-txt{font-size:14.5px;font-weight:600}
 .vagas-num{color:#ff5c96;font-weight:900}
+.vagas-bar{height:9px;border-radius:6px;background:rgba(255,255,255,.09);overflow:hidden;margin-top:10px}
+.vagas-fill{height:100%;width:0%;background:linear-gradient(90deg,#ff2d78,#ff5c96);transition:width 1.4s cubic-bezier(.22,1,.36,1)}
 
 .disclaimer{font-size:11.5px;color:#78707f;line-height:1.55;margin-top:22px;padding-top:16px;border-top:1px solid rgba(255,255,255,.08)}
-
-@media(max-width:400px){
-  h1{font-size:25.5px}h2{font-size:21px}p{font-size:16px}
-  .price{font-size:42px}.counter-num{font-size:36px}
-}
+@media(max-width:400px){h1{font-size:25.5px}h2{font-size:21px}p{font-size:16px}.price{font-size:42px}.big-num{font-size:48px}}
 </style>
 </head>
 <body>
@@ -291,86 +258,114 @@ strong{color:#fff}
 <div class="container">
 <button class="back-btn" id="backBtn" onclick="goBack()" style="display:none">← voltar</button>
 
-<!-- ============ 0. HOOK ============ -->
+<!-- 1. HOOK -->
 <section class="step active" id="lp" data-step="0">
   <span class="eyebrow reveal d1">só pra meninas</span>
   <h1 class="reveal d1">descubra como garotas comuns estão fazendo até <span class="money">R$8.700 por semana</span> sem sair de casa e sem acordar cedo</h1>
   <p class="lead reveal d2">elas aprenderam a criar modelos de IA tão realistas que os homens pagam pra ver.</p>
   <div class="chat reveal d3">e não, não é foto delas. é de uma mulher que <strong>não existe</strong>.</div>
-  <button class="cta reveal d4" onclick="goToStep('q1')">quero entender como funciona</button>
-  <p class="cta-sub reveal d4">leva menos de 1 minuto · conteúdo pra maiores de 18 anos</p>
+  <button class="cta reveal d4" onclick="goToStep('q_meta')">quero entender como funciona</button>
+  <p class="cta-sub reveal d4">leva 2 minutinhos · conteúdo pra maiores de 18 anos</p>
 </section>
 
-<!-- ============ 1. DESEJO ============ -->
-<section class="step" id="q1" data-step="1">
-  <span class="eyebrow reveal d1">pergunta 1 de 4</span>
+<!-- 2. META -->
+<section class="step" id="q_meta" data-step="1">
+  <span class="eyebrow reveal d1">pergunta 1 de 6</span>
   <h2 class="reveal d1">quanto entrar por semana já mudaria a sua vida?</h2>
   <p class="muted reveal d2" style="margin-bottom:20px">responde sincero, ninguém tá vendo</p>
   <div class="reveal d3">
-    <button class="opt" onclick="answer('meta','500','q2')"><span class="emo">💸</span> R$500 por semana já ajudaria muito</button>
-    <button class="opt" onclick="answer('meta','1000','q2')"><span class="emo">💰</span> R$1.000 por semana</button>
-    <button class="opt" onclick="answer('meta','2000','q2')"><span class="emo">🔥</span> R$2.000 por semana</button>
-    <button class="opt" onclick="answer('meta','5000','q2')"><span class="emo">👑</span> R$5.000 ou mais, quero mudar de vida mesmo</button>
+    <button class="opt" onclick="answer('meta','500','analise')"><span class="emo">💸</span> R$500 por semana já ajudaria muito</button>
+    <button class="opt" onclick="answer('meta','1000','analise')"><span class="emo">💰</span> R$1.000 por semana</button>
+    <button class="opt" onclick="answer('meta','2000','analise')"><span class="emo">🔥</span> R$2.000 por semana</button>
+    <button class="opt" onclick="answer('meta','5000','analise')"><span class="emo">👑</span> R$5.000 ou mais, quero mudar de vida mesmo</button>
   </div>
 </section>
 
-<!-- ============ 2. DOR: DEPENDENCIA ============ -->
-<section class="step" id="q2" data-step="2">
-  <span class="eyebrow reveal d1">pergunta 2 de 4</span>
-  <h2 class="reveal d1">amiga, vc já teve que pedir dinheiro pra alguém que vc não queria pedir?</h2>
+<!-- 3. ANALISE ANIMADA -->
+<section class="step" id="analise" data-step="2">
+  <span class="eyebrow reveal d1">calculando</span>
+  <h2 class="reveal d1">peraí que eu vou fazer uma conta rapidinho</h2>
+  <div class="card reveal d2">
+    <div class="scan-bar"><div class="scan-fill" id="scanFill"></div></div>
+    <div class="scan-line" id="sc1"><span class="mark">✓</span> vendo quantas criadoras de IA existem hoje</div>
+    <div class="scan-line" id="sc2"><span class="mark">✓</span> cruzando com a procura que tá sobrando</div>
+    <div class="scan-line" id="sc3"><span class="mark">✓</span> calculando quanto vc precisa vender</div>
+    <div class="scan-line" id="sc4"><span class="mark">✓</span> pronto</div>
+  </div>
+  <div id="analiseResult" style="display:none">
+    <div class="result-box reveal d1">
+      <div class="muted">pra vc bater <b data-bind="metaSemana" style="color:#fff"></b> por semana vc precisa de</div>
+      <div class="big-num" id="assinNum" style="margin:10px 0">0</div>
+      <div class="muted">assinantes pagando R$29,90 por mês</div>
+    </div>
+    <div class="chat reveal d2">só isso, amiga. <strong data-bind="assinantes"></strong> pessoas. e tem site com milhões de homens procurando.</div>
+    <button class="cta reveal d3" onclick="goToStep('q_dor')">continua</button>
+  </div>
+</section>
+
+<!-- 4. DOR: DEPENDENCIA -->
+<section class="step" id="q_dor" data-step="3">
+  <span class="eyebrow reveal d1">pergunta 2 de 6</span>
+  <h2 class="reveal d1">vc já teve que pedir dinheiro pra alguém que vc não queria pedir?</h2>
   <div class="reveal d3">
-    <button class="opt" onclick="answer('dor','humilhante','q3')"><span class="emo">😔</span> já, e foi humilhante</button>
-    <button class="opt" onclick="answer('dor','sempre','q3')"><span class="emo">😩</span> já, e acontece direto</button>
-    <button class="opt" onclick="answer('dor','quase','q3')"><span class="emo">😬</span> ainda não, mas tô quase</button>
-    <button class="opt" onclick="answer('dor','nunca','q3')"><span class="emo">🙏</span> nunca precisei</button>
+    <button class="opt" onclick="answer('dor','humilhante','q_trampo')"><span class="emo">😔</span> já, e foi humilhante</button>
+    <button class="opt" onclick="answer('dor','sempre','q_trampo')"><span class="emo">😩</span> já, e acontece direto</button>
+    <button class="opt" onclick="answer('dor','quase','q_trampo')"><span class="emo">😬</span> ainda não, mas tô quase</button>
+    <button class="opt" onclick="answer('dor','nunca','q_trampo')"><span class="emo">🙏</span> nunca precisei</button>
   </div>
 </section>
 
-<!-- ============ 3. DOR: TRABALHO ============ -->
-<section class="step" id="q3" data-step="3">
-  <span class="eyebrow reveal d1">pergunta 3 de 4</span>
+<!-- 5. TRABALHO -->
+<section class="step" id="q_trampo" data-step="4">
+  <span class="eyebrow reveal d1">pergunta 3 de 6</span>
   <h2 class="reveal d1">e o seu trabalho hoje, como tá?</h2>
   <div class="reveal d3">
-    <button class="opt" onclick="answer('trampo','cedo','historia')"><span class="emo">⏰</span> acordo cedo e odeio cada segundo</button>
-    <button class="opt" onclick="answer('trampo','gente','historia')"><span class="emo">🙄</span> aguento gente insuportável todo dia</button>
-    <button class="opt" onclick="answer('trampo','desempregada','historia')"><span class="emo">📉</span> tô desempregada agora</button>
-    <button class="opt" onclick="answer('trampo','estudo','historia')"><span class="emo">🚌</span> trabalho, estudo, e não sobra nada</button>
+    <button class="opt" onclick="answer('trampo','cedo','espelho')"><span class="emo">⏰</span> acordo cedo e odeio cada segundo</button>
+    <button class="opt" onclick="answer('trampo','gente','espelho')"><span class="emo">🙄</span> aguento gente insuportável todo dia</button>
+    <button class="opt" onclick="answer('trampo','desempregada','espelho')"><span class="emo">📉</span> tô desempregada agora</button>
+    <button class="opt" onclick="answer('trampo','estudo','espelho')"><span class="emo">🚌</span> trabalho, estudo, e não sobra nada</button>
   </div>
 </section>
 
-<!-- ============ 4. HISTORIA (DOR) ============ -->
-<section class="step" id="historia" data-step="4">
+<!-- 6. ESPELHO -->
+<section class="step" id="espelho" data-step="5">
+  <span class="eyebrow reveal d1">deixa eu ver se entendi</span>
+  <h2 class="reveal d1">então a sua situação hoje é essa</h2>
+  <div class="mirror reveal d2"><span class="ic">🎯</span><div><div class="lab">vc quer fazer</div><div class="val" data-bind="metaSemana"></div> <div class="lab" style="margin-top:2px">por semana</div></div></div>
+  <div class="mirror reveal d3"><span class="ic">💔</span><div><div class="lab">e hoje vc</div><div class="val" data-bind="dorTxt"></div></div></div>
+  <div class="mirror reveal d4"><span class="ic">😮‍💨</span><div><div class="lab">enquanto isso</div><div class="val" data-bind="trampoTxt"></div></div></div>
+  <div class="chat reveal d5" style="margin-top:18px">amiga, eu vou ser bem direta com vc: eu tava exatamente aí. e não faz tanto tempo assim.</div>
+  <button class="cta reveal d6" onclick="goToStep('historia')">me conta</button>
+</section>
+
+<!-- 7. HISTORIA -->
+<section class="step" id="historia" data-step="6">
   <span class="eyebrow reveal d1">a ju</span>
-  <h2 class="reveal d1">então deixa eu te contar minha história rapidinho</h2>
-  <div class="chat reveal d2">pq eu já estive exatamente onde vc tá.</div>
-  <div class="chat reveal d3">eu fui abandonada grávida pelo meu ex namorado.</div>
-  <div class="ph reveal d3">
-    <span class="ico">🖼️</span>
-    <b>[IMAGEM 1]</b>
-    <span>foto da Ju no ônibus / cansada / clima de rotina pesada</span>
-  </div>
-  <div class="chat reveal d4">acordava cedo, pegava ônibus lotado todo dia, e ainda ia pra faculdade de noite.</div>
+  <h2 class="reveal d1">minha história rapidinho</h2>
+  <div class="chat reveal d2">eu fui abandonada grávida pelo meu ex namorado.</div>
+  <div class="ph reveal d3"><span class="ico">🖼️</span><b>[IMAGEM 1]</b><span>foto da Ju no ônibus / cansada / rotina pesada</span></div>
+  <div class="chat reveal d4">acordava cedo, pegava ônibus lotado, e ainda ia pra faculdade de noite.</div>
   <div class="chat reveal d5">e mesmo assim não sobrava <strong>um puto</strong> no bolso.</div>
   <div class="chat reveal d6">enquanto isso eu tinha uma prima ganhando rios de dinheiro vendendo foto na internet.</div>
-  <button class="cta reveal d6" onclick="goToStep('virada')">e aí o que aconteceu?</button>
+  <button class="cta reveal d7" onclick="goToStep('virada')">e aí?</button>
 </section>
 
-<!-- ============ 5. A VIRADA ============ -->
-<section class="step" id="virada" data-step="5">
+<!-- 8. VIRADA -->
+<section class="step" id="virada" data-step="7">
   <span class="eyebrow reveal d1">a virada</span>
-  <h2 class="reveal d1">eu cheguei a cogitar vender foto nua também. e é aí que a história muda</h2>
-  <div class="chat reveal d2">de uma semana pra outra eu comecei a fazer <span class="money">R$2.000 toda semana</span> no mesmo site que a minha prima. privacy e onlyfans.</div>
+  <h2 class="reveal d1">eu cheguei a cogitar vender foto nua também</h2>
+  <div class="chat reveal d2">de uma semana pra outra eu comecei a fazer <span class="money">R$2.000 toda semana</span> no mesmo site que ela. privacy e onlyfans.</div>
   <div class="chat reveal d3">só que tinha uma diferença.</div>
   <div class="chat reveal d4"><strong>eu nunca vendi nenhuma foto minha. nenhuma.</strong></div>
-  <div class="chat reveal d5">pq eu aprendi a criar uma modelo de inteligência artificial. uma mulher que não existe.</div>
+  <div class="chat reveal d5">eu aprendi a criar uma modelo de inteligência artificial. uma mulher que não existe.</div>
   <div class="chat reveal d6">mesmo rosto, roupas diferentes, poses diferentes. ou melhor, sem roupa né 😏</div>
-  <button class="cta reveal d6" onclick="goToStep('demo')">me mostra isso funcionando</button>
+  <button class="cta reveal d7" onclick="goToStep('demo')">me mostra isso funcionando</button>
 </section>
 
-<!-- ============ 6. DEMONSTRACAO ============ -->
-<section class="step" id="demo" data-step="6">
+<!-- 9. DEMO -->
+<section class="step" id="demo" data-step="8">
   <span class="eyebrow reveal d1">ao vivo</span>
-  <h2 class="reveal d1">olha só como é rápido criar uma</h2>
+  <h2 class="reveal d1">olha como é rápido criar uma</h2>
   <p class="muted reveal d2" style="margin-bottom:16px">vou criar uma modelo do zero aqui na sua frente</p>
   <div class="demo-box reveal d3">
     <div class="demo-label">prompt</div>
@@ -379,36 +374,59 @@ strong{color:#fff}
       <div class="gen-img" id="genImg"></div>
       <div class="gen-noise" id="genNoise"></div>
       <div class="gen-status" id="genStatus"><span class="spinner"></span> aguardando...</div>
-      <div class="nsfw-tag" id="nsfwTag">🔒 censurado pra vc ver aqui</div>
+      <div class="nsfw-tag" id="nsfwTag">🔒 censurei pra vc ver aqui</div>
     </div>
-    <button class="sell-btn" id="sellBtn" onclick="fakeSellDemo()">💵 vender foto</button>
+    <button class="sell-btn" id="sellBtn" onclick="venderDemo()">💵 colocar à venda</button>
   </div>
   <div id="demoAfter" style="display:none">
     <div class="chat reveal d1">levou <strong>6 segundos</strong>. e essa mulher não existe.</div>
     <div class="chat reveal d2">agora imagina isso com 30 fotos, um perfil montado e o preço certo.</div>
-    <button class="cta reveal d3" onclick="goToStep('escala')">quero ver o resto</button>
+    <button class="cta reveal d3" onclick="goToStep('q_modelo')">quero criar a minha</button>
   </div>
 </section>
 
-<!-- ============ 7. ESCALA + PERGUNTA ============ -->
-<section class="step" id="escala" data-step="7">
-  <span class="eyebrow reveal d1">pergunta 4 de 4</span>
+<!-- 10. ESCOLHA DA MODELO -->
+<section class="step" id="q_modelo" data-step="9">
+  <span class="eyebrow reveal d1">pergunta 4 de 6</span>
   <h2 class="reveal d1">e o melhor: vc escolhe o público</h2>
   <div class="chat reveal d2">tem homem procurando <strong>todo</strong> tipo de mulher. e criadora de menos pra atender.</div>
   <div class="chat reveal d3">eu tenho <strong>3 modelos</strong> trabalhando pra mim agora. uma gordinha, uma baixinha, e já criei até de uma anã.</div>
-  <div class="chat reveal d4">vc não briga pelo mesmo público de um milhão de menina. vc escolhe onde tem procura e pouca gente.</div>
-  <h2 class="reveal d5" style="margin-top:24px;font-size:20px">qual vc criaria primeiro?</h2>
-  <div class="reveal d5">
-    <button class="opt" onclick="answer('modelo','loira','prova')"><span class="emo">👱‍♀️</span> uma loirinha</button>
-    <button class="opt" onclick="answer('modelo','morena','prova')"><span class="emo">👩</span> uma morena</button>
-    <button class="opt" onclick="answer('modelo','gordinha','prova')"><span class="emo">🍑</span> uma gordinha (tem MUITA procura)</button>
-    <button class="opt" onclick="answer('modelo','ruiva','prova')"><span class="emo">👩‍🦰</span> uma ruiva</button>
-    <button class="opt" onclick="answer('modelo','ju','prova')"><span class="emo">🤝</span> deixa vc escolher pra mim, Ju</button>
+  <h2 class="reveal d4" style="margin-top:24px;font-size:20px">qual vc criaria primeiro?</h2>
+  <div class="reveal d4">
+    <button class="opt" onclick="answer('modelo','loira','batismo')"><span class="emo">👱‍♀️</span> uma loirinha</button>
+    <button class="opt" onclick="answer('modelo','morena','batismo')"><span class="emo">👩</span> uma morena</button>
+    <button class="opt" onclick="answer('modelo','gordinha','batismo')"><span class="emo">🍑</span> uma gordinha (tem MUITA procura)</button>
+    <button class="opt" onclick="answer('modelo','ruiva','batismo')"><span class="emo">👩‍🦰</span> uma ruiva</button>
+    <button class="opt" onclick="answer('modelo','madura','batismo')"><span class="emo">🍷</span> uma coroa (paga MUITO bem)</button>
   </div>
 </section>
 
-<!-- ============ 8. PROVA ============ -->
-<section class="step" id="prova" data-step="8">
+<!-- 11. BATISMO DA MODELO -->
+<section class="step" id="batismo" data-step="10">
+  <span class="eyebrow reveal d1">sua modelo</span>
+  <h2 class="reveal d1">então vamos criar a sua <span data-bind="modeloTxt"></span> agora</h2>
+  <p class="reveal d2">dá um nome pra ela. esse vai ser o nome do perfil que vai te pagar todo mês.</p>
+  <div class="reveal d3" id="batismoForm">
+    <input class="name-input" id="nomeModelo" placeholder="ex: Manu, Bibi, Lari..." maxlength="18" />
+    <button class="cta" onclick="batizar()">criar a <span data-bind="modeloTxt"></span></button>
+  </div>
+  <div id="batismoAfter" style="display:none">
+    <div class="demo-box reveal d1" style="margin-top:18px">
+      <div class="demo-label">gerando <span data-bind="nomeModelo"></span></div>
+      <div class="gen-area">
+        <div class="gen-img v2" id="genImg2"></div>
+        <div class="gen-status" id="genStatus2"><span class="spinner"></span> criando...</div>
+        <div class="nsfw-tag" id="nsfwTag2">🔒 censurado</div>
+      </div>
+    </div>
+    <div class="chat reveal d2"><strong data-bind="nomeModelo"></strong> tá pronta. agora ela é sua, e ela não existe em lugar nenhum do mundo.</div>
+    <div class="chat reveal d3">é ela que vai trabalhar por vc enquanto vc dorme 💗</div>
+    <button class="cta reveal d4" onclick="goToStep('prova_ju')">e quanto ela pode me pagar?</button>
+  </div>
+</section>
+
+<!-- 12. PROVA DA JU -->
+<section class="step" id="prova_ju" data-step="11">
   <span class="eyebrow reveal d1">quanto entra</span>
   <h2 class="reveal d1">já faz 4 meses que eu vivo só disso</h2>
   <div class="counter-box reveal d2">
@@ -416,65 +434,166 @@ strong{color:#fff}
     <div class="counter-lab">faturado nos últimos 30 dias</div>
   </div>
   <div class="chat reveal d3">4 meses que eu larguei meu emprego. nunca mais acordei cedo, nunca mais olhei preço de nada.</div>
-  <div class="ph reveal d3">
-    <span class="ico">📸</span>
-    <b>[PRINT 1 e 2]</b>
-    <span>prints reais dos seus saques / extrato da plataforma</span>
-  </div>
-  <div class="chat reveal d4">ninguém faz a mínima ideia do meu nome de verdade. nem do meu rosto. e ninguém precisa saber de onde vem esse dinheiro.</div>
-  <h2 class="reveal d5" style="margin-top:26px;font-size:20px">e não é só comigo</h2>
-  <p class="reveal d5">as meninas que aplicaram o passo a passo costumam fazer <span class="money">mais de R$1.000 no primeiro mês</span>. algumas já na primeira semana viram os primeiros R$400, R$600 cair.</p>
-  <div class="ph reveal d5">
-    <span class="ico">💬</span>
-    <b>[PRINTS DAS ALUNAS]</b>
-    <span>prints reais dos depoimentos e resultados que vc já recebeu</span>
-  </div>
-  <button class="cta reveal d6" onclick="goToStep('objecao')">como eu começo?</button>
+  <div class="ph reveal d3"><span class="ico">📸</span><b>[PRINT 1 — SAQUES]</b><span>print real do seu extrato / saques da plataforma</span></div>
+  <div class="ph reveal d4 sm"><span class="ico">📱</span><b>[PRINT 2 — DASHBOARD]</b><span>print do painel de ganhos do privacy</span></div>
+  <div class="chat reveal d5">ninguém faz a mínima ideia do meu nome de verdade. nem do meu rosto. e ninguém precisa saber de onde vem esse dinheiro.</div>
+  <button class="cta reveal d6" onclick="goToStep('q_medo')">e se eu não conseguir?</button>
 </section>
 
-<!-- ============ 9. OBJECOES ============ -->
-<section class="step" id="objecao" data-step="9">
-  <span class="eyebrow reveal d1">antes que vc pergunte</span>
-  <h2 class="reveal d1">as dúvidas que toda menina me manda</h2>
+<!-- 13. MEDO -->
+<section class="step" id="q_medo" data-step="12">
+  <span class="eyebrow reveal d1">pergunta 5 de 6</span>
+  <h2 class="reveal d1">o que mais te faria desistir de tentar?</h2>
+  <p class="muted reveal d2" style="margin-bottom:20px">fala a real, eu já ouvi todas</p>
+  <div class="reveal d3">
+    <button class="opt" onclick="answer('medo','descobrir','quebra')"><span class="emo">🙈</span> medo de alguém descobrir que sou eu</button>
+    <button class="opt" onclick="answer('medo','tecnologia','quebra')"><span class="emo">🤯</span> não sei nada de IA, acho que não consigo</button>
+    <button class="opt" onclick="answer('medo','naodacerto','quebra')"><span class="emo">😕</span> medo de não dar certo e perder dinheiro</button>
+    <button class="opt" onclick="answer('medo','tempo','quebra')"><span class="emo">⏳</span> acho que não tenho tempo</button>
+    <button class="opt" onclick="answer('medo','julgamento','quebra')"><span class="emo">😳</span> medo de ser julgada</button>
+  </div>
+</section>
+
+<!-- 14. QUEBRA DO MEDO -->
+<section class="step" id="quebra" data-step="13">
+  <span class="eyebrow reveal d1">sobre isso</span>
+  <h2 class="reveal d1" data-bind="medoTitulo"></h2>
+  <div class="chat reveal d2" data-bind="medoResp1"></div>
+  <div class="chat reveal d3" data-bind="medoResp2"></div>
+  <div class="chat reveal d4">e vc não vai fazer isso sozinha. tem um monte de menina lá dentro que começou com esse mesmo medo.</div>
+  <button class="cta reveal d5" onclick="goToStep('depoimentos')">quero ver essas meninas</button>
+</section>
+
+<!-- 15. DEPOIMENTOS PERSONALIZADOS -->
+<section class="step" id="depoimentos" data-step="14">
+  <span class="eyebrow reveal d1">meninas da comunidade</span>
+  <h2 class="reveal d1">olha as que começaram querendo <span data-bind="metaSemana"></span> por semana igual vc</h2>
+  <p class="muted reveal d2" style="margin-bottom:16px">esses são os resultados da <strong>primeira semana</strong> delas</p>
+  <div id="depoWrap" class="reveal d3"></div>
+  <div class="ph reveal d5"><span class="ico">💬</span><b>[PRINTS DOS DEPOIMENTOS]</b><span>prints reais das conversas e resultados dessas meninas</span></div>
+  <div class="chat reveal d6">e olha que nenhuma delas sabia nada disso antes. nenhuma.</div>
+  <button class="cta reveal d6" onclick="goToStep('matematica')">quero fazer as contas</button>
+</section>
+
+<!-- 16. A CONTA -->
+<section class="step" id="matematica" data-step="15">
+  <span class="eyebrow reveal d1">a conta</span>
+  <h2 class="reveal d1">deixa eu te mostrar como fecha <span data-bind="metaSemana"></span> por semana</h2>
   <div class="card reveal d2">
-    <div class="obj"><div class="obj-q">preciso aparecer em alguma foto?</div><p class="obj-a">não. nenhuma. em nenhum momento. o rosto que vai no perfil é gerado do zero.</p></div>
-    <div class="obj"><div class="obj-q">isso é permitido?</div><p class="obj-a">é. o privacy tem a categoria oficial de criadora de IA. vc marca lá e tá tudo certo. pouca gente usa pq pouca gente sabe que existe.</p></div>
-    <div class="obj"><div class="obj-q">preciso saber mexer com inteligência artificial?</div><p class="obj-a">zero. o passo a passo é clicar onde eu mando clicar. tem menina de 40 anos na comunidade que não sabia nem usar canva.</p></div>
-    <div class="obj"><div class="obj-q">alguém pode descobrir quem eu sou?</div><p class="obj-a">descobrir como? a menina do perfil não existe. não tem foto sua, não tem rosto seu, não tem nada seu.</p></div>
-    <div class="obj"><div class="obj-q">quanto tempo toma por semana?</div><p class="obj-a">eu crio as imagens uma vez na semana e depois só vou postando e vendendo no privado. configura uma vez e replica.</p></div>
+    <div class="calc-row"><span>assinantes no perfil</span><span class="v" data-bind="calcAssin"></span></div>
+    <div class="calc-row"><span>assinatura mensal</span><span class="v">R$ 29,90</span></div>
+    <div class="calc-row"><span>packs vendidos no privado</span><span class="v" data-bind="calcPacks"></span></div>
+    <div class="calc-row"><span>valor médio do pack</span><span class="v">R$ 80,00</span></div>
+    <div class="calc-total"><span>por mês</span><span class="v" data-bind="calcTotal"></span></div>
   </div>
-  <button class="cta reveal d4" onclick="goToStep('oferta')">beleza, quero entrar</button>
+  <div class="chat reveal d3">e isso é com <strong>uma</strong> modelo só. eu tenho três.</div>
+  <div class="chat reveal d4">quer dobrar? cria outra. o trabalho é o mesmo, vc só replica o que já funciona.</div>
+  <button class="cta reveal d5" onclick="goToStep('q_sonho')">continua</button>
 </section>
 
-<!-- ============ 10. OFERTA ============ -->
-<section class="step" id="oferta" data-step="10">
+<!-- 17. O SONHO -->
+<section class="step" id="q_sonho" data-step="16">
+  <span class="eyebrow reveal d1">pergunta 6 de 6</span>
+  <h2 class="reveal d1">a primeira coisa que vc faria com esse dinheiro?</h2>
+  <div class="reveal d3">
+    <button class="opt" onclick="answer('sonho','sair','projecao')"><span class="emo">🚪</span> pedir demissão do meu trabalho</button>
+    <button class="opt" onclick="answer('sonho','dividas','projecao')"><span class="emo">🧾</span> pagar todas as minhas dívidas</button>
+    <button class="opt" onclick="answer('sonho','casa','projecao')"><span class="emo">🏠</span> sair da casa em que eu tô</button>
+    <button class="opt" onclick="answer('sonho','filho','projecao')"><span class="emo">👶</span> dar tudo pro meu filho</button>
+    <button class="opt" onclick="answer('sonho','viver','projecao')"><span class="emo">✈️</span> viajar e comprar o que eu quiser</button>
+  </div>
+</section>
+
+<!-- 18. PROJECAO 90 DIAS -->
+<section class="step" id="projecao" data-step="17">
+  <span class="eyebrow reveal d1">se vc começar hoje</span>
+  <h2 class="reveal d1">olha como seriam os seus próximos 90 dias</h2>
+  <div class="reveal d2">
+    <div class="tl">
+      <div class="tl-item"><div class="tl-when">hoje à noite</div><div class="tl-what"><strong data-bind="nomeModelo"></strong> tá criada e o perfil dela tá no ar</div></div>
+      <div class="tl-item"><div class="tl-when">essa semana</div><div class="tl-what">vc posta nas comunidades certas e vêm os primeiros assinantes</div></div>
+      <div class="tl-item"><div class="tl-when">primeiro mês</div><div class="tl-what">vc faz o seu primeiro saque. as meninas costumam passar de <span class="money">R$1.000</span></div></div>
+      <div class="tl-item"><div class="tl-when">segundo mês</div><div class="tl-what">vc cria a segunda modelo e dobra sem dobrar o trabalho</div></div>
+      <div class="tl-item"><div class="tl-when">em 90 dias</div><div class="tl-what" data-bind="sonhoTxt"></div></div>
+    </div>
+  </div>
+  <div class="chat reveal d4">e o mais louco: ninguém na sua vida precisa saber de nada disso.</div>
+  <button class="cta reveal d5" onclick="goToStep('comunidade')">como eu entro?</button>
+</section>
+
+<!-- 19. O CLUBE -->
+<section class="step" id="comunidade" data-step="18">
   <span class="eyebrow reveal d1">comunidade da ju</span>
-  <h2 class="reveal d1">o passo a passo completo tá tudo aqui dentro</h2>
+  <h2 class="reveal d1">isso aqui não é curso. é um clube fechado de meninas</h2>
+  <div class="online-badge reveal d2"><span class="dot"></span> <span id="onlineNum">0</span> meninas online agora</div>
+  <div class="perk reveal d2"><span class="ic">🕵️‍♀️</span><div><h4>vc entra anônima</h4><p>vc escolhe um apelido. ninguém lá dentro sabe seu nome, seu rosto, nem sua cidade. nem eu preciso saber.</p></div></div>
+  <div class="perk reveal d3"><span class="ic">💸</span><div><h4>a gente mostra os ganhos</h4><p>todo dia tem menina postando print do que entrou. vc vê exatamente o que tá funcionando e copia.</p></div></div>
+  <div class="perk reveal d4"><span class="ic">🔄</span><div><h4>estratégia atualizada toda semana</h4><p>o que funciona hoje muda rápido. quando muda, eu aviso lá dentro no mesmo dia. quem tá fora fica pra trás.</p></div></div>
+  <div class="perk reveal d5"><span class="ic">🤝</span><div><h4>ninguém compete com ninguém</h4><p>cada uma pega um nicho diferente. a gente se ajuda, troca prompt, troca comunidade boa pra postar.</p></div></div>
+  <button class="cta reveal d6" onclick="goToStep('dentro')">quero ver como é lá dentro</button>
+</section>
+
+<!-- 20. DENTRO DA COMUNIDADE -->
+<section class="step" id="dentro" data-step="19">
+  <span class="eyebrow reveal d1">bastidores</span>
+  <h2 class="reveal d1">um pedacinho do que rola lá dentro</h2>
+  <div class="card reveal d2" id="chatWrap" style="min-height:230px"></div>
+  <div class="ph reveal d5"><span class="ico">📲</span><b>[PRINTS DA COMUNIDADE]</b><span>prints reais do grupo: meninas comemorando, tirando dúvida, postando ganho</span></div>
+  <div class="chat reveal d6">é isso todo dia. e é por isso que quem entra não sai.</div>
+  <button class="cta reveal d6" onclick="goToStep('urgencia')">quero entrar</button>
+</section>
+
+<!-- 21. JANELA -->
+<section class="step" id="urgencia" data-step="20">
+  <span class="eyebrow reveal d1">por que agora</span>
+  <h2 class="reveal d1">e por que eu tô te falando isso hoje</h2>
+  <div class="chat reveal d2">isso aqui tá fácil <strong>porque quase ninguém sabe fazer</strong>.</div>
+  <div class="chat reveal d3">criar uma modelo que parece de verdade é difícil. a maioria tenta e sai aquela coisa esquisita de IA que ninguém paga.</div>
+  <div class="chat reveal d4">com a ferramenta certa e o método certo, é fácil. configura uma vez e replica pra sempre.</div>
+  <div class="chat reveal d5">mas todo mundo vai descobrir isso em algum momento. e aí vai ter criadora de IA demais e vai ficar igual todo o resto.</div>
+  <div class="chat reveal d6">quem entrar agora pega o mercado vazio. daqui a um ano vc vai olhar pra trás e pensar "pqp, era só ter começado".</div>
+  <button class="cta reveal d7" onclick="goToStep('oferta')">não quero ficar de fora</button>
+</section>
+
+<!-- 22. OFERTA -->
+<section class="step" id="oferta" data-step="21">
+  <span class="eyebrow reveal d1">sua vaga</span>
+  <h2 class="reveal d1">tudo que vc precisa tá dentro da comunidade da Ju</h2>
   <div class="offer-card reveal d2">
     <ul class="incl">
-      <li><span class="chk">✓</span> qual ferramenta usar (e a configuração exata)</li>
-      <li><span class="chk">✓</span> o método pra criar modelos realistas de verdade</li>
-      <li><span class="chk">✓</span> como manter o mesmo rosto em todas as fotos</li>
-      <li><span class="chk">✓</span> como criar e marcar o perfil nas plataformas</li>
-      <li><span class="chk">✓</span> em quais comunidades postar pra pegar os primeiros assinantes</li>
-      <li><span class="chk">✓</span> do zero até o seu primeiro saque</li>
-      <li><span class="chk">✓</span> a comunidade só de meninas, pra tirar dúvida e trocar resultado</li>
+      <li><span class="chk">✓</span><span><b>o passo a passo do zero ao primeiro saque</b>qual ferramenta usar e a configuração exata que eu uso</span></li>
+      <li><span class="chk">✓</span><span><b>o método das modelos realistas</b>o segredo de manter o mesmo rosto em todas as fotos</span></li>
+      <li><span class="chk">✓</span><span><b>como criar e marcar o perfil</b>certinho como criadora de IA, sem risco de bloqueio</span></li>
+      <li><span class="chk">✓</span><span><b>as comunidades certas pra postar</b>onde pegar os primeiros assinantes na primeira semana</span></li>
+      <li><span class="chk">✓</span><span><b>o clube fechado, e vc entra anônima</b>com apelido. ninguém sabe quem vc é, nem eu</span></li>
+      <li><span class="chk">✓</span><span><b>ganhos e estratégias compartilhadas todo dia</b>vc vê o que tá funcionando agora e copia</span></li>
+      <li><span class="chk">✓</span><span><b>atualização toda vez que o jogo muda</b>vc nunca fica pra trás</span></li>
     </ul>
-    <div style="text-align:center;margin-top:20px">
+    <div class="center" style="margin-top:22px">
       <div class="muted">taxa de entrada hoje</div>
       <div class="price"><small>R$</small>97</div>
-      <div class="muted">acesso imediato</div>
+      <div class="muted">pagamento único · acesso imediato</div>
     </div>
     <button class="cta" onclick="goToCheckout()">entrar na comunidade da Ju</button>
     <p class="cta-sub">vc cai direto no grupo depois do pagamento</p>
   </div>
   <div class="scarcity reveal d3">
     <span class="pulse"></span>
-    <span class="scarcity-txt">restam <span class="vagas-num" id="vagas">14</span> vagas nessa turma. depois disso o preço sobe.</span>
+    <div style="flex:1">
+      <div class="scarcity-txt">restam <span class="vagas-num" id="vagas">14</span> vagas nessa turma</div>
+      <div class="vagas-bar"><div class="vagas-fill" id="vagasFill"></div></div>
+    </div>
   </div>
   <div class="chat reveal d4">e não me entenda mal. vc mesma viu quanto dinheiro entra com isso. se eu ensinasse de graça eu ia só aumentar a minha concorrência, né?</div>
   <div class="chat reveal d5">então a barreira tem que existir. mas R$97 não é nada perto do que vc tira já no primeiro mês.</div>
-  <div class="chat reveal d5">te vejo lá dentro, amiga 💗</div>
+  <div class="card reveal d5" style="margin-top:16px">
+    <div class="obj"><div class="obj-q">preciso aparecer em alguma foto?</div><p class="obj-a">nenhuma. em nenhum momento. o rosto do perfil é gerado do zero.</p></div>
+    <div class="obj"><div class="obj-q">isso é permitido?</div><p class="obj-a">é. o privacy tem a categoria oficial de criadora de IA. vc marca lá e tá tudo certo.</p></div>
+    <div class="obj"><div class="obj-q">preciso saber mexer com IA?</div><p class="obj-a">zero. é clicar onde eu mando clicar. tem menina lá que não sabia nem usar canva.</p></div>
+    <div class="obj"><div class="obj-q">quanto tempo toma?</div><p class="obj-a">eu crio as imagens uma vez por semana e depois só posto e vendo no privado.</p></div>
+  </div>
+  <button class="cta reveal d6" onclick="goToCheckout()">quero minha vaga por R$97</button>
+  <p class="cta-sub reveal d6">te vejo lá dentro, amiga 💗</p>
   <p class="disclaimer">os resultados citados são reais e foram obtidos pela criadora do método e por alunas da comunidade. eles não representam garantia de ganho: o resultado de cada pessoa depende de aplicação, dedicação e do mercado. conteúdo destinado exclusivamente a maiores de 18 anos. o método ensina criação de personagens de inteligência artificial, sem uso de imagem de pessoas reais, e orienta a identificação do perfil como criadora de IA conforme as regras das plataformas.</p>
 </section>
 
@@ -482,45 +601,169 @@ strong{color:#fff}
 
 <script>
 /* ==========================================================
-   CONFIGURE AQUI  (troque pelos seus dados reais)
+   CONFIGURE AQUI
    ========================================================== */
-const CHECKOUT_URL = "https://SEU-CHECKOUT-AQUI.com";
+const CHECKOUT_URL   = "https://SEU-CHECKOUT-AQUI.com";
+const FATURAMENTO_30D = 34900;   // seu faturamento real dos ultimos 30 dias
+const VAGAS_TOTAL     = 50;      // tamanho da turma
+const VAGAS_RESTANTES = 14;      // feche a turma de verdade quando zerar
+const MEMBROS_ONLINE  = 87;      // numero real aproximado de gente ativa na comunidade
 
-// valor real faturado nos ultimos 30 dias (aparece no contador animado)
-const FATURAMENTO_30D = 34900;
-
-// vagas restantes na turma. feche a turma de verdade quando chegar a zero.
-const VAGAS_RESTANTES = 14;
-
-// FEED DE VENDAS: preencha com vendas reais suas / das alunas.
-// e o texto do rotulo ja deixa claro que sao vendas do metodo, nao "ao vivo agora".
+// feed de vendas: troque pelas suas vendas reais
 const VENDAS = [
-  ["Camila", "R$ 47,00", "há 2 min"],
-  ["assinante novo", "R$ 29,90", "há 5 min"],
-  ["Bruna", "R$ 89,00", "há 8 min"],
-  ["pack vendido no privado", "R$ 150,00", "há 12 min"],
-  ["Rafa", "R$ 34,90", "há 15 min"],
-  ["assinatura renovada", "R$ 29,90", "há 21 min"],
-  ["Duda", "R$ 74,00", "há 26 min"],
-  ["pack personalizado", "R$ 220,00", "há 33 min"]
+  ["Camila","R$ 47,00","há 2 min"],
+  ["assinante novo","R$ 29,90","há 5 min"],
+  ["Bruna","R$ 89,00","há 8 min"],
+  ["pack vendido no privado","R$ 150,00","há 12 min"],
+  ["Rafa","R$ 34,90","há 15 min"],
+  ["assinatura renovada","R$ 29,90","há 21 min"],
+  ["Duda","R$ 74,00","há 26 min"],
+  ["pack personalizado","R$ 220,00","há 33 min"]
 ];
+
+// DEPOIMENTOS POR FAIXA DE META  <<< TROQUE PELOS REAIS
+// a menina so ve os depoimentos da faixa que ela escolheu.
+const DEPOIMENTOS = {
+  "500": [
+    {nome:"[NOME]", meta:"queria R$500/sem", valor:"R$ 410", txt:"[cole aqui o depoimento real dela sobre a primeira semana]"},
+    {nome:"[NOME]", meta:"queria R$500/sem", valor:"R$ 630", txt:"[depoimento real]"},
+    {nome:"[NOME]", meta:"queria R$500/sem", valor:"R$ 380", txt:"[depoimento real]"}
+  ],
+  "1000": [
+    {nome:"[NOME]", meta:"queria R$1.000/sem", valor:"R$ 890", txt:"[depoimento real]"},
+    {nome:"[NOME]", meta:"queria R$1.000/sem", valor:"R$ 1.140", txt:"[depoimento real]"},
+    {nome:"[NOME]", meta:"queria R$1.000/sem", valor:"R$ 720", txt:"[depoimento real]"}
+  ],
+  "2000": [
+    {nome:"[NOME]", meta:"queria R$2.000/sem", valor:"R$ 1.560", txt:"[depoimento real]"},
+    {nome:"[NOME]", meta:"queria R$2.000/sem", valor:"R$ 2.230", txt:"[depoimento real]"},
+    {nome:"[NOME]", meta:"queria R$2.000/sem", valor:"R$ 1.890", txt:"[depoimento real]"}
+  ],
+  "5000": [
+    {nome:"[NOME]", meta:"queria R$5.000/sem", valor:"R$ 3.400", txt:"[depoimento real]"},
+    {nome:"[NOME]", meta:"queria R$5.000/sem", valor:"R$ 4.900", txt:"[depoimento real]"},
+    {nome:"[NOME]", meta:"queria R$5.000/sem", valor:"R$ 2.750", txt:"[depoimento real]"}
+  ]
+};
+
+// MENSAGENS DO GRUPO  <<< TROQUE POR MENSAGENS REAIS DA SUA COMUNIDADE
+const MENSAGENS = [
+  {nome:"[apelido]", txt:"[mensagem real do grupo]"},
+  {nome:"[apelido]", txt:"[mensagem real do grupo]"},
+  {nome:"[apelido]", txt:"[mensagem real do grupo]"},
+  {nome:"Ju", txt:"[sua resposta no grupo]"}
+];
+
+/* ==========================================================
+   TABELAS DE PERSONALIZACAO
+   ========================================================== */
+const FAIXAS = {
+  "500":  {label:"R$500",   semana:500},
+  "1000": {label:"R$1.000", semana:1000},
+  "2000": {label:"R$2.000", semana:2000},
+  "5000": {label:"R$5.000", semana:5000}
+};
+
+const DOR_TXT = {
+  humilhante:"já passou humilhação pra pedir dinheiro",
+  sempre:"vive dependendo de dinheiro dos outros",
+  quase:"tá quase tendo que pedir ajuda",
+  nunca:"ainda não precisou pedir, e quer que continue assim"
+};
+
+const TRAMPO_TXT = {
+  cedo:"acorda cedo pra um trabalho que vc odeia",
+  gente:"aguenta gente insuportável todo santo dia",
+  desempregada:"tá sem emprego agora",
+  estudo:"trabalha, estuda, e não sobra nada"
+};
+
+const MODELO_TXT = {
+  loira:"loirinha", morena:"morena", gordinha:"gordinha",
+  ruiva:"ruiva", madura:"coroa"
+};
+
+const MEDOS = {
+  descobrir:{
+    t:"medo de descobrirem que é vc?",
+    a:"amiga, descobrir o quê? a menina do perfil não existe. não tem foto sua, não tem rosto seu, não tem nada seu ali.",
+    b:"eu faço isso há 4 meses e nem a minha própria mãe sabe. o rosto que aparece nunca pisou no mundo."
+  },
+  tecnologia:{
+    t:"acha que não vai conseguir mexer?",
+    a:"eu não sabia nada. NADA. eu mal sabia mexer no instagram direito.",
+    b:"o passo a passo é literalmente clicar onde eu mando clicar. tem menina de 40 e poucos anos lá dentro que nunca tinha usado nem canva."
+  },
+  naodacerto:{
+    t:"medo de não dar certo?",
+    a:"olha, eu não vou te prometer que vc vai ficar rica. quem promete isso tá te vendendo sonho.",
+    b:"mas vc sabe que conteúdo adulto vende. isso não é teoria, é o mercado mais antigo que existe. o que muda é que agora vc não precisa ser vc na foto."
+  },
+  tempo:{
+    t:"acha que não tem tempo?",
+    a:"eu crio as imagens uma vez na semana. depois é só ir postando e respondendo no privado.",
+    b:"tem menina lá dentro que faz tudo no ônibus, indo pro trabalho. dá pra tocar no tempo que vc tiver."
+  },
+  julgamento:{
+    t:"medo de ser julgada?",
+    a:"julgada por quem, amiga? ninguém sabe. vc não aparece em lugar nenhum dessa história.",
+    b:"e dentro da comunidade vc entra com apelido. nem as outras meninas sabem seu nome de verdade."
+  }
+};
+
+const SONHO_TXT = {
+  sair:"vc pede demissão sem medo, porque já tem entrada fixa todo mês",
+  dividas:"vc quita as dívidas que hoje te tiram o sono",
+  casa:"vc junta o suficiente pra sair da casa em que vc tá",
+  filho:"vc dá pro seu filho o que hoje vc não consegue dar",
+  viver:"vc viaja e compra o que quiser sem olhar preço"
+};
 
 /* ==========================================================
    ESTADO E NAVEGACAO
    ========================================================== */
 const state = {};
-const order = ["lp","q1","q2","q3","historia","virada","demo","escala","prova","objecao","oferta"];
+const order = ["lp","q_meta","analise","q_dor","q_trampo","espelho","historia","virada","demo",
+               "q_modelo","batismo","prova_ju","q_medo","quebra","depoimentos","matematica",
+               "q_sonho","projecao","comunidade","dentro","urgencia","oferta"];
 let current = "lp";
 let toastTimer = null;
 
-function saveState(){
-  try{ localStorage.setItem("quiz_ju", JSON.stringify(state)); }catch(e){}
+function saveState(){ try{ localStorage.setItem("quiz_ju", JSON.stringify(state)); }catch(e){} }
+
+function bind(chave, valor){
+  document.querySelectorAll('[data-bind="'+chave+'"]').forEach(el=>{ el.textContent = valor; });
+}
+
+function personalizar(){
+  if(state.meta){
+    const f = FAIXAS[state.meta];
+    bind("metaSemana", f.label);
+    const mensal   = f.semana * 4;
+    const assinPuro = Math.round(mensal / 29.9);
+    bind("assinantes", assinPuro);
+    // mix: 55% assinatura + 45% pack no privado
+    const assin = Math.round((mensal * .55) / 29.9);
+    const packs = Math.round((mensal * .45) / 80);
+    const total = assin * 29.9 + packs * 80;
+    bind("calcAssin", assin);
+    bind("calcPacks", packs + " por mês");
+    bind("calcTotal", "R$ " + Math.round(total).toLocaleString("pt-BR"));
+  }
+  if(state.dor)    bind("dorTxt", DOR_TXT[state.dor]);
+  if(state.trampo) bind("trampoTxt", TRAMPO_TXT[state.trampo]);
+  if(state.modelo) bind("modeloTxt", MODELO_TXT[state.modelo]);
+  if(state.sonho)  bind("sonhoTxt", SONHO_TXT[state.sonho]);
+  if(state.nomeModelo) bind("nomeModelo", state.nomeModelo);
+  if(state.medo){
+    const m = MEDOS[state.medo];
+    bind("medoTitulo", m.t); bind("medoResp1", m.a); bind("medoResp2", m.b);
+  }
 }
 
 function updateProgress(id){
   const i = order.indexOf(id);
-  const pct = (i / (order.length - 1)) * 100;
-  document.getElementById("pbar").style.width = pct + "%";
+  document.getElementById("pbar").style.width = (i/(order.length-1))*100 + "%";
   document.getElementById("backBtn").style.display = i > 0 ? "inline-flex" : "none";
 }
 
@@ -528,49 +771,33 @@ function goToStep(id, push){
   const cur = document.querySelector(".step.active");
   if(cur) cur.classList.remove("active");
   const nxt = document.getElementById(id);
+  personalizar();
   nxt.classList.add("active");
   current = id;
   updateProgress(id);
   window.scrollTo({top:0,behavior:"instant"});
+  nxt.querySelectorAll(".reveal").forEach(el=>{ el.style.animation="none"; void el.offsetWidth; el.style.animation=""; });
+  if(push !== false){ try{ history.pushState({step:id},"","#"+id); }catch(e){} }
+  if(typeof fbq === "function") fbq("trackCustom","QuizStep",{step:id,index:order.indexOf(id)});
 
-  // reinicia as animacoes de entrada em cascata
-  nxt.querySelectorAll(".reveal").forEach(el=>{
-    el.style.animation = "none";
-    void el.offsetWidth;
-    el.style.animation = "";
-  });
-
-  if(push !== false){
-    try{ history.pushState({step:id}, "", "#" + id); }catch(e){}
-  }
-
-  if(typeof fbq === "function"){
-    fbq("trackCustom","QuizStep",{step:id, index:order.indexOf(id)});
-  }
-
-  // gatilhos por etapa
   stopToasts();
-  if(id === "demo") runDemo();
-  if(id === "prova"){ animateCounter(); startToasts(2600); }
-  if(id === "oferta"){ startToasts(6000); }
-  if(id === "oferta" && typeof fbq === "function") fbq("track","InitiateCheckout");
+  if(id === "analise")     rodarAnalise();
+  if(id === "demo")        rodarDemo();
+  if(id === "prova_ju")   { animarContador(); startToasts(2600); }
+  if(id === "depoimentos") montarDepoimentos();
+  if(id === "comunidade")  animarOnline();
+  if(id === "dentro")      montarChat();
+  if(id === "oferta")     { animarVagas(); startToasts(6500);
+                            if(typeof fbq === "function") fbq("track","InitiateCheckout"); }
 }
 
-function goBack(){
-  const i = order.indexOf(current);
-  if(i > 0) goToStep(order[i-1]);
-}
-
-window.addEventListener("popstate", e=>{
-  if(e.state && e.state.step) goToStep(e.state.step, false);
-});
+function goBack(){ const i = order.indexOf(current); if(i>0) goToStep(order[i-1]); }
+window.addEventListener("popstate", e=>{ if(e.state && e.state.step) goToStep(e.state.step,false); });
 
 function answer(key, value, next){
   state[key] = value;
   saveState();
-  if(event && event.currentTarget){
-    event.currentTarget.classList.add("picked");
-  }
+  if(window.event && window.event.currentTarget) window.event.currentTarget.classList.add("picked");
   setTimeout(()=>{
     document.querySelectorAll(".opt.picked").forEach(o=>o.classList.remove("picked"));
     goToStep(next);
@@ -579,123 +806,162 @@ function answer(key, value, next){
 
 function goToCheckout(){
   if(typeof fbq === "function") fbq("track","AddToCart");
-  const q = new URLSearchParams(state).toString();
-  window.location.href = CHECKOUT_URL + (q ? "?" + q : "");
+  window.location.href = CHECKOUT_URL + "?" + new URLSearchParams(state).toString();
 }
 
-/* ==========================================================
-   DEMO DE GERACAO
-   ========================================================== */
+/* ============ ANALISE ANIMADA ============ */
+let analiseRan = false;
+function rodarAnalise(){
+  if(analiseRan) return; analiseRan = true;
+  const fill = document.getElementById("scanFill");
+  const ids = ["sc1","sc2","sc3","sc4"];
+  let p = 0;
+  const t = setInterval(()=>{ p += 4; fill.style.width = Math.min(p,100) + "%"; if(p>=100) clearInterval(t); }, 90);
+  ids.forEach((id,i)=> setTimeout(()=> document.getElementById(id).classList.add("on"), 600 + i*620));
+  setTimeout(()=>{
+    document.getElementById("analiseResult").style.display = "block";
+    const mensal = FAIXAS[state.meta].semana * 4;
+    contarAte(document.getElementById("assinNum"), Math.round(mensal/29.9), 1500, "");
+  }, 3100);
+}
+
+function contarAte(el, alvo, dur, prefixo){
+  const t0 = performance.now();
+  (function frame(t){
+    const p = Math.min((t-t0)/dur, 1);
+    const eased = 1 - Math.pow(1-p, 3);
+    el.textContent = prefixo + Math.floor(alvo*eased).toLocaleString("pt-BR");
+    if(p<1) requestAnimationFrame(frame);
+  })(performance.now());
+}
+
+/* ============ DEMO ============ */
 const PROMPT_TXT = "photorealistic brazilian woman, 22yo, blonde, bedroom, soft window light, 85mm, ultra detailed skin --nsfw";
 let demoRan = false;
-
-function runDemo(){
-  if(demoRan) return;
-  demoRan = true;
-
-  const line   = document.getElementById("promptLine");
-  const img    = document.getElementById("genImg");
-  const noise  = document.getElementById("genNoise");
-  const status = document.getElementById("genStatus");
-  const tag    = document.getElementById("nsfwTag");
-  const sell   = document.getElementById("sellBtn");
-
+function rodarDemo(){
+  if(demoRan) return; demoRan = true;
+  const line=document.getElementById("promptLine"), img=document.getElementById("genImg"),
+        noise=document.getElementById("genNoise"), status=document.getElementById("genStatus"),
+        tag=document.getElementById("nsfwTag"), sell=document.getElementById("sellBtn");
   line.innerHTML = '<span id="ptxt"></span><span class="caret"></span>';
   const ptxt = document.getElementById("ptxt");
   let i = 0;
-
   const type = setInterval(()=>{
-    ptxt.textContent = PROMPT_TXT.slice(0, ++i);
-    if(i >= PROMPT_TXT.length){
-      clearInterval(type);
-      setTimeout(gerar, 320);
-    }
+    ptxt.textContent = PROMPT_TXT.slice(0,++i);
+    if(i >= PROMPT_TXT.length){ clearInterval(type); setTimeout(gerar,320); }
   }, 17);
-
   function gerar(){
     status.innerHTML = '<span class="spinner"></span> gerando imagem...';
     noise.classList.add("on");
-    setTimeout(()=>{ status.innerHTML = '<span class="spinner"></span> renderizando pele e luz...'; }, 1400);
+    setTimeout(()=>{ status.innerHTML = '<span class="spinner"></span> renderizando pele e luz...'; }, 1300);
     setTimeout(()=>{
-      img.classList.add("on");
-      tag.classList.add("on");
-      status.classList.add("hide");
-      noise.classList.remove("on");
-      sell.classList.add("on");
-    }, 2600);
+      img.classList.add("on"); tag.classList.add("on");
+      status.classList.add("hide"); noise.classList.remove("on"); sell.classList.add("on");
+    }, 2500);
   }
 }
 
-function fakeSellDemo(){
-  showToast("modelo nova", "R$ 47,00", "agora");
-  document.getElementById("sellBtn").textContent = "✓ foto no ar";
-  document.getElementById("sellBtn").style.pointerEvents = "none";
+function venderDemo(){
+  showToast("modelo nova","R$ 47,00","agora");
+  const b = document.getElementById("sellBtn");
+  b.textContent = "✓ no ar"; b.style.pointerEvents = "none";
   const after = document.getElementById("demoAfter");
   after.style.display = "block";
   after.querySelectorAll(".reveal").forEach(el=>{ el.style.animation="none"; void el.offsetWidth; el.style.animation=""; });
-  setTimeout(()=>{ showToast("assinante novo", "R$ 29,90", "agora"); }, 1500);
+  setTimeout(()=> showToast("assinante novo","R$ 29,90","agora"), 1500);
 }
 
-/* ==========================================================
-   NOTIFICACOES DE VENDA
-   ========================================================== */
+/* ============ BATISMO ============ */
+function batizar(){
+  const inp = document.getElementById("nomeModelo");
+  const nome = (inp.value || "").trim();
+  if(nome.length < 2){ inp.focus(); inp.style.borderColor = "#ff2d78"; return; }
+  state.nomeModelo = nome; saveState(); personalizar();
+  document.getElementById("batismoForm").style.display = "none";
+  document.getElementById("batismoAfter").style.display = "block";
+  setTimeout(()=>{
+    document.getElementById("genImg2").classList.add("on");
+    document.getElementById("genStatus2").classList.add("hide");
+    document.getElementById("nsfwTag2").classList.add("on");
+  }, 2100);
+  setTimeout(()=> showToast(nome + " tá pronta","perfil criado","agora"), 2600);
+}
+
+/* ============ DEPOIMENTOS ============ */
+function montarDepoimentos(){
+  const wrap = document.getElementById("depoWrap");
+  if(wrap.dataset.done) return;
+  wrap.dataset.done = "1";
+  const lista = DEPOIMENTOS[state.meta] || DEPOIMENTOS["500"];
+  wrap.innerHTML = lista.map((d,i)=>
+    '<div class="depo reveal" style="animation-delay:'+(.15+i*.22)+'s">'+
+      '<div class="depo-top">'+
+        '<div class="depo-av">'+ d.nome.replace(/[^A-Za-zÀ-ú]/g,"").charAt(0).toUpperCase() +'</div>'+
+        '<div><div class="depo-nome">'+d.nome+'</div><div class="depo-meta">'+d.meta+'</div></div>'+
+        '<div class="depo-val">'+d.valor+'</div>'+
+      '</div>'+
+      '<div class="depo-txt">"'+d.txt+'"</div>'+
+    '</div>'
+  ).join("");
+}
+
+/* ============ CHAT DA COMUNIDADE ============ */
+function montarChat(){
+  const wrap = document.getElementById("chatWrap");
+  if(wrap.dataset.done) return;
+  wrap.dataset.done = "1";
+  wrap.innerHTML = "";
+  MENSAGENS.forEach((m,i)=>{
+    setTimeout(()=>{
+      const d = document.createElement("div");
+      d.className = "msg";
+      d.style.animationDelay = "0s";
+      d.innerHTML = '<div class="msg-av">'+ m.nome.replace(/[^A-Za-zÀ-ú]/g,"").charAt(0).toUpperCase() +'</div>'+
+                    '<div class="msg-body"><div class="msg-nome">'+m.nome+'</div>'+m.txt+'</div>';
+      wrap.appendChild(d);
+    }, 400 + i*900);
+  });
+}
+
+/* ============ NOTIFICACOES ============ */
 function showToast(nome, valor, quando){
   const wrap = document.getElementById("toast-wrap");
   const t = document.createElement("div");
   t.className = "toast";
-  t.innerHTML = '<span class="dot"></span>' +
-                '<span class="txt">' + nome + ' · <b>' + valor + '</b></span>' +
-                '<span class="time">' + quando + '</span>';
+  t.innerHTML = '<span class="dot"></span><span class="txt">'+nome+' · <b>'+valor+'</b></span><span class="time">'+quando+'</span>';
   wrap.appendChild(t);
-  setTimeout(()=>{
-    t.classList.add("out");
-    setTimeout(()=>t.remove(), 400);
-  }, 3600);
+  setTimeout(()=>{ t.classList.add("out"); setTimeout(()=>t.remove(),400); }, 3600);
   while(wrap.children.length > 2) wrap.firstChild.remove();
 }
-
 let vIdx = 0;
 function startToasts(intervalo){
   stopToasts();
-  const fire = ()=>{
-    const v = VENDAS[vIdx % VENDAS.length];
-    vIdx++;
-    showToast(v[0], v[1], v[2]);
-  };
+  const fire = ()=>{ const v = VENDAS[vIdx++ % VENDAS.length]; showToast(v[0],v[1],v[2]); };
   setTimeout(fire, 700);
   toastTimer = setInterval(fire, intervalo);
 }
-function stopToasts(){
-  if(toastTimer){ clearInterval(toastTimer); toastTimer = null; }
+function stopToasts(){ if(toastTimer){ clearInterval(toastTimer); toastTimer = null; } }
+
+/* ============ CONTADORES ============ */
+let contadorRan = false;
+function animarContador(){
+  if(contadorRan) return; contadorRan = true;
+  contarAte(document.getElementById("counter"), FATURAMENTO_30D, 1900, "R$");
+}
+let onlineRan = false;
+function animarOnline(){
+  if(onlineRan) return; onlineRan = true;
+  contarAte(document.getElementById("onlineNum"), MEMBROS_ONLINE, 1200, "");
+}
+function animarVagas(){
+  const pct = ((VAGAS_TOTAL - VAGAS_RESTANTES) / VAGAS_TOTAL) * 100;
+  setTimeout(()=>{ document.getElementById("vagasFill").style.width = pct + "%"; }, 400);
 }
 
-/* ==========================================================
-   CONTADOR ANIMADO
-   ========================================================== */
-let counterRan = false;
-function animateCounter(){
-  if(counterRan) return;
-  counterRan = true;
-  const el = document.getElementById("counter");
-  const alvo = FATURAMENTO_30D;
-  const dur = 1900;
-  const t0 = performance.now();
-  function frame(t){
-    const p = Math.min((t - t0) / dur, 1);
-    const eased = 1 - Math.pow(1 - p, 3);
-    const val = Math.floor(alvo * eased);
-    el.textContent = "R$" + val.toLocaleString("pt-BR");
-    if(p < 1) requestAnimationFrame(frame);
-  }
-  requestAnimationFrame(frame);
-}
-
-/* ==========================================================
-   INIT
-   ========================================================== */
+/* ============ INIT ============ */
 document.getElementById("vagas").textContent = VAGAS_RESTANTES;
 updateProgress("lp");
-try{ history.replaceState({step:"lp"}, "", "#lp"); }catch(e){}
+try{ history.replaceState({step:"lp"},"","#lp"); }catch(e){}
 </script>
 </body>
 </html>
