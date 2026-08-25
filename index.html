@@ -154,6 +154,17 @@ strong{color:#fff}
   opacity:0;transform:translateY(10px);transition:opacity .5s,transform .5s;pointer-events:none}
 .sell-btn.on{opacity:1;transform:none;pointer-events:auto}
 
+/* imagens carregadas pelo usuario */
+.foto-slot{width:100%;border-radius:15px;overflow:hidden;margin-bottom:14px;
+  border:1px solid rgba(255,255,255,.12);background:#0a070d}
+.foto-slot img{width:100%;display:block}
+.galeria{display:grid;gap:10px;margin-bottom:14px}
+.galeria.g1{grid-template-columns:1fr}
+.galeria.g2{grid-template-columns:1fr 1fr}
+.galeria img{width:100%;display:block;border-radius:13px;border:1px solid rgba(255,255,255,.12);background:#0a070d}
+.ju-avatar{width:92px;height:92px;border-radius:50%;object-fit:cover;display:block;margin:0 auto 16px;
+  border:2.5px solid #ff2d78;box-shadow:0 6px 24px rgba(255,45,120,.4)}
+
 /* foto real da modelo */
 .modelo-foto{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:2;
   opacity:0;transform:scale(1.06);transition:opacity .9s ease,transform 1.3s ease;display:none}
@@ -291,6 +302,7 @@ strong{color:#fff}
 
 <!-- 1. HOOK -->
 <section class="step active" id="lp" data-step="0">
+  <img class="ju-avatar reveal d1" id="juAvatar" alt="" style="display:none" />
   <span class="eyebrow reveal d1">só pra meninas</span>
   <h1 class="reveal d1">descubra como garotas comuns estão fazendo até <span class="money">R$8.700 por semana</span> sem sair de casa e sem acordar cedo</h1>
   <p class="lead reveal d2">elas aprenderam a criar modelos de IA tão realistas que os homens pagam pra ver.</p>
@@ -380,7 +392,7 @@ strong{color:#fff}
   <span class="eyebrow reveal d1">a ju</span>
   <h2 class="reveal d1">minha história rapidinho</h2>
   <div class="chat reveal d2">eu fui abandonada grávida pelo meu ex namorado.</div>
-  <div class="ph reveal d3"><span class="ico">🖼️</span><b>[IMAGEM 1]</b><span>foto da Ju no ônibus / cansada / rotina pesada</span></div>
+  <div class="ph reveal d3" data-img="07-ju-historia"><span class="ico">🖼️</span><b>07-ju-historia</b><span>foto da Ju no ônibus / cansada / rotina pesada</span></div>
   <div class="chat reveal d4">acordava cedo, pegava ônibus lotado, e ainda ia pra faculdade de noite.</div>
   <div class="chat reveal d5">e mesmo assim não sobrava <strong>um puto</strong> no bolso.</div>
   <div class="chat reveal d6">enquanto isso eu tinha uma prima ganhando rios de dinheiro vendendo foto na internet.</div>
@@ -473,8 +485,8 @@ strong{color:#fff}
     <div class="counter-lab">faturado nos últimos 30 dias</div>
   </div>
   <div class="chat reveal d3">4 meses que eu larguei meu emprego. nunca mais acordei cedo, nunca mais olhei preço de nada.</div>
-  <div class="ph reveal d3"><span class="ico">📸</span><b>[PRINT 1 — SAQUES]</b><span>print real do seu extrato / saques da plataforma</span></div>
-  <div class="ph reveal d4 sm"><span class="ico">📱</span><b>[PRINT 2 — DASHBOARD]</b><span>print do painel de ganhos do privacy</span></div>
+  <div class="ph reveal d3" data-img="12-saques" data-multi="5"><span class="ico">📸</span><b>12-saques-1 … -5</b><span>prints dos seus saques / extrato da plataforma</span></div>
+  <div class="ph reveal d4 sm" data-img="12-dashboard"><span class="ico">📱</span><b>12-dashboard</b><span>print do painel de ganhos do privacy</span></div>
   <div class="chat reveal d5">ninguém faz a mínima ideia do meu nome de verdade. nem do meu rosto. e ninguém precisa saber de onde vem esse dinheiro.</div>
   <button class="cta reveal d6" onclick="goToStep('q_medo')">e se eu não conseguir?</button>
 </section>
@@ -509,7 +521,7 @@ strong{color:#fff}
   <h2 class="reveal d1">olha o que as meninas fizeram na primeira semana</h2>
   <p class="muted reveal d2" style="margin-bottom:16px">esses são os resultados da <strong>primeira semana</strong> delas</p>
   <div id="depoWrap" class="reveal d3"></div>
-  <div class="ph reveal d5"><span class="ico">💬</span><b>[PRINTS DOS DEPOIMENTOS]</b><span>prints reais das conversas e resultados dessas meninas</span></div>
+  <div class="ph reveal d5" data-img="15-depoimentos" data-multi="6"><span class="ico">💬</span><b>15-depoimentos-1 … -6</b><span>prints das conversas e resultados dessas meninas</span></div>
   <div class="chat reveal d6">e olha que nenhuma delas sabia nada disso antes. nenhuma.</div>
   <button class="cta reveal d6" onclick="goToStep('q_tempo')">quero fazer as contas</button>
 </section>
@@ -605,7 +617,7 @@ strong{color:#fff}
   <span class="eyebrow reveal d1">bastidores</span>
   <h2 class="reveal d1">um pedacinho do que rola lá dentro</h2>
   <div class="card reveal d2" id="chatWrap" style="min-height:230px"></div>
-  <div class="ph reveal d5"><span class="ico">📲</span><b>[PRINTS DA COMUNIDADE]</b><span>prints reais do grupo: meninas comemorando, tirando dúvida, postando ganho</span></div>
+  <div class="ph reveal d5" data-img="20-comunidade" data-multi="6"><span class="ico">📲</span><b>20-comunidade-1 … -6</b><span>prints do grupo: comemorando, tirando dúvida, postando ganho</span></div>
   <div class="chat reveal d6">é isso todo dia. e é por isso que quem entra não sai.</div>
   <button class="cta reveal d6" onclick="goToStep('urgencia')">quero entrar</button>
 </section>
@@ -1072,7 +1084,67 @@ function animarVagas(){
   setTimeout(()=>{ document.getElementById("vagasFill").style.width = pct + "%"; }, 400);
 }
 
+/* ============ CARREGADOR DE IMAGENS ============ */
+// procura os arquivos em /img e troca o placeholder pontilhado pela imagem.
+// aceita jpg, jpeg, png e webp. se o arquivo nao existir, o placeholder continua ali.
+const EXTS = ["jpg","jpeg","png","webp"];
+
+function tentarCarregar(base, cb){
+  let i = 0;
+  (function proxima(){
+    if(i >= EXTS.length) return cb(null);
+    const img = new Image();
+    img.onload  = ()=> cb(img.src);
+    img.onerror = ()=>{ i++; proxima(); };
+    img.src = "img/" + base + "." + EXTS[i];
+  })();
+}
+
+function carregarSlot(el){
+  if(el.dataset.carregado) return;
+  const base  = el.dataset.img;
+  const multi = parseInt(el.dataset.multi || "0", 10);
+
+  if(!multi){
+    tentarCarregar(base, src=>{
+      if(!src) return;
+      el.dataset.carregado = "1";
+      el.className = el.className.replace("ph","foto-slot");
+      el.innerHTML = '<img src="'+src+'" alt="" />';
+    });
+    return;
+  }
+
+  const achadas = [];
+  let pendentes = multi;
+  for(let i = 1; i <= multi; i++){
+    (function(idx){
+      tentarCarregar(base + "-" + idx, src=>{
+        if(src) achadas[idx] = src;
+        if(--pendentes === 0) montar();
+      });
+    })(i);
+  }
+  function montar(){
+    const lista = achadas.filter(Boolean);
+    if(!lista.length) return;
+    el.dataset.carregado = "1";
+    el.className = "galeria " + (lista.length === 1 ? "g1" : "g2") + " reveal";
+    el.innerHTML = lista.map(src=>'<img src="'+src+'" alt="" />').join("");
+  }
+}
+
+function carregarImagens(){
+  document.querySelectorAll("[data-img]").forEach(carregarSlot);
+  const av = document.getElementById("juAvatar");
+  if(av && !av.dataset.tentado){
+    av.dataset.tentado = "1";
+    tentarCarregar("01-ju-perfil", src=>{ if(src){ av.src = src; av.style.display = "block"; } });
+  }
+}
+
 /* ============ INIT ============ */
+carregarImagens();
 document.getElementById("vagas").textContent = VAGAS_RESTANTES;
 updateProgress("lp");
 try{ history.replaceState({step:"lp"},"","#lp"); }catch(e){}
