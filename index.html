@@ -22,11 +22,21 @@ src="https://www.facebook.com/tr?id=1583309593342549&ev=PageView&noscript=1"
 /></noscript>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{-webkit-text-size-adjust:100%}
+html{
+  -webkit-text-size-adjust:100%;
+  /* trava o bounce do iOS: nao deixa arrastar acima do topo */
+  overscroll-behavior-y:none;
+}
 body{
   font-family:-apple-system,BlinkMacSystemFont,"Inter","Segoe UI",Roboto,sans-serif;
-  background:#0c0910;color:#f3edf7;line-height:1.55;min-height:100vh;
-  -webkit-font-smoothing:antialiased;overflow-x:hidden;
+  background:#0c0910;color:#f3edf7;line-height:1.55;
+  /* 100vh no iOS conta a area escondida atras da barra de endereco e sobra
+     espaco rolavel no topo. dvh usa a altura real; vh fica de fallback. */
+  min-height:100vh;
+  min-height:100dvh;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+  overscroll-behavior-y:none;
 }
 button,input{font-family:inherit}
 button{cursor:pointer;border:none;background:none;color:inherit}
@@ -43,8 +53,13 @@ button{cursor:pointer;border:none;background:none;color:inherit}
   background:linear-gradient(90deg,#ff2d78,#ff6ba8,#c084fc);
   transition:width .55s cubic-bezier(.22,1,.36,1);box-shadow:0 0 14px rgba(255,45,120,.75)}
 
-#toast-wrap{position:fixed;left:0;right:0;top:12px;z-index:200;pointer-events:none;padding:0 14px;display:flex;flex-direction:column;align-items:center;gap:8px}
-.container{position:relative;z-index:2;max-width:520px;margin:0 auto;padding:20px 18px 70px}
+#toast-wrap{position:fixed;left:0;right:0;top:calc(12px + env(safe-area-inset-top));z-index:200;pointer-events:none;padding:0 14px;display:flex;flex-direction:column;align-items:center;gap:8px}
+.container{position:relative;z-index:2;max-width:520px;margin:0 auto;
+  padding:20px 18px 70px;
+  padding-top:calc(20px + env(safe-area-inset-top));
+  padding-left:calc(18px + env(safe-area-inset-left));
+  padding-right:calc(18px + env(safe-area-inset-right));
+  padding-bottom:calc(70px + env(safe-area-inset-bottom))}
 
 .back-btn{display:inline-flex;align-items:center;gap:6px;color:#a99fb3;font-size:13px;margin-bottom:14px;padding:6px 10px;border-radius:8px;transition:.2s}
 .back-btn:hover{background:rgba(255,255,255,.07);color:#fff}
@@ -854,7 +869,7 @@ function goToStep(id, push){
   nxt.classList.add("active");
   current = id;
   updateProgress(id);
-  window.scrollTo({top:0,behavior:"instant"});
+  irParaOTopo();
   nxt.querySelectorAll(".reveal").forEach(el=>{ el.style.animation="none"; void el.offsetWidth; el.style.animation=""; });
   if(push !== false){ try{ history.pushState({step:id},"","#"+id); }catch(e){} }
   if(typeof fbq === "function") fbq("trackCustom","QuizStep",{step:id,index:order.indexOf(id)});
@@ -869,6 +884,14 @@ function goToStep(id, push){
   if(id === "dentro")      montarChat();
   if(id === "oferta")     { animarVagas(); startToasts(6500);
                             if(typeof fbq === "function") fbq("track","InitiateCheckout"); }
+}
+
+// alguns navegadores do celular ignoram scrollTo com behavior, e o Safari
+// restaura a posicao anterior depois do load. isso cobre os dois casos.
+function irParaOTopo(){
+  window.scrollTo(0,0);
+  document.documentElement.scrollTop = 0;
+  document.body.scrollTop = 0;
 }
 
 function goBack(){ const i = order.indexOf(current); if(i>0) goToStep(order[i-1]); }
@@ -1148,6 +1171,12 @@ function carregarImagens(){
 }
 
 /* ============ INIT ============ */
+// sem isso o Safari reabre a pagina na posicao em que a pessoa parou
+try{ if("scrollRestoration" in history) history.scrollRestoration = "manual"; }catch(e){}
+irParaOTopo();
+window.addEventListener("load", irParaOTopo);
+window.addEventListener("pageshow", irParaOTopo);
+
 carregarImagens();
 document.getElementById("vagas").textContent = VAGAS_RESTANTES;
 updateProgress("lp");
