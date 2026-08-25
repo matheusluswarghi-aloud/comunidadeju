@@ -1,0 +1,79 @@
+=====================================================
+  IMAGENS DO QUIZ - ONDE VAI CADA UMA
+=====================================================
+
+Coloque os arquivos NESTA pasta com exatamente estes nomes.
+Pode ser .jpg, .png ou .webp - o quiz acha sozinho.
+Arquivo que faltar nao quebra nada, so continua o placeholder.
+
+-----------------------------------------------------
+ROSTO DA JU
+-----------------------------------------------------
+01-ju-perfil
+   Foto de perfil redonda, no topo da PRIMEIRA TELA.
+   Opcional, mas ajuda muito.
+
+07-ju-historia
+   Etapa "minha historia rapidinho".
+   Ju no onibus / cansada / rotina pesada.
+
+-----------------------------------------------------
+PROVAS DE GANHO
+-----------------------------------------------------
+12-saques-1   ate   12-saques-5
+   Etapa "ja faz 4 meses que eu vivo so disso".
+   Prints dos seus saques / extrato.
+   Pode subir de 1 a 5. Nao precisa subir todas.
+
+12-dashboard
+   Mesma etapa, logo abaixo.
+   Print do painel de ganhos do Privacy.
+
+15-depoimentos-1   ate   15-depoimentos-6
+   Etapa "olha o que as meninas fizeram na primeira semana".
+   Prints das conversas com as alunas.
+
+20-comunidade-1   ate   20-comunidade-6
+   Etapa "bastidores".
+   Prints do grupo: comemorando, tirando duvida, postando ganho.
+
+-----------------------------------------------------
+MODELOS  (vao dentro da subpasta "modelos")
+-----------------------------------------------------
+Uma foto por tipo, COM ROUPA.
+Aparece quando ela da nome pra modelo dela.
+
+modelos/loira
+modelos/morena
+modelos/gordinha
+modelos/ruiva
+modelos/madura
+
+Formato ideal: vertical ou quadrada, tipo 800x1000.
+
+-----------------------------------------------------
+EXEMPLOS DE NOME COMPLETO
+-----------------------------------------------------
+01-ju-perfil.jpg
+07-ju-historia.png
+12-saques-1.jpg
+12-saques-2.jpg
+12-dashboard.jpg
+15-depoimentos-1.jpg
+20-comunidade-1.jpg
+modelos/gordinha.jpg
+
+-----------------------------------------------------
+DEPOIS DE SUBIR AS IMAGENS
+-----------------------------------------------------
+Abra o Terminal e rode:
+
+   cd ~/Desktop/comunidade-da-ju
+   vercel deploy --prod --yes
+
+-----------------------------------------------------
+ATENCAO
+-----------------------------------------------------
+O repositorio esta PUBLICO.
+Print com nome de assinante, @ de perfil ou dado
+bancario: borre antes de subir.
