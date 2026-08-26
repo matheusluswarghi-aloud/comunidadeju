@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 <meta name="robots" content="noindex,nofollow" />
 <title>Comunidade da Ju</title>
+<!-- Meta Pixel Code -->
 <script>
 !function(f,b,e,v,n,t,s)
 {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -20,6 +21,29 @@ fbq('track', 'PageView');
 <noscript><img height="1" width="1" style="display:none"
 src="https://www.facebook.com/tr?id=1583309593342549&ev=PageView&noscript=1"
 /></noscript>
+<!-- End Meta Pixel Code -->
+<script>
+// O fbq as vezes deixa o PageView preso na fila interna e nunca envia
+// (fbq.queue fica com "track|PageView" parado). Se em 1.5s isso acontecer,
+// dispara o PageView direto no endpoint da Meta, que e o mesmo caminho do
+// <noscript> acima. So dispara se o fbq NAO tiver processado, entao nao duplica.
+(function(){
+  var PIXEL = '1583309593342549';
+  function disparoDireto(){
+    var i = new Image(1,1);
+    i.style.display = 'none';
+    i.src = 'https://www.facebook.com/tr?id=' + PIXEL +
+            '&ev=PageView&noscript=1&rl=' + Date.now();
+    document.body && document.body.appendChild(i);
+  }
+  setTimeout(function(){
+    try{
+      var preso = window.fbq && window.fbq.queue && window.fbq.queue.length > 0;
+      if(preso || !window.fbq) disparoDireto();
+    }catch(e){ disparoDireto(); }
+  }, 1500);
+})();
+</script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{
