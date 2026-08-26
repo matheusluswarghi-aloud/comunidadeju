@@ -906,8 +906,9 @@ function goToStep(id, push){
   if(id === "matematica")   montarConta();
   if(id === "comunidade")  animarOnline();
   if(id === "dentro")      montarChat();
-  if(id === "oferta")     { animarVagas(); startToasts(6500);
-                            if(typeof fbq === "function") fbq("track","InitiateCheckout"); }
+  // o InitiateCheckout fica so na PerfectPay, pra nao poluir o evento que a
+  // campanha otimiza. aqui a etapa de oferta so anima as vagas e as vendas.
+  if(id === "oferta")     { animarVagas(); startToasts(6500); }
 }
 
 // alguns navegadores do celular ignoram scrollTo com behavior, e o Safari
