@@ -23,25 +23,73 @@ src="https://www.facebook.com/tr?id=1583309593342549&ev=PageView&noscript=1"
 /></noscript>
 <!-- End Meta Pixel Code -->
 <script>
-// O fbq as vezes deixa o PageView preso na fila interna e nunca envia
-// (fbq.queue fica com "track|PageView" parado). Se em 1.5s isso acontecer,
-// dispara o PageView direto no endpoint da Meta, que e o mesmo caminho do
-// <noscript> acima. So dispara se o fbq NAO tiver processado, entao nao duplica.
+// O fbevents.js nao processa a fila (fbq.queue fica com "track|PageView"
+// parado indefinidamente), entao o PageView nunca sai por ele. Disparamos
+// direto no endpoint, MAS com os parametros de atribuicao — sem fbc/fbp a
+// Meta recebe o evento e nao consegue liga-lo ao clique do anuncio, e o
+// resultado e clique sem "visualizacao da pagina de destino".
 (function(){
   var PIXEL = '1583309593342549';
-  function disparoDireto(){
-    var i = new Image(1,1);
-    i.style.display = 'none';
-    i.src = 'https://www.facebook.com/tr?id=' + PIXEL +
-            '&ev=PageView&noscript=1&rl=' + Date.now();
-    document.body && document.body.appendChild(i);
+
+  function cookie(nome){
+    var m = document.cookie.match('(^|;)\\s*' + nome + '\\s*=\\s*([^;]+)');
+    return m ? m.pop() : '';
   }
+  function setCookie(nome, valor){
+    try{
+      document.cookie = nome + '=' + valor + ';path=/;max-age=7776000;SameSite=Lax';
+    }catch(e){}
+  }
+
+  // _fbp: id do navegador. se o fbevents nao criou, criamos no mesmo formato.
+  function fbp(){
+    var v = cookie('_fbp');
+    if(!v){
+      v = 'fb.1.' + Date.now() + '.' + Math.floor(Math.random() * 1e10);
+      setCookie('_fbp', v);
+    }
+    return v;
+  }
+
+  // _fbc: id do clique no anuncio, derivado do fbclid da URL.
+  function fbc(){
+    var id = new URLSearchParams(location.search).get('fbclid');
+    if(id){
+      var v = 'fb.1.' + Date.now() + '.' + id;
+      setCookie('_fbc', v);
+      return v;
+    }
+    return cookie('_fbc');
+  }
+
+  function enviarPageView(){
+    var q = [
+      'id=' + PIXEL,
+      'ev=PageView',
+      'dl=' + encodeURIComponent(location.href),
+      'rl=' + encodeURIComponent(document.referrer || ''),
+      'if=false',
+      'ts=' + Date.now(),
+      'fbp=' + encodeURIComponent(fbp())
+    ];
+    var c = fbc();
+    if(c) q.push('fbc=' + encodeURIComponent(c));
+
+    var img = new Image(1,1);
+    img.style.display = 'none';
+    img.src = 'https://www.facebook.com/tr?' + q.join('&');
+    if(document.body) document.body.appendChild(img);
+  }
+
+  // grava os cookies imediatamente (antes de qualquer navegacao) e so
+  // dispara se o fbq nao tiver processado a fila sozinho.
+  fbp(); fbc();
   setTimeout(function(){
     try{
-      var preso = window.fbq && window.fbq.queue && window.fbq.queue.length > 0;
-      if(preso || !window.fbq) disparoDireto();
-    }catch(e){ disparoDireto(); }
-  }, 1500);
+      var preso = !window.fbq || (window.fbq.queue && window.fbq.queue.length > 0);
+      if(preso) enviarPageView();
+    }catch(e){ enviarPageView(); }
+  }, 1200);
 })();
 </script>
 <style>
