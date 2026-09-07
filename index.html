@@ -421,7 +421,7 @@ strong{color:#fff}
   box-shadow:0 8px 24px rgba(255,45,120,.4);margin-top:12px;font-family:inherit;transition:.15s}
 .stu-gerar:active{transform:scale(.985)}
 .stu-gerar:disabled{opacity:.55;box-shadow:none}
-.stu-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:13px}
+.stu-grid{display:grid;grid-template-columns:1fr;gap:8px;margin-top:13px}
 .stu-card{aspect-ratio:3/4;border-radius:12px;overflow:hidden;position:relative;
   background:linear-gradient(150deg,#2a1f33,#15101d);border:1px solid rgba(255,255,255,.08)}
 .stu-card img{width:100%;height:100%;object-fit:cover;display:block;opacity:0;transition:opacity .55s}
@@ -756,19 +756,18 @@ strong{color:#fff}
 
       <div class="stu-lab"><span class="n">2</span> escolhe a cena</div>
       <div class="stu-chips" id="chipsCenario"></div>
-      <div class="stu-chips" id="chipsLuz"></div>
 
       <div class="stu-lab" style="margin-top:13px"><span class="n">3</span> o comando que ele executa</div>
       <div class="stu-prompt" id="stuPrompt"></div>
 
-      <button class="stu-gerar" id="stuBtn" onclick="studioGerar()">✨ gerar 4 fotos · 40 créditos</button>
+      <button class="stu-gerar" id="stuBtn" onclick="studioGerar()">✨ gerar foto · 10 créditos</button>
       <div class="stu-grid" id="stuGrid" style="display:none"></div>
     </div>
   </div>
 
   <div id="stuAfter" style="display:none">
-    <div class="chat reveal d1">levou <strong>8 segundos</strong>. quatro fotos novas, e em todas é a mesma mulher.</div>
-    <div class="chat reveal d2">é isso que faz o perfil ter dona. e é isso que quase ninguém consegue fazer sozinha.</div>
+    <div class="chat reveal d1">levou <strong>8 segundos</strong>. e essa mulher não existe.</div>
+    <div class="chat reveal d2">troca a cena ali em cima e gera de novo: é sempre <strong data-bind="nomeModelo"></strong>, em qualquer lugar. é isso que faz o perfil ter dona, e é isso que quase ninguém consegue fazer sozinha.</div>
     <div class="chat reveal d3">agora imagina isso 30 vezes, com um perfil montado e o preço certo.</div>
     <button class="cta reveal d4" onclick="goToStep('studio_video')">quero ver a ferramenta inteira</button>
   </div>
@@ -1380,8 +1379,7 @@ const STU_CENARIO = [
   ["praia",    "na praia no fim da tarde", "-3", "vestido de verão"],
   ["carro",    "dentro do carro",       "-4", "look do dia"]
 ];
-const STU_LUZ     = [["natural","luz natural da janela"],["dourada","luz dourada do fim do dia"],
-                     ["noite","luz de noite"]];
+
 
 let stuMontado = false, stuGerou = false, stuGerando = false, stuRodadas = 0;
 
@@ -1399,9 +1397,7 @@ function montarStudio(){
   if(stuMontado) return;
   stuMontado = true;
   state.stuCenario = state.stuCenario || "quarto";
-  state.stuLuz     = state.stuLuz     || "natural";
   montarChips("chipsCenario", STU_CENARIO, "stuCenario");
-  montarChips("chipsLuz",     STU_LUZ,     "stuLuz");
   escreverPrompt();
 }
 
@@ -1429,8 +1425,7 @@ function escreverPrompt(){
   const cena = acha(STU_CENARIO, state.stuCenario);
   document.getElementById("stuPrompt").innerHTML =
     '<span class="pk">' + (state.nomeModelo || "sua modelo") + '</span>, ' +
-    cena[1] + ', ' + cena[3] + ', ' +
-    acha(STU_LUZ, state.stuLuz)[1] +
+    cena[1] + ', ' + cena[3] +
     ', <span class="pk">rosto travado</span>, vertical 4:5';
 }
 
@@ -1456,21 +1451,19 @@ function studioGerar(){
   const btn  = document.getElementById("stuBtn");
   const grid = document.getElementById("stuGrid");
   btn.disabled = true;
-  btn.innerHTML = '<span class="spinner"></span> gerando 4 fotos...';
+  btn.innerHTML = '<span class="spinner"></span> gerando a foto...';
   grid.style.display = "grid";
   grid.innerHTML = "";
 
-  const seed = parseInt(document.getElementById("stuSeed").textContent, 10) || 8241;
-  for(let i = 0; i < 4; i++){
-    const c = document.createElement("div");
-    c.className = "stu-card c" + i;
-    c.innerHTML = '<img alt="" /><div class="sh"></div>' +
-      '<div class="st"><span>gerando...</span><span class="sd">#' + (seed + i*7) + '</span></div>';
-    grid.appendChild(c);
-  }
+  const seed = (parseInt(document.getElementById("stuSeed").textContent, 10) || 8241) + stuRodadas*7;
+  const c = document.createElement("div");
+  c.className = "stu-card c0";
+  c.innerHTML = '<img alt="" /><div class="sh"></div>' +
+    '<div class="st"><span>gerando...</span><span class="sd">#' + seed + '</span></div>';
+  grid.appendChild(c);
 
-  const gastoAntes = CREDITOS_MES - (stuRodadas - 1) * 4 * CUSTO_FOTO;
-  descerAte(document.getElementById("stuCred"), gastoAntes, gastoAntes - 4*CUSTO_FOTO, 1500);
+  const gastoAntes = CREDITOS_MES - (stuRodadas - 1) * CUSTO_FOTO;
+  descerAte(document.getElementById("stuCred"), gastoAntes, gastoAntes - CUSTO_FOTO, 1200);
   // no celular a grade nasce abaixo da dobra: sem isso ela nao ve as fotos aparecendo
   setTimeout(() => {
     try{ grid.scrollIntoView({behavior:"smooth", block:"center"}); }catch(e){}
@@ -1478,15 +1471,13 @@ function studioGerar(){
   if(typeof fbq === "function") fbq("trackCustom","StudioGerou",{modelo:state.modelo || ""});
 
   fotoDaCena(src => {
-    const cards = grid.querySelectorAll(".stu-card");
-    cards.forEach((c, i) => {
-      setTimeout(() => {
-        if(src) c.querySelector("img").src = src;
-        c.classList.add("on");
-        c.querySelector(".st span").textContent = state.nomeModelo || "sua modelo";
-        if(i === cards.length - 1) terminarStudio();
-      }, 1600 + i*880);
-    });
+    setTimeout(() => {
+      const card = grid.querySelector(".stu-card");
+      if(src) card.querySelector("img").src = src;
+      card.classList.add("on");
+      card.querySelector(".st span").textContent = state.nomeModelo || "sua modelo";
+      terminarStudio();
+    }, 1900);
   });
 }
 
@@ -1494,13 +1485,13 @@ function terminarStudio(){
   stuGerou = true;
   stuGerando = false;
   const btn = document.getElementById("stuBtn");
-  btn.innerHTML = "✓ 4 fotos prontas";
+  btn.innerHTML = "✓ foto pronta";
   const after = document.getElementById("stuAfter");
   after.style.display = "block";
   after.querySelectorAll(".reveal").forEach(el => {
     el.style.animation = "none"; void el.offsetWidth; el.style.animation = "";
   });
-  showToast("4 fotos geradas","40 créditos","agora");
+  showToast("foto gerada","10 créditos","agora");
 }
 
 // trocar a cena depois de gerar: o botao volta, ela gera de novo e ve fotos
@@ -1508,7 +1499,7 @@ function terminarStudio(){
 function rearmarStudio(){
   const btn = document.getElementById("stuBtn");
   btn.disabled = false;
-  btn.innerHTML = "✨ gerar nessa cena · 40 créditos";
+  btn.innerHTML = "✨ gerar nessa cena · 10 créditos";
   const grid = document.getElementById("stuGrid");
   grid.style.display = "none";
   grid.innerHTML = "";

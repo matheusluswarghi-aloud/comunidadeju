@@ -82,12 +82,13 @@ O bloco do Studio (8, 11, 12, 13) é o que mudou o funil:
   da modelo que ela batizou enquanto os créditos caem de 5.000 para 4.960. Dispara
   `fbq trackCustom StudioGerou` — sinal de engajamento forte para a campanha.
   **A cena escolhida troca a foto de verdade:** cada chip aponta para um arquivo
-  (`<tipo>` = quarto, `-2` academia, `-3` praia, `-4` carro), e os 4 cards são
-  enquadramentos daquela foto (`.stu-card.c0` a `.c3`, dois deles espelhados). A roupa
-  vem junto da cena, e não como chip próprio, porque as fotos já foram geradas assim —
-  escolher "academia" e receber vestido quebraria a demo. Trocar de cena depois de gerar
-  rearma o botão: ela gera de novo, vê fotos de outro cenário e os créditos caem outros
-  40. Se um arquivo faltar, cai na foto base sem quebrar.
+  (`<tipo>` = quarto, `-2` academia, `-3` praia, `-4` carro). Sai **uma** foto por
+  geração, grande. A roupa vem junto da cena, e não como chip próprio, porque as fotos
+  já foram geradas assim — escolher "academia" e receber vestido quebraria a demo.
+  Trocar de cena rearma o botão: ela gera de novo, vê a foto de outro cenário e os
+  créditos caem outros 10. É na segunda geração que o argumento da consistência aparece,
+  e a copy do `stuAfter` convida a isso. Se um arquivo faltar, cai na foto base sem
+  quebrar.
 - **`studio_video`** — o `video/tour.mp4`. O `src` só é atribuído quando ela chega na
   etapa (`tocarTour()`), então quem não chega lá nunca baixa o arquivo.
 - **`creditos`** — a matemática dos 5.000 créditos.
