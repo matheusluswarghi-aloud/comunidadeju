@@ -40,14 +40,12 @@ modelo em `img/modelos/`.
   via cupom de 80% liberado num pop-up na última etapa. 7 dias de garantia. Inclui a
   comunidade **e** o Ju Studio com 5.000 créditos/mês, que continuam entrando para
   sempre. Sem tabela comparativa de preço com concorrente — decisão explícita.
-- ⚠️ **O `CHECKOUT_URL` ainda aponta para a assinatura mensal** (`PPU38CQFK13`). Precisa
-  virar um produto vitalício na PerfectPay, senão ela paga esperando acesso definitivo e
-  recebe cobrança recorrente. Há um comentário no código marcando isso.
+- **Checkout:** `https://go.perfectpay.com.br/PPU38CQFUMM` — produto vitalício, R$97 à
+  vista. Trocado em 07/09/2026 (o `PPU38CQFK13` era a assinatura mensal antiga).
 - **Créditos:** 1 foto = 10 créditos, 1 vídeo de 5s = 100. Então 5.000/mês = 500 fotos
   ou 50 vídeos. Renovam todo mês, não acumulam. As constantes vivem no topo do
   `<script>`: `CREDITOS_MES`, `CUSTO_FOTO`, `CUSTO_VIDEO`.
-- **Checkout:** PerfectPay — `https://go.perfectpay.com.br/PPU38CQFK13`
-  (constante `CHECKOUT_URL` no `index.html`).
+- **Checkout:** PerfectPay `https://go.perfectpay.com.br/PPU38CQFUMM` (constante `CHECKOUT_URL`).
 - **Pixel da Meta:** `1583309593342549`. O `InitiateCheckout` foi **removido do quiz** de
   propósito — fica só na PerfectPay, pra não contar duas vezes. O `PageView` tem
   disparo redundante manual com `fbc`/`fbp` porque o `fbevents.js` estava travando a fila.
