@@ -81,15 +81,37 @@ src="https://www.facebook.com/tr?id=1583309593342549&ev=PageView&noscript=1"
     if(document.body) document.body.appendChild(img);
   }
 
-  // grava os cookies imediatamente (antes de qualquer navegacao) e so
-  // dispara se o fbq nao tiver processado a fila sozinho.
+  // Medido no ar: o fbevents.js carrega, marca loaded=true e mesmo assim NUNCA
+  // esvazia a fila — todo trackCustom do quiz ficava parado nela. Por isso todo
+  // evento sai por aqui, direto no endpoint, e o fbq fica so como redundancia.
+  window.pxEvento = function(nome, dados, custom){
+    var q = [
+      'id=' + PIXEL,
+      'ev=' + encodeURIComponent(nome),
+      'dl=' + encodeURIComponent(location.href),
+      'rl=' + encodeURIComponent(document.referrer || ''),
+      'if=false',
+      'ts=' + Date.now(),
+      'fbp=' + encodeURIComponent(fbp())
+    ];
+    if(custom) q.push('cd[event]=' + encodeURIComponent(nome));
+    var c = fbc();
+    if(c) q.push('fbc=' + encodeURIComponent(c));
+    if(dados) for(var k in dados){
+      if(Object.prototype.hasOwnProperty.call(dados, k))
+        q.push('cd[' + encodeURIComponent(k) + ']=' + encodeURIComponent(dados[k]));
+    }
+    var img = new Image(1,1);
+    img.style.display = 'none';
+    img.src = 'https://www.facebook.com/tr?' + q.join('&');
+    if(document.body) document.body.appendChild(img);
+  };
+
+  // Cookies e PageView na hora. O atraso de 1200ms que existia aqui abria uma
+  // janela morta de ~1s (DOM pronto em 0,4s, evento so aos 1,5s) e todo mundo
+  // que saia antes disso virava clique sem visualizacao da pagina de destino.
   fbp(); fbc();
-  setTimeout(function(){
-    try{
-      var preso = !window.fbq || (window.fbq.queue && window.fbq.queue.length > 0);
-      if(preso) enviarPageView();
-    }catch(e){ enviarPageView(); }
-  }, 1200);
+  enviarPageView();
 })();
 </script>
 <style>
@@ -1276,6 +1298,8 @@ function goToStep(id, push){
   // funil na ordem certa quando os eventos vem em lista.
   if(typeof fbq === "function"){
     const i = order.indexOf(id);
+    pxEvento("QuizStep",{step:id,index:i},true);
+    pxEvento("QZ_" + String(i).padStart(2,"0") + "_" + id,null,true);
     fbq("trackCustom","QuizStep",{step:id,index:i});
     fbq("trackCustom","QZ_" + String(i).padStart(2,"0") + "_" + id);
   }
@@ -1345,6 +1369,7 @@ function capturarOrigem(){
 }
 
 function goToCheckout(){
+  pxEvento("AddToCart");
   if(typeof fbq === "function") fbq("track","AddToCart");
   state.preco = cupomAtivo ? PRECO_CUPOM : PRECO_CHEIO;
   if(cupomAtivo) state.cupom = CUPOM_PCT + "OFF";
@@ -1504,6 +1529,7 @@ function studioGerar(){
   setTimeout(() => {
     try{ grid.scrollIntoView({behavior:"smooth", block:"center"}); }catch(e){}
   }, 420);
+  pxEvento("StudioGerou",{modelo:state.modelo || ""},true);
   if(typeof fbq === "function") fbq("trackCustom","StudioGerou",{modelo:state.modelo || ""});
 
   fotoDaCena(src => {
@@ -1709,6 +1735,7 @@ function abrirCupom(){
     document.getElementById("popPct").textContent = CUPOM_PCT;
     soltarConfete();
     document.getElementById("popCupom").classList.add("on");
+    pxEvento("CupomAberto",null,true);
     if(typeof fbq === "function") fbq("trackCustom","CupomAberto");
   }, 1500);
 }
@@ -1733,6 +1760,7 @@ function aplicarCupom(){
   if(cupomAtivo) return;
   cupomAtivo = true;
   state.cupom = CUPOM_PCT + "OFF"; saveState();
+  pxEvento("CupomAplicado",null,true);
   if(typeof fbq === "function") fbq("trackCustom","CupomAplicado");
 
   const de = document.getElementById("precoDe");
