@@ -1318,11 +1318,39 @@ function answer(key, value, next){
   }, 230);
 }
 
+/* ============ ORIGEM DO TRAFEGO (UTM) ============ */
+// O Meta manda a origem na URL do anuncio. Sem guardar e repassar aqui, ela
+// morre na primeira tela: a venda chega na PerfectPay sem saber de qual
+// criativo veio, e nao da pra atribuir nada.
+const UTM_CHAVES = ["utm_source","utm_medium","utm_campaign","utm_content","utm_term",
+                    "plc","fbclid","gclid","ref"];
+
+function lerOrigem(){
+  try{ return JSON.parse(localStorage.getItem("quiz_ju_origem") || "{}"); }
+  catch(e){ return {}; }
+}
+
+// guarda no primeiro acesso e nao sobrescreve com vazio: se ela voltar pelo
+// historico ou recarregar sem os parametros, a origem original se mantem
+function capturarOrigem(){
+  const q = new URLSearchParams(location.search);
+  const o = lerOrigem();
+  let novo = false;
+  UTM_CHAVES.forEach(k => { const v = q.get(k); if(v){ o[k] = v; novo = true; } });
+  if(novo){
+    o._em = new Date().toISOString();
+    try{ localStorage.setItem("quiz_ju_origem", JSON.stringify(o)); }catch(e){}
+  }
+  return o;
+}
+
 function goToCheckout(){
   if(typeof fbq === "function") fbq("track","AddToCart");
   state.preco = cupomAtivo ? PRECO_CUPOM : PRECO_CHEIO;
   if(cupomAtivo) state.cupom = CUPOM_PCT + "OFF";
-  window.location.href = CHECKOUT_URL + "?" + new URLSearchParams(state).toString();
+  const params = new URLSearchParams(state);
+  Object.entries(lerOrigem()).forEach(([k,v]) => { if(k[0] !== "_") params.set(k, v); });
+  window.location.href = CHECKOUT_URL + "?" + params.toString();
 }
 
 /* ============ ANALISE ANIMADA ============ */
@@ -1853,6 +1881,7 @@ irParaOTopo();
 window.addEventListener("load", irParaOTopo);
 window.addEventListener("pageshow", irParaOTopo);
 
+capturarOrigem();
 carregarImagens();
 document.getElementById("vagas").textContent = VAGAS_RESTANTES;
 updateProgress("lp");

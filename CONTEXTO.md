@@ -46,6 +46,13 @@ modelo em `img/modelos/`.
   ou 50 vídeos. Renovam todo mês, não acumulam. As constantes vivem no topo do
   `<script>`: `CREDITOS_MES`, `CUSTO_FOTO`, `CUSTO_VIDEO`.
 - **Checkout:** PerfectPay `https://go.perfectpay.com.br/PPU38CQFUMM` (constante `CHECKOUT_URL`).
+- **Origem do tráfego (UTM):** o quiz captura `utm_source`, `utm_medium`, `utm_campaign`,
+  `utm_content`, `utm_term`, `plc`, `fbclid`, `gclid` e `ref` da URL de entrada, guarda em
+  `localStorage` (`quiz_ju_origem`) e repassa ao checkout junto com as respostas. Não
+  sobrescreve com vazio, então recarregar sem parâmetros não apaga a origem.
+  ⚠️ **Falta o outro lado:** os anúncios precisam ter os parâmetros de URL configurados no
+  Gerenciador (campo "Parâmetros de URL" do anúncio). `url_tags` não é editável pela API
+  em criativo já publicado, e recriar o anúncio perderia prova social e o aprendizado.
 - **Pixel da Meta:** `1583309593342549`. O `InitiateCheckout` foi **removido do quiz** de
   propósito — fica só na PerfectPay, pra não contar duas vezes. O `PageView` tem
   disparo redundante manual com `fbc`/`fbp` porque o `fbevents.js` estava travando a fila.
