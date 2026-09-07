@@ -730,7 +730,7 @@ strong{color:#fff}
     </div>
     <div class="chat reveal d2"><strong data-bind="nomeModelo"></strong> tá pronta. agora ela é sua, e ela não existe em lugar nenhum do mundo.</div>
     <div class="chat reveal d3">o rosto dela ficou travado. de agora em diante, toda foto que vc pedir sai com essa mesma cara.</div>
-    <button class="cta reveal d4" onclick="goToStep('studio_video')">quero ver a ferramenta funcionando</button>
+    <button class="cta reveal d4" onclick="goToStep('studio_sim')">quero ver ela em outras fotos</button>
   </div>
 </section>
 
@@ -756,7 +756,6 @@ strong{color:#fff}
 
       <div class="stu-lab"><span class="n">2</span> escolhe a cena</div>
       <div class="stu-chips" id="chipsCenario"></div>
-      <div class="stu-chips" id="chipsRoupa"></div>
       <div class="stu-chips" id="chipsLuz"></div>
 
       <div class="stu-lab" style="margin-top:13px"><span class="n">3</span> o comando que ele executa</div>
@@ -1044,7 +1043,7 @@ strong{color:#fff}
     <div class="obj"><div class="obj-q">é mensalidade mesmo?</div><p class="obj-a">não. vc paga uma vez e o acesso é vitalício. a comunidade, o Studio e os 5.000 créditos todo mês continuam seus, sem cobrança nova.</p></div>
     <div class="obj"><div class="obj-q">preciso aparecer em alguma foto?</div><p class="obj-a">nenhuma. em nenhum momento. o rosto do perfil é gerado do zero.</p></div>
     <div class="obj"><div class="obj-q">isso é permitido?</div><p class="obj-a">é. o privacy tem a categoria oficial de criadora de IA. vc marca lá e tá tudo certo.</p></div>
-    <div class="obj"><div class="obj-q">preciso saber mexer com IA?</div><p class="obj-a">zero. vc viu ali em cima como é: escolhe a cena numa lista e clica em gerar. não tem comando pra decorar nem programa pra instalar, abre no celular igual instagram.</p></div>
+    <div class="obj"><div class="obj-q">preciso saber mexer com IA?</div><p class="obj-a">zero. vc já mexeu aqui em cima: escolhe a cena e clica em gerar. não tem comando pra decorar nem programa pra instalar, abre no celular igual instagram.</p></div>
     <div class="obj"><div class="obj-q">os créditos acabam?</div><p class="obj-a">são 5.000 por mês, e renovam todo mês. isso dá 500 fotos. as meninas usam bem menos que isso. o que sobrar não acumula pro mês seguinte.</p></div>
     <div class="obj"><div class="obj-q">quanto tempo toma?</div><p class="obj-a">eu crio as imagens uma vez por semana e depois só posto e vendo no privado.</p></div>
   </div>
@@ -1172,7 +1171,7 @@ const MEDOS = {
   },
   tecnologia:{
     t:"acha que não vai conseguir mexer?",
-    a:"amiga, é escolher a cena numa lista e clicar em gerar. em 8 segundos as fotos tão prontas na tela.",
+    a:"amiga, vc acabou de mexer. aquela tela que vc usou pra criar as fotos da sua modelo é a ferramenta de verdade: escolhe a cena, clica, espera 8 segundos.",
     b:"não tem comando pra decorar, não tem programa pra instalar. tem menina de 40 e poucos anos lá dentro que nunca tinha usado nem canva."
   },
   caraia:{
@@ -1209,13 +1208,8 @@ const SONHO_TXT = {
    ESTADO E NAVEGACAO
    ========================================================== */
 const state = {};
-// O simulador (studio_sim) esta FORA do fluxo enquanto nao houver foto de cada
-// modelo em cada cena: ele deixa a pessoa escolher praia/academia/carro e hoje
-// devolveria sempre a mesma imagem. A secao continua no HTML — pra religar,
-// basta pos "studio_sim" de volta no array abaixo e apontar o CTA do batismo
-// (goToStep) de volta pra ela.
 const order = ["lp","q_meta","analise","q_dor","q_trampo","espelho","historia","virada",
-               "studio_reveal","q_modelo","batismo","studio_video","creditos",
+               "studio_reveal","q_modelo","batismo","studio_sim","studio_video","creditos",
                "prova_ju","q_medo","quebra","depoimentos","q_tempo","matematica",
                "q_sonho","projecao","comunidade","dentro","urgencia","oferta","fechamento"];
 let current = "lp";
@@ -1376,14 +1370,20 @@ function batizar(){
 /* ============ JU STUDIO: SIMULADOR ============ */
 // as tres escolhas que montam o comando. ela clica de verdade e ve o prompt
 // se reescrever: e o momento em que ela sente que esta operando a ferramenta.
-const STU_CENARIO = [["quarto","no quarto"],["praia","na praia no fim de tarde"],
-                     ["academia","na academia"],["carro","dentro do carro"]];
-const STU_ROUPA   = [["casual","roupa casual"],["lingerie","de lingerie"],
-                     ["treino","roupa de treino"],["vestido","vestido curto"]];
+// cada cena aponta para a foto real daquela modelo naquele cenario. o sufixo
+// casa com os arquivos gerados: <tipo>-2 academia, -3 praia, -4 carro, e a foto
+// base e o quarto. a roupa vem junto da cena porque as fotos ja foram geradas
+// assim: escolher "academia" e receber vestido quebraria a demo.
+const STU_CENARIO = [
+  ["quarto",   "no quarto",             "",   "roupa casual"],
+  ["academia", "na academia",           "-2", "roupa de treino"],
+  ["praia",    "na praia no fim da tarde", "-3", "vestido de verão"],
+  ["carro",    "dentro do carro",       "-4", "look do dia"]
+];
 const STU_LUZ     = [["natural","luz natural da janela"],["dourada","luz dourada do fim do dia"],
                      ["noite","luz de noite"]];
 
-let stuMontado = false, stuGerou = false;
+let stuMontado = false, stuGerou = false, stuGerando = false, stuRodadas = 0;
 
 // preenche as fotos da modelo dentro de uma etapa especifica. o reveal roda antes
 // de ela escolher o tipo, entao la cai no padrao.
@@ -1399,10 +1399,8 @@ function montarStudio(){
   if(stuMontado) return;
   stuMontado = true;
   state.stuCenario = state.stuCenario || "quarto";
-  state.stuRoupa   = state.stuRoupa   || "casual";
   state.stuLuz     = state.stuLuz     || "natural";
   montarChips("chipsCenario", STU_CENARIO, "stuCenario");
-  montarChips("chipsRoupa",   STU_ROUPA,   "stuRoupa");
   montarChips("chipsLuz",     STU_LUZ,     "stuLuz");
   escreverPrompt();
 }
@@ -1414,53 +1412,46 @@ function montarChips(wrapId, lista, chave){
     '" data-k="' + par[0] + '">' + par[1] + '</button>').join("");
   wrap.querySelectorAll(".stu-chip").forEach(b => {
     b.onclick = () => {
-      if(stuGerou) return;
+      if(stuGerando) return;
       state[chave] = b.dataset.k; saveState();
       wrap.querySelectorAll(".stu-chip").forEach(o => o.classList.remove("on"));
       b.classList.add("on");
       escreverPrompt();
+      // trocar a cena rearma o botao: ela testa outra e ve que muda de verdade
+      if(stuGerou) rearmarStudio();
     };
   });
 }
 
-function acha(lista, k){ const r = lista.find(x => x[0] === k); return (r || lista[0])[1]; }
+function acha(lista, k){ const r = lista.find(x => x[0] === k); return r || lista[0]; }
 
 function escreverPrompt(){
+  const cena = acha(STU_CENARIO, state.stuCenario);
   document.getElementById("stuPrompt").innerHTML =
     '<span class="pk">' + (state.nomeModelo || "sua modelo") + '</span>, ' +
-    acha(STU_CENARIO, state.stuCenario) + ', ' +
-    acha(STU_ROUPA,   state.stuRoupa)   + ', ' +
-    acha(STU_LUZ,     state.stuLuz)     +
+    cena[1] + ', ' + cena[3] + ', ' +
+    acha(STU_LUZ, state.stuLuz)[1] +
     ', <span class="pk">rosto travado</span>, vertical 4:5';
 }
 
-// usa modelos/<tipo>-2, -3, -4 se existirem; senao repete a principal, que os
-// enquadramentos do CSS ja diferenciam
-function fotosDaModelo(cb){
-  const base = "modelos/" + (state.modelo || "loira");
-  const achadas = [];
-  const entregar = () => {
-    if(!achadas.length) return cb([]);
-    const r = [];
-    for(let i = 0; i < 4; i++) r.push(achadas[i] || achadas[0]);
-    cb(r);
-  };
-  tentarCarregar(base, src => {
-    if(src) achadas.push(src);
-    (function proxima(i){
-      if(i > 4) return entregar();
-      tentarCarregar(base + "-" + i, s2 => {
-        if(!s2) return entregar();
-        achadas.push(s2);
-        proxima(i + 1);
-      });
-    })(2);
+// busca a foto da modelo NA CENA escolhida. cada cena tem seu arquivo
+// (<tipo>-2 academia, -3 praia, -4 carro, base = quarto); se ela faltar, cai
+// na foto base, e os enquadramentos do CSS seguem diferenciando os 4 cards.
+function fotoDaCena(cb){
+  const tipo   = state.modelo || "loira";
+  const cena   = acha(STU_CENARIO, state.stuCenario);
+  const alvo   = "modelos/" + tipo + cena[2];
+  tentarCarregar(alvo, src => {
+    if(src) return cb(src);
+    if(!cena[2]) return cb(null);
+    tentarCarregar("modelos/" + tipo, base => cb(base));
   });
 }
 
 function studioGerar(){
-  if(stuGerou) return;
-  stuGerou = true;
+  if(stuGerando) return;
+  stuGerando = true;
+  stuRodadas++;
 
   const btn  = document.getElementById("stuBtn");
   const grid = document.getElementById("stuGrid");
@@ -1478,18 +1469,19 @@ function studioGerar(){
     grid.appendChild(c);
   }
 
-  descerAte(document.getElementById("stuCred"), CREDITOS_MES, CREDITOS_MES - 4*CUSTO_FOTO, 1500);
+  const gastoAntes = CREDITOS_MES - (stuRodadas - 1) * 4 * CUSTO_FOTO;
+  descerAte(document.getElementById("stuCred"), gastoAntes, gastoAntes - 4*CUSTO_FOTO, 1500);
   // no celular a grade nasce abaixo da dobra: sem isso ela nao ve as fotos aparecendo
   setTimeout(() => {
     try{ grid.scrollIntoView({behavior:"smooth", block:"center"}); }catch(e){}
   }, 420);
   if(typeof fbq === "function") fbq("trackCustom","StudioGerou",{modelo:state.modelo || ""});
 
-  fotosDaModelo(srcs => {
+  fotoDaCena(src => {
     const cards = grid.querySelectorAll(".stu-card");
     cards.forEach((c, i) => {
       setTimeout(() => {
-        if(srcs[i]) c.querySelector("img").src = srcs[i];
+        if(src) c.querySelector("img").src = src;
         c.classList.add("on");
         c.querySelector(".st span").textContent = state.nomeModelo || "sua modelo";
         if(i === cards.length - 1) terminarStudio();
@@ -1499,6 +1491,8 @@ function studioGerar(){
 }
 
 function terminarStudio(){
+  stuGerou = true;
+  stuGerando = false;
   const btn = document.getElementById("stuBtn");
   btn.innerHTML = "✓ 4 fotos prontas";
   const after = document.getElementById("stuAfter");
@@ -1507,6 +1501,17 @@ function terminarStudio(){
     el.style.animation = "none"; void el.offsetWidth; el.style.animation = "";
   });
   showToast("4 fotos geradas","40 créditos","agora");
+}
+
+// trocar a cena depois de gerar: o botao volta, ela gera de novo e ve fotos
+// de outro cenario. e o momento em que a ferramenta prova que responde a ela.
+function rearmarStudio(){
+  const btn = document.getElementById("stuBtn");
+  btn.disabled = false;
+  btn.innerHTML = "✨ gerar nessa cena · 40 créditos";
+  const grid = document.getElementById("stuGrid");
+  grid.style.display = "none";
+  grid.innerHTML = "";
 }
 
 // o contarAte so sobe a partir do zero; aqui os creditos precisam descer
