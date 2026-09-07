@@ -463,6 +463,90 @@ strong{color:#fff}
 .cred-ou{text-align:center;font-size:11px;color:#78707f;font-weight:700;
   text-transform:uppercase;letter-spacing:.14em;margin:2px 0 8px}
 
+
+/* ============ DEPOIMENTOS ESTILO ZAP ============ */
+.zap-wrap{background:linear-gradient(165deg,#101a15,#0b120e);border:1px solid rgba(255,255,255,.08);
+  border-radius:16px;padding:14px 12px 8px;margin:15px 0}
+.zap-topo{display:flex;align-items:center;gap:7px;font-size:11px;color:#6d7d74;font-weight:700;
+  padding-bottom:11px;margin-bottom:12px;border-bottom:1px solid rgba(255,255,255,.06)}
+.zap-topo .pt{width:6px;height:6px;border-radius:50%;background:#3ddc84;flex-shrink:0}
+.zap{display:flex;gap:8px;margin-bottom:11px;opacity:0;transform:translateY(8px)}
+.zap.on{animation:zapIn .38s cubic-bezier(.22,1,.36,1) forwards}
+@keyframes zapIn{to{opacity:1;transform:none}}
+.zap-av{width:31px;height:31px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;
+  justify-content:center;font-size:12.5px;font-weight:800;color:#04240f;
+  background:linear-gradient(135deg,#3ddc84,#2aa563)}
+.zap-bolha{background:#1c2b23;border-radius:3px 13px 13px 13px;padding:9px 11px 6px;
+  font-size:13.5px;line-height:1.48;max-width:84%;color:#e4ece8}
+.zap-nome{font-size:11px;font-weight:800;color:#5ce6a0;margin-bottom:3px}
+.zap-hora{font-size:9.5px;color:#6d7d74;text-align:right;margin-top:3px}
+.zap-hora .ck{color:#54a9ff;font-size:10px;margin-left:2px}
+.zap-audio{display:flex;align-items:center;gap:9px;min-width:190px;padding:2px 0 4px}
+.zap-audio .play{width:26px;height:26px;border-radius:50%;background:#3ddc84;color:#04240f;
+  display:flex;align-items:center;justify-content:center;font-size:10px;flex-shrink:0}
+.zap-onda{flex:1;display:flex;align-items:center;gap:2px;height:20px}
+.zap-onda i{flex:1;background:#4a6157;border-radius:2px}
+.zap-onda i:nth-child(3n){background:#5ce6a0}
+.zap-dur{font-size:10px;color:#6d7d74;font-weight:700}
+.zap-valor{display:inline-block;background:rgba(61,220,132,.16);border:1px solid rgba(61,220,132,.4);
+  color:#5ce6a0;font-weight:800;font-size:12px;padding:3px 9px;border-radius:7px;margin-top:6px}
+
+/* ============ POP-UP DO CUPOM ============ */
+.pop-bg{position:fixed;inset:0;z-index:200;background:rgba(6,4,10,.88);backdrop-filter:blur(7px);
+  display:none;align-items:center;justify-content:center;padding:20px}
+.pop-bg.on{display:flex;animation:popBg .3s ease both}
+@keyframes popBg{from{opacity:0}to{opacity:1}}
+.pop{position:relative;max-width:355px;width:100%;text-align:center;border-radius:24px;padding:30px 22px 24px;
+  background:linear-gradient(168deg,#241432,#140d1e 60%,#0f0a17);
+  border:1px solid rgba(255,45,120,.42);
+  box-shadow:0 0 60px rgba(255,45,120,.28),0 24px 70px rgba(0,0,0,.7);
+  animation:popIn .55s cubic-bezier(.2,1.35,.4,1) both}
+@keyframes popIn{from{opacity:0;transform:scale(.82) translateY(24px)}to{opacity:1;transform:none}}
+.pop-eyebrow{display:inline-block;font-size:10.5px;font-weight:800;letter-spacing:.14em;
+  text-transform:uppercase;color:#ffd76a;background:rgba(255,215,106,.12);
+  border:1px solid rgba(255,215,106,.34);padding:5px 12px;border-radius:20px;margin-bottom:16px}
+.pop-selo{width:118px;height:118px;margin:4px auto 16px;border-radius:50%;position:relative;
+  background:linear-gradient(140deg,#ff2d78,#8b3ff5);display:flex;flex-direction:column;
+  align-items:center;justify-content:center;box-shadow:0 0 0 8px rgba(255,45,120,.13),0 12px 34px rgba(255,45,120,.5);
+  animation:seloIn .7s cubic-bezier(.2,1.4,.4,1) .18s both}
+@keyframes seloIn{from{opacity:0;transform:scale(.4) rotate(-22deg)}to{opacity:1;transform:none}}
+.pop-selo b{font-size:39px;font-weight:900;letter-spacing:-.04em;line-height:1}
+.pop-selo span{font-size:12px;font-weight:800;letter-spacing:.16em;margin-top:1px}
+.pop h3{font-size:23px;font-weight:900;letter-spacing:-.03em;line-height:1.2;margin-bottom:10px}
+.pop p{font-size:14.5px;color:#c7bdd1;line-height:1.55;margin-bottom:9px}
+.pop p b{color:#fff}
+.pop-cta{width:100%;padding:16px;border-radius:14px;font-size:16px;font-weight:800;margin-top:16px;
+  background:linear-gradient(135deg,#ff2d78,#ff5c96);color:#fff;border:none;cursor:pointer;
+  font-family:inherit;box-shadow:0 10px 30px rgba(255,45,120,.5);letter-spacing:-.01em}
+.pop-cta:active{transform:scale(.985)}
+.pop-nao{display:block;width:100%;margin-top:13px;font-size:12px;color:#7a7185;
+  background:none;border:none;cursor:pointer;font-family:inherit;text-decoration:underline}
+.confete{position:absolute;top:-8px;width:8px;height:13px;border-radius:2px;opacity:0;
+  z-index:0;pointer-events:none;animation:cai 2.4s ease-in forwards}
+.pop > *:not(#confetes){position:relative;z-index:1}
+@keyframes cai{0%{opacity:1;transform:translateY(0) rotate(0)}
+               100%{opacity:0;transform:translateY(420px) rotate(560deg)}}
+
+/* ============ PRECO COM CUPOM ============ */
+.preco-de{font-size:30px;font-weight:800;color:#9b91a6;letter-spacing:-.03em;line-height:1.1}
+.preco-de.riscado{font-size:19px;text-decoration:line-through;text-decoration-color:#ff2d78;
+  text-decoration-thickness:2px;color:#8a8194;transition:.4s}
+.preco-tag{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:800;
+  letter-spacing:.06em;text-transform:uppercase;color:#04240f;background:#3ddc84;
+  padding:4px 10px;border-radius:20px;margin:8px 0 2px;
+  animation:tagIn .5s cubic-bezier(.2,1.4,.4,1) both}
+@keyframes tagIn{from{opacity:0;transform:scale(.6)}to{opacity:1;transform:none}}
+.preco-novo{animation:precoIn .6s cubic-bezier(.2,1.3,.4,1) both}
+@keyframes precoIn{from{opacity:0;transform:scale(.72)}to{opacity:1;transform:none}}
+.resgatar{display:none;margin:12px auto 0;font-size:13px;font-weight:800;color:#ff5c96;
+  background:rgba(255,45,120,.1);border:1px dashed rgba(255,45,120,.5);border-radius:11px;
+  padding:10px 16px;cursor:pointer;font-family:inherit}
+.cupom-timer{display:flex;align-items:center;justify-content:center;gap:8px;font-size:13px;
+  font-weight:700;color:#ffb4cd;background:rgba(255,45,120,.1);
+  border:1px solid rgba(255,45,120,.32);border-radius:11px;padding:10px 14px;margin-top:14px}
+.cupom-timer b{font-variant-numeric:tabular-nums;font-size:16px;font-weight:900;color:#fff}
+.cupom-timer.fim{color:#9b91a6;background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.1)}
+
 .disclaimer{font-size:11.5px;color:#78707f;line-height:1.55;margin-top:22px;padding-top:16px;border-top:1px solid rgba(255,255,255,.08)}
 @media(max-width:400px){h1{font-size:25.5px}h2{font-size:21px}p{font-size:16px}.price{font-size:42px}.big-num{font-size:48px}}
 </style>
@@ -889,8 +973,8 @@ strong{color:#fff}
 
 <!-- 22. OFERTA -->
 <section class="step" id="oferta" data-step="25">
-  <span class="eyebrow reveal d1">sua vaga</span>
-  <h2 class="reveal d1">a ferramenta e a comunidade, na mesma mensalidade</h2>
+  <span class="eyebrow reveal d1">o que vc leva</span>
+  <h2 class="reveal d1">tudo isso fica seu quando vc entra</h2>
   <div class="offer-card reveal d2">
     <ul class="incl">
       <li><span class="chk">✓</span><span><b>o Ju Studio, a ferramenta completa</b>cria as fotos e os vídeos da sua modelo com o rosto travado, e agenda os posts sozinho</span></li>
@@ -903,39 +987,87 @@ strong{color:#fff}
       <li><span class="chk">✓</span><span><b>ganhos e estratégias compartilhadas todo dia</b>vc vê o que tá funcionando agora e copia</span></li>
       <li><span class="chk">✓</span><span><b>atualização toda vez que o jogo muda</b>vc nunca fica pra trás</span></li>
     </ul>
-    <div class="center" style="margin-top:22px">
-      <div class="muted">sua vaga na comunidade</div>
-      <div class="price"><small>R$</small>97<span style="font-size:20px;font-weight:700;letter-spacing:-.01em">/mês</span></div>
-      <div class="muted">cancela quando quiser · acesso imediato</div>
+  </div>
+
+  <div class="chat reveal d3">e não é conversa minha não. olha o que chega no meu zap toda semana 👇</div>
+  <div class="zap-wrap reveal d3">
+    <div class="zap-topo"><span class="pt"></span> mensagens das meninas · essa semana</div>
+    <div id="zapWrap"></div>
+  </div>
+
+  <div class="chat reveal d4">toda vez que chega uma dessas eu lembro de mim, tomando ônibus lotado achando que ia ser sempre assim.</div>
+  <button class="cta reveal d5" onclick="goToStep('fechamento')">quero entrar também</button>
+  <p class="cta-sub reveal d5">falta só uma coisa pra te contar</p>
+</section>
+
+<!-- 27. FECHAMENTO: PRECO E CUPOM -->
+<section class="step" id="fechamento" data-step="26">
+  <span class="eyebrow reveal d1">sua vaga</span>
+  <h2 class="reveal d1">quanto custa entrar</h2>
+  <div class="chat reveal d2">eu podia cobrar mensalidade, mas eu odeio ficar presa a assinatura e imagino que vc também.</div>
+  <div class="chat reveal d2">então é <strong>uma vez só</strong>. paga e é seu pra sempre, com os créditos entrando todo mês.</div>
+
+  <div class="offer-card reveal d3">
+    <div class="center">
+      <div class="muted" id="precoLab">acesso vitalício</div>
+      <div class="preco-de" id="precoDe">R$ 497</div>
+      <div id="precoBloco" style="display:none">
+        <span class="preco-tag">🎁 cupom de <span id="tagPct">80%</span> aplicado</span>
+        <div class="price preco-novo"><small>R$</small><span id="precoPor">97</span></div>
+        <div class="muted">pagamento único · acesso imediato · pra sempre</div>
+      </div>
+      <button class="resgatar" id="resgatar" onclick="resgatarCupom()">🎁 resgatar meu cupom de 80%</button>
+      <div class="cupom-timer" id="cupomTimer" style="display:none">
+        <span class="pulse"></span> seu cupom expira em <b id="cupomRelogio">15:00</b>
+      </div>
       <div class="guarantee">
         <span class="ic">🛡️</span>
-        <div><b>7 dias de garantia</b>entrou, olhou tudo por dentro e achou que não é pra vc? me chama que eu devolvo os R$97. sem pergunta, sem enrolação.</div>
+        <div><b>7 dias de garantia</b>entrou, olhou tudo por dentro e achou que não é pra vc? me chama que eu devolvo tudo. sem pergunta, sem enrolação.</div>
       </div>
     </div>
-    <button class="cta" onclick="goToCheckout()">entrar na comunidade da Ju</button>
+    <button class="cta" onclick="goToCheckout()">garantir meu acesso vitalício</button>
     <p class="cta-sub">vc cai direto no grupo e já recebe o acesso ao Studio</p>
   </div>
-  <div class="scarcity reveal d3">
+
+  <div class="scarcity reveal d4">
     <span class="pulse"></span>
     <div style="flex:1">
       <div class="scarcity-txt">restam <span class="vagas-num" id="vagas">14</span> vagas nessa turma</div>
       <div class="vagas-bar"><div class="vagas-fill" id="vagasFill"></div></div>
     </div>
   </div>
-  <div class="chat reveal d4">e não me entenda mal. vc mesma viu quanto dinheiro entra com isso. se eu ensinasse de graça eu ia só aumentar a minha concorrência, né?</div>
-  <div class="chat reveal d5">então a barreira tem que existir. mas R$97 não é nada perto do que vc tira já no primeiro mês. é menos que um delivery de sexta.</div>
-  <div class="card reveal d5" style="margin-top:16px">
+
+  <div class="chat reveal d5">e não me entenda mal. vc mesma viu quanto dinheiro entra com isso. se eu ensinasse de graça eu ia só aumentar a minha concorrência, né?</div>
+  <div class="chat reveal d5">então a barreira tem que existir. mas com o cupom isso sai por menos do que vc tira na primeira semana. é menos que um delivery de sexta.</div>
+
+  <div class="card reveal d6" style="margin-top:16px">
+    <div class="obj"><div class="obj-q">é mensalidade mesmo?</div><p class="obj-a">não. vc paga uma vez e o acesso é vitalício. a comunidade, o Studio e os 5.000 créditos todo mês continuam seus, sem cobrança nova.</p></div>
     <div class="obj"><div class="obj-q">preciso aparecer em alguma foto?</div><p class="obj-a">nenhuma. em nenhum momento. o rosto do perfil é gerado do zero.</p></div>
     <div class="obj"><div class="obj-q">isso é permitido?</div><p class="obj-a">é. o privacy tem a categoria oficial de criadora de IA. vc marca lá e tá tudo certo.</p></div>
     <div class="obj"><div class="obj-q">preciso saber mexer com IA?</div><p class="obj-a">zero. vc já mexeu aqui em cima: escolhe a cena e clica em gerar. não tem comando pra decorar nem programa pra instalar, abre no celular igual instagram.</p></div>
     <div class="obj"><div class="obj-q">os créditos acabam?</div><p class="obj-a">são 5.000 por mês, e renovam todo mês. isso dá 500 fotos. as meninas usam bem menos que isso. o que sobrar não acumula pro mês seguinte.</p></div>
-    <div class="obj"><div class="obj-q">e se eu cancelar, perco a ferramenta?</div><p class="obj-a">perde. o Studio e os créditos fazem parte da assinatura. enquanto vc for da comunidade, é seu.</p></div>
     <div class="obj"><div class="obj-q">quanto tempo toma?</div><p class="obj-a">eu crio as imagens uma vez por semana e depois só posto e vendo no privado.</p></div>
   </div>
-  <button class="cta reveal d6" onclick="goToCheckout()">quero minha vaga por R$97/mês</button>
-  <p class="cta-sub reveal d6">te vejo lá dentro, amiga 💗</p>
-  <p class="disclaimer">os resultados citados são reais e foram obtidos pela criadora do método e por alunas da comunidade. eles não representam garantia de ganho: o resultado de cada pessoa depende de aplicação, dedicação e do mercado. conteúdo destinado exclusivamente a maiores de 18 anos. o acesso ao Ju Studio e os 5.000 créditos mensais fazem parte da assinatura: renovam a cada mês, não são cumulativos e encerram junto com ela. o método ensina criação de personagens de inteligência artificial, sem uso de imagem de pessoas reais, e orienta a identificação do perfil como criadora de IA conforme as regras das plataformas.</p>
+
+  <button class="cta reveal d7" onclick="goToCheckout()">quero minha vaga vitalícia</button>
+  <p class="cta-sub reveal d7">te vejo lá dentro, amiga 💗</p>
+  <p class="disclaimer">os resultados citados são reais e foram obtidos pela criadora do método e por alunas da comunidade. eles não representam garantia de ganho: o resultado de cada pessoa depende de aplicação, dedicação e do mercado. conteúdo destinado exclusivamente a maiores de 18 anos. o acesso é vitalício mediante pagamento único, e inclui 5.000 créditos mensais no Ju Studio, que renovam a cada mês e não são cumulativos. o cupom de desconto é válido apenas durante esta sessão. o método ensina criação de personagens de inteligência artificial, sem uso de imagem de pessoas reais, e orienta a identificação do perfil como criadora de IA conforme as regras das plataformas.</p>
 </section>
+
+<!-- POP-UP DO CUPOM -->
+<div class="pop-bg" id="popCupom">
+  <div class="pop">
+    <div id="confetes"></div>
+    <span class="pop-eyebrow">espera aí</span>
+    <div class="pop-selo"><b><span id="popPct">80</span>%</b><span>OFF</span></div>
+    <h3>vc desbloqueou um desconto</h3>
+    <p>de cada 10 meninas que começam esse teste, <b>7 largam no meio</b>. vc foi até o fim.</p>
+    <p>então eu vou fazer uma coisa que eu não faço pra todo mundo: <b>80% de desconto</b> no acesso vitalício, agora.</p>
+    <p style="color:#ff8ab0;font-size:13px">esse cupom vale só nessa tela. se vc sair, ele vai embora.</p>
+    <button class="pop-cta" onclick="aplicarCupom()">quero meu desconto 🎁</button>
+    <button class="pop-nao" onclick="recusarCupom()">continuar sem o desconto</button>
+  </div>
+</div>
 
 </div>
 
@@ -943,6 +1075,10 @@ strong{color:#fff}
 /* ==========================================================
    CONFIGURE AQUI
    ========================================================== */
+// ATENCAO: esse link ainda e o da ASSINATURA de R$97/mes.
+// A oferta agora e ACESSO VITALICIO por R$97 a vista. Crie o produto vitalicio
+// na PerfectPay e troque a URL abaixo, senao ela paga esperando acesso pra
+// sempre e recebe cobranca recorrente.
 const CHECKOUT_URL   = "https://go.perfectpay.com.br/PPU38CQFK13";
 const FATURAMENTO_30D = 34900;   // seu faturamento real dos ultimos 30 dias
 const VAGAS_TOTAL     = 50;      // tamanho da turma
@@ -955,6 +1091,22 @@ const MEMBROS_ONLINE  = 87;      // numero real aproximado de gente ativa na com
 const CREDITOS_MES = 5000;
 const CUSTO_FOTO   = 10;
 const CUSTO_VIDEO  = 100;
+
+// Oferta: acesso vitalico ancorado em R$497, com cupom de 80% na ultima etapa.
+const PRECO_CHEIO   = 497;
+const PRECO_CUPOM   = 97;    // 80% de 497 daria 99,40; 97 e o numero redondo do funil
+const CUPOM_PCT     = 80;
+const CUPOM_MINUTOS = 15;    // 0 = o cupom nunca expira
+
+// depoimentos que chegam no zap da Ju. nomes trocados, elas sao anonimas.
+const ZAPS = [
+  {nome:"Duda", hora:"09:14", txt:"ju eu to tremendo aqui kkkkk acabei de receber a notificação do primeiro assinante"},
+  {nome:"Tati", hora:"11:02", txt:"amiga saquei essa semana. eu ganho 1.100 no meu trampo de 8h por dia viu", valor:"R$ 1.240"},
+  {nome:"Nina", hora:"14:47", audio:"0:34"},
+  {nome:"Bia",  hora:"19:23", txt:"gente eu tava com MUITO medo de ficar com cara de robô mas nossa, ficou real demais. mostrei pra minha irmã e ela perguntou quem era a menina 😭"},
+  {nome:"Rafa", hora:"21:56", txt:"paguei meu aluguel com a Lari esse mês kkkkkk minha modelo trabalha mais que eu", valor:"R$ 890"},
+  {nome:"Duda", hora:"23:11", txt:"ja to montando a segunda modelo. tem homem procurando coisa que vc nem imagina amiga"}
+];
 
 // feed de vendas: tipos de venda, sem nome de pessoa
 const VENDAS = [
@@ -1062,7 +1214,7 @@ const state = {};
 const order = ["lp","q_meta","analise","q_dor","q_trampo","espelho","historia","virada",
                "studio_reveal","q_modelo","batismo","studio_sim","studio_video","creditos",
                "prova_ju","q_medo","quebra","depoimentos","q_tempo","matematica",
-               "q_sonho","projecao","comunidade","dentro","urgencia","oferta"];
+               "q_sonho","projecao","comunidade","dentro","urgencia","oferta","fechamento"];
 let current = "lp";
 let toastTimer = null;
 
@@ -1137,7 +1289,8 @@ function goToStep(id, push){
   if(id === "dentro")      montarChat();
   // o InitiateCheckout fica so na PerfectPay, pra nao poluir o evento que a
   // campanha otimiza. aqui a etapa de oferta so anima as vagas e as vendas.
-  if(id === "oferta")     { animarVagas(); startToasts(6500); }
+  if(id === "oferta")     { montarZaps(); startToasts(7000); }
+  if(id === "fechamento") { animarVagas(); startToasts(8000); abrirCupom(); }
 }
 
 // alguns navegadores do celular ignoram scrollTo com behavior, e o Safari
@@ -1163,6 +1316,8 @@ function answer(key, value, next){
 
 function goToCheckout(){
   if(typeof fbq === "function") fbq("track","AddToCart");
+  state.preco = cupomAtivo ? PRECO_CUPOM : PRECO_CHEIO;
+  if(cupomAtivo) state.cupom = CUPOM_PCT + "OFF";
   window.location.href = CHECKOUT_URL + "?" + new URLSearchParams(state).toString();
 }
 
@@ -1478,6 +1633,135 @@ function startToasts(intervalo){
   toastTimer = setInterval(fire, intervalo);
 }
 function stopToasts(){ if(toastTimer){ clearInterval(toastTimer); toastTimer = null; } }
+
+/* ============ DEPOIMENTOS DE ZAP ============ */
+function montarZaps(){
+  const wrap = document.getElementById("zapWrap");
+  if(wrap.dataset.done) return;
+  wrap.dataset.done = "1";
+
+  wrap.innerHTML = ZAPS.map(z => {
+    const inicial = z.nome.charAt(0).toUpperCase();
+    let corpo;
+    if(z.audio){
+      // barrinhas de altura variada pra parecer forma de onda de verdade
+      let onda = "";
+      for(let i = 0; i < 26; i++) onda += '<i style="height:' + (5 + (i*7 % 15)) + 'px"></i>';
+      corpo = '<div class="zap-audio"><span class="play">▶</span>' +
+              '<span class="zap-onda">' + onda + '</span>' +
+              '<span class="zap-dur">' + z.audio + '</span></div>';
+    } else {
+      corpo = z.txt + (z.valor ? '<div><span class="zap-valor">💸 ' + z.valor + '</span></div>' : "");
+    }
+    return '<div class="zap">' +
+      '<div class="zap-av">' + inicial + '</div>' +
+      '<div class="zap-bolha"><div class="zap-nome">' + z.nome + '</div>' + corpo +
+      '<div class="zap-hora">' + z.hora + ' <span class="ck">✓✓</span></div></div></div>';
+  }).join("");
+
+  wrap.querySelectorAll(".zap").forEach((z, i) =>
+    setTimeout(() => z.classList.add("on"), 260 + i*420));
+}
+
+/* ============ CUPOM DE 80% ============ */
+let cupomAtivo = false, cupomTimer = null, popMostrado = false;
+
+function abrirCupom(){
+  if(cupomAtivo || popMostrado) return;
+  popMostrado = true;
+  // ela vê o preço cheio antes: sem essa pausa não existe âncora pro desconto
+  setTimeout(() => {
+    document.getElementById("popPct").textContent = CUPOM_PCT;
+    soltarConfete();
+    document.getElementById("popCupom").classList.add("on");
+    if(typeof fbq === "function") fbq("trackCustom","CupomAberto");
+  }, 1500);
+}
+
+function soltarConfete(){
+  const cores = ["#ff2d78","#8b3ff5","#3ddc84","#ffd76a","#ff5c96"];
+  const box = document.getElementById("confetes");
+  box.innerHTML = "";
+  for(let i = 0; i < 16; i++){
+    const c = document.createElement("i");
+    c.className = "confete";
+    c.style.left = (4 + Math.random()*92) + "%";
+    c.style.background = cores[i % cores.length];
+    c.style.animationDelay = (Math.random()*.5) + "s";
+    c.style.animationDuration = (1.9 + Math.random()*1.1) + "s";
+    box.appendChild(c);
+  }
+}
+
+function aplicarCupom(){
+  document.getElementById("popCupom").classList.remove("on");
+  if(cupomAtivo) return;
+  cupomAtivo = true;
+  state.cupom = CUPOM_PCT + "OFF"; saveState();
+  if(typeof fbq === "function") fbq("trackCustom","CupomAplicado");
+
+  const de = document.getElementById("precoDe");
+  document.getElementById("precoLab").textContent = "acesso vitalício, de";
+  de.classList.add("riscado");
+  document.getElementById("tagPct").textContent = CUPOM_PCT + "%";
+  document.getElementById("precoPor").textContent = PRECO_CUPOM;
+  document.getElementById("precoBloco").style.display = "block";
+  showToast("cupom de " + CUPOM_PCT + "% aplicado", "R$ " + PRECO_CUPOM, "agora");
+
+  if(CUPOM_MINUTOS > 0) rodarRelogio(CUPOM_MINUTOS * 60);
+}
+
+// o botao secundario fecha sem aplicar; o cupom continua resgatavel ali mesmo
+function recusarCupom(){
+  document.getElementById("popCupom").classList.remove("on");
+  const btn = document.getElementById("resgatar");
+  if(btn) btn.style.display = "block";
+}
+
+function resgatarCupom(){
+  const btn = document.getElementById("resgatar");
+  if(btn) btn.style.display = "none";
+  soltarConfete();
+  document.getElementById("popCupom").classList.add("on");
+}
+
+function rodarRelogio(segundos){
+  const box = document.getElementById("cupomTimer");
+  const rel = document.getElementById("cupomRelogio");
+  box.style.display = "flex";
+
+  // o prazo fica guardado: se ela recarregar a pagina o relogio nao volta do zero
+  let fim;
+  try{
+    fim = parseInt(localStorage.getItem("quiz_ju_cupom_fim") || "0", 10);
+    if(!fim || fim < Date.now()){
+      fim = Date.now() + segundos*1000;
+      localStorage.setItem("quiz_ju_cupom_fim", String(fim));
+    }
+  }catch(e){ fim = Date.now() + segundos*1000; }
+
+  clearInterval(cupomTimer);
+  const tick = () => {
+    const resta = Math.max(0, Math.round((fim - Date.now())/1000));
+    const m = String(Math.floor(resta/60)).padStart(2,"0");
+    const seg = String(resta % 60).padStart(2,"0");
+    rel.textContent = m + ":" + seg;
+    if(resta <= 0){ clearInterval(cupomTimer); expirarCupom(); }
+  };
+  tick();
+  cupomTimer = setInterval(tick, 1000);
+}
+
+function expirarCupom(){
+  cupomAtivo = false;
+  delete state.cupom; saveState();
+  document.getElementById("precoBloco").style.display = "none";
+  document.getElementById("precoDe").classList.remove("riscado");
+  document.getElementById("precoLab").textContent = "acesso vitalício";
+  const box = document.getElementById("cupomTimer");
+  box.classList.add("fim");
+  box.innerHTML = "seu cupom de " + CUPOM_PCT + "% expirou";
+}
 
 /* ============ CONTADORES ============ */
 let contadorRan = false;

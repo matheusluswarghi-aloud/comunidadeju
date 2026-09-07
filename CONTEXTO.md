@@ -36,9 +36,13 @@ modelo em `img/modelos/`.
 
 ## Oferta e conversão
 
-- **Preço:** R$97/mês, com 7 dias de garantia (devolução sem pergunta). Inclui a
-  comunidade **e** o Ju Studio com 5.000 créditos/mês. Sem tabela de ancoragem: a
-  decisão foi não comparar preços com concorrente.
+- **Preço:** **acesso vitalício**, pagamento único. Ancorado em R$497 e fechado em R$97
+  via cupom de 80% liberado num pop-up na última etapa. 7 dias de garantia. Inclui a
+  comunidade **e** o Ju Studio com 5.000 créditos/mês, que continuam entrando para
+  sempre. Sem tabela comparativa de preço com concorrente — decisão explícita.
+- ⚠️ **O `CHECKOUT_URL` ainda aponta para a assinatura mensal** (`PPU38CQFK13`). Precisa
+  virar um produto vitalício na PerfectPay, senão ela paga esperando acesso definitivo e
+  recebe cobrança recorrente. Há um comentário no código marcando isso.
 - **Créditos:** 1 foto = 10 créditos, 1 vídeo de 5s = 100. Então 5.000/mês = 500 fotos
   ou 50 vídeos. Renovam todo mês, não acumulam. As constantes vivem no topo do
   `<script>`: `CREDITOS_MES`, `CUSTO_FOTO`, `CUSTO_VIDEO`.
@@ -49,20 +53,25 @@ modelo em `img/modelos/`.
   disparo redundante manual com `fbc`/`fbp` porque o `fbevents.js` estava travando a fila.
 - Números que aparecem na simulação de ganhos: assinatura R$29,90/mês, pack médio R$80.
 
-## Estrutura do quiz — 26 etapas
+## Estrutura do quiz — 27 etapas
 
-`data-step` 0 a 25, todas `<section class="step">` no mesmo HTML:
+`data-step` 0 a 26, todas `<section class="step">` no mesmo HTML:
 
 ```
 0  lp             8  studio_reveal    16 quebra          24 urgencia
 1  q_meta         9  q_modelo         17 depoimentos     25 oferta
-2  analise       10  batismo          18 q_tempo
+2  analise       10  batismo          18 q_tempo         26 fechamento
 3  q_dor         11  studio_sim       19 matematica
 4  q_trampo      12  studio_video     20 q_sonho
 5  espelho       13  creditos         21 projecao
 6  historia      14  prova_ju         22 comunidade
 7  virada        15  q_medo           23 dentro
 ```
+
+**A oferta é dividida em duas etapas de propósito:** `oferta` mostra só o que ela leva
+(a lista de entregáveis) mais depoimentos em formato de conversa de WhatsApp — bolhas,
+áudio com forma de onda, valores sacados, checks azuis (`ZAPS` no script). Nenhum preço
+aparece ali. `fechamento` é onde o preço entra.
 
 O bloco do Studio (8, 11, 12, 13) é o que mudou o funil:
 
@@ -79,6 +88,19 @@ O bloco do Studio (8, 11, 12, 13) é o que mudou o funil:
 - **`studio_video`** — o `video/tour.mp4`. O `src` só é atribuído quando ela chega na
   etapa (`tocarTour()`), então quem não chega lá nunca baixa o arquivo.
 - **`creditos`** — a matemática dos 5.000 créditos.
+
+E o fechamento com cupom:
+
+- **`fechamento`** — mostra R$497 por 1,5s (a âncora precisa existir antes do desconto),
+  então o pop-up entra com confete e o selo de 80%. Ao aceitar, o 497 risca, o 97 aparece
+  e começa um relógio de 15 minutos.
+- **Caminhos alternativos, todos testados:** recusar o cupom deixa o preço em R$497 e
+  mostra um botão para resgatar depois; ao expirar, o preço **volta mesmo** para R$497 e
+  o timer diz que expirou. O prazo fica em `localStorage` (`quiz_ju_cupom_fim`), então
+  recarregar a página não reinicia o relógio.
+- Constantes no topo do script: `PRECO_CHEIO`, `PRECO_CUPOM`, `CUPOM_PCT` e
+  `CUPOM_MINUTOS` (0 desliga a expiração). Eventos novos no pixel: `CupomAberto` e
+  `CupomAplicado`; o cupom e o preço vão como parâmetro na URL do checkout.
 
 A antiga etapa `demo` (step 8, com `rodarDemo`/`venderDemo`) foi **removida**: o
 simulador faz o mesmo papel, depois do batismo e com a modelo dela.
