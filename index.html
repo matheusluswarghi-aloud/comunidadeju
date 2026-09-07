@@ -1270,7 +1270,15 @@ function goToStep(id, push){
   irParaOTopo();
   nxt.querySelectorAll(".reveal").forEach(el=>{ el.style.animation="none"; void el.offsetWidth; el.style.animation=""; });
   if(push !== false){ try{ history.pushState({step:id},"","#"+id); }catch(e){} }
-  if(typeof fbq === "function") fbq("trackCustom","QuizStep",{step:id,index:order.indexOf(id)});
+  // dois eventos de proposito: o QuizStep agregado (serie historica, ja rodando) e
+  // um evento por etapa. o Meta nao quebra evento customizado por parametro, entao
+  // sem o segundo nao da pra ver a queda etapa a etapa. o indice no nome mantem o
+  // funil na ordem certa quando os eventos vem em lista.
+  if(typeof fbq === "function"){
+    const i = order.indexOf(id);
+    fbq("trackCustom","QuizStep",{step:id,index:i});
+    fbq("trackCustom","QZ_" + String(i).padStart(2,"0") + "_" + id);
+  }
 
   stopToasts();
   if(id === "analise")     rodarAnalise();
