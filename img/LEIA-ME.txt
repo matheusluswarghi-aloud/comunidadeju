@@ -53,6 +53,31 @@ modelos/madura
 
 Formato ideal: vertical ou quadrada, tipo 800x1000.
 
+OPCIONAL, MAS DEIXA MUITO MELHOR:
+Suba mais 3 fotos DA MESMA modelo, em cenas diferentes:
+
+   modelos/loira-2    modelos/loira-3    modelos/loira-4
+   modelos/morena-2   modelos/morena-3   ...
+
+O simulador do Ju Studio, na etapa em que ela gera as 4 fotos,
+usa essas variacoes. Sem elas ele mostra a mesma foto em quatro
+enquadramentos diferentes, que funciona, mas quem olha com atencao
+percebe que e a mesma imagem.
+Numere sem pular: se faltar a -3, ele para na -2.
+
+-----------------------------------------------------
+PRINTS DO JU STUDIO  (pasta "studio")
+-----------------------------------------------------
+Esses NAO precisam ser subidos: sao gerados automaticamente
+a partir da tela do Studio. Para refazer depois de mexer no
+layout dele:
+
+   cd ~/Desktop/justudio
+   python3 -m http.server 8080     (deixe rodando em outra aba)
+   node captura.mjs
+
+Isso regrava os 5 prints em img/studio/ e o video em video/tour.mp4.
+
 -----------------------------------------------------
 EXEMPLOS DE NOME COMPLETO
 -----------------------------------------------------

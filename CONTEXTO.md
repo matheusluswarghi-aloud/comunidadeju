@@ -1,13 +1,18 @@
 # Contexto — Comunidade da Ju
 
-> Documento de retomada. Reconstruído a partir do código, do git e dos arquivos da pasta
-> em 07/09/2026. Última atividade real do projeto: 26/08/2026.
+> Documento de retomada. Reconstruído a partir do código em 07/09/2026 e atualizado no
+> mesmo dia, quando o Ju Studio entrou na oferta.
 
 ## O que é
 
 Funil de venda em formato de **quiz interativo** para a "Comunidade da Ju" — comunidade
 paga que ensina mulheres a monetizar em plataformas de conteúdo adulto por assinatura
 (Privacy / OnlyFans). A persona que fala em primeira pessoa no quiz é a **Ju**.
+
+Desde 07/09/2026 a mensalidade inclui também o **Ju Studio**, a ferramenta de geração de
+imagem e vídeo, com **5.000 créditos mensais**. Isso mudou o eixo do funil: o quiz não
+vende mais só o método, vende a máquina. A dificuldade de fazer IA que não fica "zoada"
+deixou de ser a janela de oportunidade e virou a objeção que o produto resolve.
 
 Promessa do topo: *"descubra como garotas comuns estão fazendo até R$8.700 por semana
 sem sair de casa e sem acordar cedo"*.
@@ -20,16 +25,23 @@ sem sair de casa e sem acordar cedo"*.
 | Repo | https://github.com/matheusluswarghi-aloud/comunidadeju (**público**) |
 | Vercel | projeto `comunidadeju` (`prj_EyElDEYlDKaR2Dkpjc55CAGOoIx0`) |
 | Deploy | `vercel deploy --prod --yes` a partir da raiz |
-| Quiz | `index.html` (~1.260 linhas, página única, tudo inline) |
-| Ferramenta auxiliar | `ferramenta/index.html` — "Ju Studio — Gerador de Modelos IA" |
+| Quiz | `index.html` (~1.700 linhas, página única, tudo inline) |
+| Ferramenta auxiliar | `ferramenta/index.html` — cópia antiga do MVP do Studio |
 | Imagens | `img/` (ver `img/LEIA-ME.txt` com a convenção de nomes) |
+| Prints do Studio | `img/studio/*.jpg` (web, 900px) e `img/studio/hd/*.png` (@2x, para criativo) |
+| Vídeo do tour | `video/tour.mp4` (19s, 353KB) + `tour.jpg` de poster |
 
 Projeto irmão: `~/Desktop/justudio` — versão standalone do Ju Studio, mesmas fotos de
 modelo em `img/modelos/`.
 
 ## Oferta e conversão
 
-- **Preço:** R$97/mês, com 7 dias de garantia (devolução sem pergunta).
+- **Preço:** R$97/mês, com 7 dias de garantia (devolução sem pergunta). Inclui a
+  comunidade **e** o Ju Studio com 5.000 créditos/mês. Sem tabela de ancoragem: a
+  decisão foi não comparar preços com concorrente.
+- **Créditos:** 1 foto = 10 créditos, 1 vídeo de 5s = 100. Então 5.000/mês = 500 fotos
+  ou 50 vídeos. Renovam todo mês, não acumulam. As constantes vivem no topo do
+  `<script>`: `CREDITOS_MES`, `CUSTO_FOTO`, `CUSTO_VIDEO`.
 - **Checkout:** PerfectPay — `https://go.perfectpay.com.br/PPU38CQFK13`
   (constante `CHECKOUT_URL` no `index.html`).
 - **Pixel da Meta:** `1583309593342549`. O `InitiateCheckout` foi **removido do quiz** de
@@ -37,24 +49,60 @@ modelo em `img/modelos/`.
   disparo redundante manual com `fbc`/`fbp` porque o `fbevents.js` estava travando a fila.
 - Números que aparecem na simulação de ganhos: assinatura R$29,90/mês, pack médio R$80.
 
-## Estrutura do quiz — 22 etapas
+## Estrutura do quiz — 26 etapas
 
-`data-step` 0 a 21, todas `<section class="step">` no mesmo HTML:
+`data-step` 0 a 25, todas `<section class="step">` no mesmo HTML:
 
-0 `lp` · 1 `q_meta` · 2 `analise` · 3 `q_dor` · 4 `q_trampo` · 5 `espelho` ·
-6 `historia` · 7 `virada` · 8 `demo` · 9 `q_modelo` · 10 `batismo` · 11 `prova_ju` ·
-12 `q_medo` · 13 `quebra` · 14 `depoimentos` · 15 `q_tempo` + `matematica` ·
-16 `q_sonho` · 17 `projecao` · 18 `comunidade` · 19 `dentro` · 20 `urgencia` ·
-21 `oferta`
+```
+0  lp             8  studio_reveal    16 quebra          24 urgencia
+1  q_meta         9  q_modelo         17 depoimentos     25 oferta
+2  analise       10  batismo          18 q_tempo
+3  q_dor         11  studio_sim       19 matematica
+4  q_trampo      12  studio_video     20 q_sonho
+5  espelho       13  creditos         21 projecao
+6  historia      14  prova_ju         22 comunidade
+7  virada        15  q_medo           23 dentro
+```
 
-Lógica do funil: pergunta de meta financeira (R$500 / 1.000 / 2.000 / 5.000+) →
-personalização com o número dela → história da Ju → prova social (saques, dashboard,
-depoimentos) → quebra de objeção (medo) → matemática dos ganhos → projeção 3 meses →
-bastidores da comunidade → urgência → oferta R$97.
+O bloco do Studio (8, 11, 12, 13) é o que mudou o funil:
 
-A escolha de modelo (`q_modelo` → `batismo`) faz a pessoa **dar um nome à modelo dela**,
-e o quiz mostra a foto correspondente de `img/modelos/`: loira, morena, gordinha, ruiva,
-madura.
+- **`studio_reveal`** — "o problema nunca foi a IA, foi a IA mal feita". Comparativo
+  lado a lado usando a **mesma** foto de modelo, a da esquerda com filtro de cara-de-IA
+  (`saturate/contrast/hue-rotate` no CSS, classe `.vs-item.ruim`). É ilustração e está
+  legendado como tal.
+- **`studio_sim`** — réplica mobile do Studio, interativa. Ela escolhe cenário, roupa e
+  luz em chips reais, o prompt se reescreve sozinho, e ao clicar em gerar nascem 4 fotos
+  da modelo que ela batizou enquanto os créditos caem de 5.000 para 4.960. Dispara
+  `fbq trackCustom StudioGerou` — sinal de engajamento forte para a campanha.
+  As 4 fotos usam `modelos/<tipo>-2/-3/-4` se existirem; senão, enquadramentos
+  diferentes da mesma foto (classes `.stu-card.c0` a `.c3`).
+- **`studio_video`** — o `video/tour.mp4`. O `src` só é atribuído quando ela chega na
+  etapa (`tocarTour()`), então quem não chega lá nunca baixa o arquivo.
+- **`creditos`** — a matemática dos 5.000 créditos.
+
+A antiga etapa `demo` (step 8, com `rodarDemo`/`venderDemo`) foi **removida**: o
+simulador faz o mesmo papel, depois do batismo e com a modelo dela.
+
+Fluxo geral: meta financeira → dor → história da Ju → revelação da ferramenta → ela cria
+e batiza a modelo → **usa o Studio** → vê o tour → entende os créditos → prova social →
+quebra de objeção → matemática → projeção → comunidade → urgência → oferta.
+
+## Como regravar prints e vídeo
+
+O Studio de captura é `~/Desktop/justudio/index.html` (5 telas: gerar, vídeo, modelos,
+agendador, ganhos; `?rec=1` liga o cursor falso e as legendas). Para refazer tudo depois
+de mexer no layout:
+
+```bash
+cd ~/Desktop/justudio
+python3 -m http.server 8080     # deixe rodando
+node captura.mjs                # prints + vídeo
+node captura.mjs prints         # só os prints
+```
+
+O vídeo é gravado em 1180×760 e recortado em 4:5 por cena (`CENAS` no `captura.mjs`),
+porque UI de desktop fica ilegível a 350px de largura no celular. As legendas grandes
+são desenhadas no DOM e normalizadas pelo zoom de cada recorte.
 
 ## Convenção das imagens (resumo do LEIA-ME)
 
@@ -95,8 +143,14 @@ eaaf147  PageView com parametros de atribuicao (fbc/fbp)
 
 ## Pontas soltas / o que verificar ao retomar
 
-- O `ferramenta/index.html` (Ju Studio) não tem chamada de API no código — é só layout,
-  a geração de imagem não foi ligada.
+- **O Ju Studio real ainda não existe como produto.** O backend de geração foi feito com
+  o Gemini, mas o front definitivo não. O que está em `~/Desktop/justudio` é a versão de
+  captura — serve de esqueleto para o produto, e é dele que saem os prints e o vídeo.
+  Esse é o próximo trabalho combinado.
+- `ferramenta/index.html` é uma cópia antiga do MVP e está desatualizada em relação ao
+  `justudio`. Ou sincronizar ou apagar.
+- Se ele subir `img/modelos/<tipo>-2.jpg`, `-3` e `-4`, o simulador melhora sozinho —
+  passa a mostrar 4 fotos de verdade em vez de 4 enquadramentos da mesma.
 - Não existe registro de resultado: nenhum dado de tráfego, CPA ou conversão foi salvo
   na pasta. Se rodou anúncio, os números estão só no Meta Ads / PerfectPay.
 - Não há transcript de sessão do Claude Code guardado para esta pasta — este documento
