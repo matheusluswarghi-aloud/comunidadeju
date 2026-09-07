@@ -56,15 +56,17 @@ modelo em `img/modelos/`.
 `data-step` 0 a 26, todas `<section class="step">` no mesmo HTML:
 
 ```
-0  lp             8  studio_reveal    16 quebra          24 urgencia
-1  q_meta         9  q_modelo         17 depoimentos     25 oferta
-2  analise       10  batismo          18 q_tempo         26 fechamento
-3  q_dor         11  studio_sim       19 matematica
-4  q_trampo      12  studio_video     20 q_sonho
-5  espelho       13  creditos         21 projecao
-6  historia      14  prova_ju         22 comunidade
-7  virada        15  q_medo           23 dentro
+0  lp             8  studio_reveal    15 quebra          23 urgencia
+1  q_meta         9  q_modelo         16 depoimentos     24 oferta
+2  analise       10  batismo          17 q_tempo         25 fechamento
+3  q_dor         11  studio_video     18 matematica
+4  q_trampo      12  creditos         19 q_sonho
+5  espelho       13  prova_ju         20 projecao
+6  historia      14  q_medo           21 comunidade
+7  virada                             22 dentro
 ```
+
+(`studio_sim` está fora do fluxo — ver abaixo.)
 
 **A oferta é dividida em duas etapas de propósito:** `oferta` mostra só o que ela leva
 (a lista de entregáveis) mais depoimentos em formato de conversa de WhatsApp — bolhas,
@@ -77,7 +79,12 @@ O bloco do Studio (8, 11, 12, 13) é o que mudou o funil:
   lado a lado usando a **mesma** foto de modelo, a da esquerda com filtro de cara-de-IA
   (`saturate/contrast/hue-rotate` no CSS, classe `.vs-item.ruim`). É ilustração e está
   legendado como tal.
-- **`studio_sim`** — réplica mobile do Studio, interativa. Ela escolhe cenário, roupa e
+- **`studio_sim`** — ⚠️ **fora do fluxo desde 07/09/2026.** Está no HTML, mas não no
+  array `order`, e o batismo pula direto para `studio_video`. Motivo: ele deixa a pessoa
+  escolher praia/academia/carro e hoje devolveria sempre a mesma foto, porque só existe
+  uma imagem por modelo. Para religar: pôr `"studio_sim"` de volta no `order` (entre
+  `batismo` e `studio_video`) e apontar o CTA do batismo para ela. Descrição do que ele
+  faz: réplica mobile do Studio, interativa. Ela escolhe cenário, roupa e
   luz em chips reais, o prompt se reescreve sozinho, e ao clicar em gerar nascem 4 fotos
   da modelo que ela batizou enquanto os créditos caem de 5.000 para 4.960. Dispara
   `fbq trackCustom StudioGerou` — sinal de engajamento forte para a campanha.

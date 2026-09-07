@@ -730,7 +730,7 @@ strong{color:#fff}
     </div>
     <div class="chat reveal d2"><strong data-bind="nomeModelo"></strong> tá pronta. agora ela é sua, e ela não existe em lugar nenhum do mundo.</div>
     <div class="chat reveal d3">o rosto dela ficou travado. de agora em diante, toda foto que vc pedir sai com essa mesma cara.</div>
-    <button class="cta reveal d4" onclick="goToStep('studio_sim')">quero ver ela em outras fotos</button>
+    <button class="cta reveal d4" onclick="goToStep('studio_video')">quero ver a ferramenta funcionando</button>
   </div>
 </section>
 
@@ -1044,7 +1044,7 @@ strong{color:#fff}
     <div class="obj"><div class="obj-q">é mensalidade mesmo?</div><p class="obj-a">não. vc paga uma vez e o acesso é vitalício. a comunidade, o Studio e os 5.000 créditos todo mês continuam seus, sem cobrança nova.</p></div>
     <div class="obj"><div class="obj-q">preciso aparecer em alguma foto?</div><p class="obj-a">nenhuma. em nenhum momento. o rosto do perfil é gerado do zero.</p></div>
     <div class="obj"><div class="obj-q">isso é permitido?</div><p class="obj-a">é. o privacy tem a categoria oficial de criadora de IA. vc marca lá e tá tudo certo.</p></div>
-    <div class="obj"><div class="obj-q">preciso saber mexer com IA?</div><p class="obj-a">zero. vc já mexeu aqui em cima: escolhe a cena e clica em gerar. não tem comando pra decorar nem programa pra instalar, abre no celular igual instagram.</p></div>
+    <div class="obj"><div class="obj-q">preciso saber mexer com IA?</div><p class="obj-a">zero. vc viu ali em cima como é: escolhe a cena numa lista e clica em gerar. não tem comando pra decorar nem programa pra instalar, abre no celular igual instagram.</p></div>
     <div class="obj"><div class="obj-q">os créditos acabam?</div><p class="obj-a">são 5.000 por mês, e renovam todo mês. isso dá 500 fotos. as meninas usam bem menos que isso. o que sobrar não acumula pro mês seguinte.</p></div>
     <div class="obj"><div class="obj-q">quanto tempo toma?</div><p class="obj-a">eu crio as imagens uma vez por semana e depois só posto e vendo no privado.</p></div>
   </div>
@@ -1172,7 +1172,7 @@ const MEDOS = {
   },
   tecnologia:{
     t:"acha que não vai conseguir mexer?",
-    a:"amiga, vc acabou de mexer. aquela tela que vc usou pra criar a sua modelo é a ferramenta de verdade: escolhe a cena, clica, espera 8 segundos.",
+    a:"amiga, é escolher a cena numa lista e clicar em gerar. em 8 segundos as fotos tão prontas na tela.",
     b:"não tem comando pra decorar, não tem programa pra instalar. tem menina de 40 e poucos anos lá dentro que nunca tinha usado nem canva."
   },
   caraia:{
@@ -1209,8 +1209,13 @@ const SONHO_TXT = {
    ESTADO E NAVEGACAO
    ========================================================== */
 const state = {};
+// O simulador (studio_sim) esta FORA do fluxo enquanto nao houver foto de cada
+// modelo em cada cena: ele deixa a pessoa escolher praia/academia/carro e hoje
+// devolveria sempre a mesma imagem. A secao continua no HTML — pra religar,
+// basta pos "studio_sim" de volta no array abaixo e apontar o CTA do batismo
+// (goToStep) de volta pra ela.
 const order = ["lp","q_meta","analise","q_dor","q_trampo","espelho","historia","virada",
-               "studio_reveal","q_modelo","batismo","studio_sim","studio_video","creditos",
+               "studio_reveal","q_modelo","batismo","studio_video","creditos",
                "prova_ju","q_medo","quebra","depoimentos","q_tempo","matematica",
                "q_sonho","projecao","comunidade","dentro","urgencia","oferta","fechamento"];
 let current = "lp";
