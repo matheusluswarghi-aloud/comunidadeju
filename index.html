@@ -1414,8 +1414,17 @@ function registrarPasso(indice, id){
       i: indice,
       t: id,
       f: (lerOrigem().utm_source || "direto"),
-      // ligado so pelos meus testes automatizados, via sessionStorage
-      teste: (function(){ try{ return sessionStorage.getItem("quiz_ju_teste") === "1"; }catch(e){ return false; } })()
+      // marca a sessao como teste: ?qa=1 na URL, ou sessionStorage pelos
+      // testes automatizados. Sessao marcada ganha prefixo zzteste e pode ser
+      // apagada sem levar trafego real junto.
+      teste: (function(){
+        try{
+          if(new URLSearchParams(location.search).get("qa") === "1"){
+            sessionStorage.setItem("quiz_ju_teste","1");
+          }
+          return sessionStorage.getItem("quiz_ju_teste") === "1";
+        }catch(e){ return false; }
+      })()
     });
     if(navigator.sendBeacon){
       navigator.sendBeacon("/api/passo", new Blob([corpo], {type:"application/json"}));
