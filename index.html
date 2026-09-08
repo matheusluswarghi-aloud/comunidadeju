@@ -1296,12 +1296,11 @@ function goToStep(id, push){
   // um evento por etapa. o Meta nao quebra evento customizado por parametro, entao
   // sem o segundo nao da pra ver a queda etapa a etapa. o indice no nome mantem o
   // funil na ordem certa quando os eventos vem em lista.
+  const iEtapa = order.indexOf(id);
+  registrarPasso(iEtapa, id);
   if(typeof fbq === "function"){
-    const i = order.indexOf(id);
-    pxEvento("QuizStep",{step:id,index:i},true);
-    pxEvento("QZ_" + String(i).padStart(2,"0") + "_" + id,null,true);
-    fbq("trackCustom","QuizStep",{step:id,index:i});
-    fbq("trackCustom","QZ_" + String(i).padStart(2,"0") + "_" + id);
+    pxEvento("QuizStep",{step:id,index:iEtapa},true);
+    fbq("trackCustom","QuizStep",{step:id,index:iEtapa});
   }
 
   stopToasts();
@@ -1352,6 +1351,43 @@ const UTM_CHAVES = ["utm_source","utm_medium","utm_campaign","utm_content","utm_
 function lerOrigem(){
   try{ return JSON.parse(localStorage.getItem("quiz_ju_origem") || "{}"); }
   catch(e){ return {}; }
+}
+
+/* ============ RETENCAO POR TELA ============ */
+// O Meta descarta um evento por tela (27 nomes distintos de baixo volume caem
+// fora do limite de eventos personalizados), entao a retencao do quiz e medida
+// aqui e guardada por nos. Um registro por tela alcancada, por sessao.
+const PASSOS_ENVIADOS = new Set();
+
+function sessaoQuiz(){
+  try{
+    let s = sessionStorage.getItem("quiz_ju_sessao");
+    if(!s){
+      s = (Date.now().toString(36) + Math.random().toString(36).slice(2, 8)).slice(-14);
+      sessionStorage.setItem("quiz_ju_sessao", s);
+    }
+    return s;
+  }catch(e){ return "anon" + Math.random().toString(36).slice(2, 8); }
+}
+
+// nao pode atrasar nem quebrar o quiz: sendBeacon nao bloqueia e sobrevive a
+// navegacao; qualquer erro aqui e ignorado de proposito
+function registrarPasso(indice, id){
+  if(PASSOS_ENVIADOS.has(indice)) return;
+  PASSOS_ENVIADOS.add(indice);
+  try{
+    const corpo = JSON.stringify({
+      s: sessaoQuiz(),
+      i: indice,
+      f: (lerOrigem().utm_source || "direto")
+    });
+    if(navigator.sendBeacon){
+      navigator.sendBeacon("/api/passo", new Blob([corpo], {type:"application/json"}));
+    }else{
+      fetch("/api/passo", {method:"POST", headers:{"Content-Type":"application/json"},
+                           body: corpo, keepalive: true}).catch(function(){});
+    }
+  }catch(e){}
 }
 
 // guarda no primeiro acesso e nao sobrescreve com vazio: se ela voltar pelo
