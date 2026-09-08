@@ -41,7 +41,9 @@ module.exports = async (req, res) => {
   const fonte = limpo(corpo.f, 12) || "direto";
   const tela = limpoId(corpo.t, 24) || "tela";
   // criativo que trouxe a visita, pra dar pra cortar a retencao por anuncio
-  const criativo = limpo(corpo.c, 28) || "sem";
+  // mantem o hifen: "leva11-ad09" le melhor que "leva11ad09"
+  const criativo = String(corpo.c || "").toLowerCase()
+                     .replace(/[^a-z0-9-]/g, "").slice(0, 28) || "sem";
   if (!sessao) return res.status(400).json({ erro: "falta a sessao" });
 
   // o dia sai em horario de Brasilia, que e como ele le os numeros
