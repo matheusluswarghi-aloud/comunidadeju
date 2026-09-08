@@ -16,7 +16,10 @@ t.src=v;s=b.getElementsByTagName(e)[0];
 s.parentNode.insertBefore(t,s)}(window, document,'script',
 'https://connect.facebook.net/en_US/fbevents.js');
 fbq('init', '1583309593342549');
-fbq('track', 'PageView');
+// o mesmo id vai nos tres caminhos (fbq, pixel manual e servidor) pra Meta
+// entender que e a mesma visita e nao contar tres vezes
+window.__eid = 'pv.' + Date.now().toString(36) + '.' + Math.random().toString(36).slice(2,10);
+fbq('track', 'PageView', {}, { eventID: window.__eid });
 </script>
 <noscript><img height="1" width="1" style="display:none"
 src="https://www.facebook.com/tr?id=1583309593342549&ev=PageView&noscript=1"
@@ -70,6 +73,7 @@ src="https://www.facebook.com/tr?id=1583309593342549&ev=PageView&noscript=1"
       'rl=' + encodeURIComponent(document.referrer || ''),
       'if=false',
       'ts=' + Date.now(),
+      'eid=' + encodeURIComponent(window.__eid || ''),
       'fbp=' + encodeURIComponent(fbp())
     ];
     var c = fbc();
@@ -110,8 +114,30 @@ src="https://www.facebook.com/tr?id=1583309593342549&ev=PageView&noscript=1"
   // Cookies e PageView na hora. O atraso de 1200ms que existia aqui abria uma
   // janela morta de ~1s (DOM pronto em 0,4s, evento so aos 1,5s) e todo mundo
   // que saia antes disso virava clique sem visualizacao da pagina de destino.
+  // O mesmo PageView tambem sai pelo servidor (Conversions API). O navegador
+  // do Instagram bloqueia cookie de terceiro e derruba o pixel; o servidor
+  // nao depende disso. Chegando os dois com o mesmo event_id, a Meta conta
+  // uma visita so e fica com a que tiver mais dado.
+  function pageViewNoServidor(){
+    try{
+      var corpo = JSON.stringify({
+        eid: window.__eid,
+        fbp: cookie('_fbp'),
+        fbc: cookie('_fbc'),
+        url: location.href
+      });
+      if(navigator.sendBeacon){
+        navigator.sendBeacon('/api/pageview', new Blob([corpo], {type:'application/json'}));
+      }else{
+        fetch('/api/pageview', {method:'POST', headers:{'Content-Type':'application/json'},
+                                body: corpo, keepalive: true}).catch(function(){});
+      }
+    }catch(e){}
+  }
+
   fbp(); fbc();
   enviarPageView();
+  pageViewNoServidor();
 })();
 </script>
 <style>
