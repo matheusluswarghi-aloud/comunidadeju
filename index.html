@@ -524,20 +524,26 @@ strong{color:#fff}
   box-shadow:0 0 60px rgba(255,45,120,.28),0 24px 70px rgba(0,0,0,.7);
   animation:popIn .55s cubic-bezier(.2,1.35,.4,1) both}
 @keyframes popIn{from{opacity:0;transform:scale(.82) translateY(24px)}to{opacity:1;transform:none}}
-.pop-eyebrow{display:inline-block;font-size:10.5px;font-weight:800;letter-spacing:.14em;
-  text-transform:uppercase;color:#ffd76a;background:rgba(255,215,106,.12);
-  border:1px solid rgba(255,215,106,.34);padding:5px 12px;border-radius:20px;margin-bottom:16px}
-.pop-selo{width:118px;height:118px;margin:4px auto 16px;border-radius:50%;position:relative;
+.pop-eyebrow{display:block;font-size:17px;font-weight:900;letter-spacing:.22em;
+  text-transform:uppercase;color:#fff;margin-bottom:14px;line-height:1;
+  text-shadow:0 2px 18px rgba(255,45,120,.6)}
+.pop-selo{width:172px;height:172px;margin:2px auto 18px;border-radius:50%;position:relative;
   background:linear-gradient(140deg,#ff2d78,#8b3ff5);display:flex;flex-direction:column;
   align-items:center;justify-content:center;box-shadow:0 0 0 8px rgba(255,45,120,.13),0 12px 34px rgba(255,45,120,.5);
   animation:seloIn .7s cubic-bezier(.2,1.4,.4,1) .18s both}
 @keyframes seloIn{from{opacity:0;transform:scale(.4) rotate(-22deg)}to{opacity:1;transform:none}}
-.pop-selo b{font-size:39px;font-weight:900;letter-spacing:-.04em;line-height:1}
-.pop-selo span{font-size:12px;font-weight:800;letter-spacing:.16em;margin-top:1px}
+.pop-selo b{font-size:58px;font-weight:900;letter-spacing:-.04em;line-height:1}
+/* o > importa: sem ele esta regra pegava tambem o <span id="popPct"> que
+   fica dentro do <b>, e o "50" saia do tamanho do "OFF" */
+.pop-selo>span{font-size:17px;font-weight:800;letter-spacing:.18em;margin-top:2px}
+.pop-selo b span{font-size:38px;letter-spacing:.01em}
+.pop-frase{font-size:15.5px;color:#e4dced;line-height:1.5;margin-bottom:4px}
+.pop-frase b{color:#fff;font-weight:800}
 .pop h3{font-size:23px;font-weight:900;letter-spacing:-.03em;line-height:1.2;margin-bottom:10px}
 .pop p{font-size:14.5px;color:#c7bdd1;line-height:1.55;margin-bottom:9px}
 .pop p b{color:#fff}
-.pop-cta{width:100%;padding:16px;border-radius:14px;font-size:16px;font-weight:800;margin-top:16px;
+.pop-cta{width:100%;padding:17px;border-radius:14px;font-size:16px;font-weight:900;margin-top:18px;
+  text-transform:uppercase;letter-spacing:.06em;
   background:linear-gradient(135deg,#ff2d78,#ff5c96);color:#fff;border:none;cursor:pointer;
   font-family:inherit;box-shadow:0 10px 30px rgba(255,45,120,.5);letter-spacing:-.01em}
 .pop-cta:active{transform:scale(.985)}
@@ -1084,13 +1090,10 @@ strong{color:#fff}
 <div class="pop-bg" id="popCupom">
   <div class="pop">
     <div id="confetes"></div>
-    <span class="pop-eyebrow">espera aí</span>
+    <span class="pop-eyebrow">desbloqueado</span>
     <div class="pop-selo"><b><span id="popPct">50</span>%</b><span>OFF</span></div>
-    <h3>vc desbloqueou um desconto</h3>
-    <p>de cada 10 meninas que começam esse teste, <b>7 largam no meio</b>. vc foi até o fim.</p>
-    <p>então eu vou fazer uma coisa que eu não faço pra todo mundo: <b>50% de desconto no primeiro mês</b>. de R$ 99 por <b>R$ 49</b>.</p>
-    <p style="color:#ff8ab0;font-size:13px">esse cupom vale só nessa tela. se vc sair, ele vai embora.</p>
-    <button class="pop-cta" onclick="aplicarCupom()">quero meu desconto 🎁</button>
+    <p class="pop-frase">você acabou de ganhar <b>50% de desconto</b> na assinatura do primeiro mês da <b>Comunidade + StudioJu IA</b>!</p>
+    <button class="pop-cta" onclick="aplicarCupom()">aplicar desconto</button>
     <button class="pop-nao" onclick="recusarCupom()">continuar sem o desconto</button>
   </div>
 </div>
@@ -1777,17 +1780,28 @@ let cupomAtivo = false, cupomTimer = null, popMostrado = false;
 // O timeout e so rede de seguranca pra quem fica parada olhando.
 function armarCupom(){
   if(cupomAtivo || popMostrado) return;
-  let armado = true;
-  const disparar = () => {
-    if(!armado) return;
-    armado = false;
-    ["touchstart","wheel","scroll","pointerdown"].forEach(ev =>
-      window.removeEventListener(ev, disparar));
+
+  // "scroll" fica de fora de proposito: a troca de tela chama irParaOTopo(),
+  // e esse scroll programatico disparava o popup na hora, antes de ela mexer
+  // em qualquer coisa. Aqui so entram gestos que partem dela.
+  const GESTOS = ["wheel","touchstart","pointerdown","keydown"];
+  let morto = false;
+
+  function disparar(){
+    if(morto) return;
+    morto = true;
+    GESTOS.forEach(ev => window.removeEventListener(ev, disparar));
+    clearTimeout(rede);
     abrirCupom();
-  };
-  ["touchstart","wheel","scroll","pointerdown"].forEach(ev =>
-    window.addEventListener(ev, disparar, {passive:true}));
-  setTimeout(disparar, 9000);
+  }
+
+  // e ainda espera a transicao da tela terminar, pra nao pegar o rabo dela
+  setTimeout(() => {
+    if(!morto) GESTOS.forEach(ev => window.addEventListener(ev, disparar, {passive:true}));
+  }, 900);
+
+  // rede pra quem fica parada lendo sem rolar
+  const rede = setTimeout(disparar, 12000);
 }
 
 function abrirCupom(){
