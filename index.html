@@ -608,6 +608,40 @@ strong{color:#fff}
 
 .disclaimer{font-size:11.5px;color:#78707f;line-height:1.55;margin-top:22px;padding-top:16px;border-top:1px solid rgba(255,255,255,.08)}
 @media(max-width:400px){h1{font-size:25.5px}h2{font-size:21px}p{font-size:16px}.price{font-size:42px}.big-num{font-size:48px}}
+
+/* ====== bloco de entrada (advertorial) ======
+   Sem foto de propósito: as imagens de modelo que existem no projeto são
+   sugestivas e o print de ganhos traz valor circulado — os dois gatilhos
+   clássicos de reprovação. Aqui a ideia é representada em CSS. */
+.explica{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);
+  border-radius:18px;padding:18px 18px 16px;margin-top:20px}
+.explica p{font-size:14.5px;line-height:1.62;color:#c7bdd1;margin:0}
+.explica p + p{margin-top:10px}
+.explica b{color:#fff;font-weight:700}
+
+.gerando{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin:16px 0 4px}
+.gerando i{display:block;aspect-ratio:3/4;border-radius:12px;position:relative;overflow:hidden;
+  background:linear-gradient(135deg,rgba(255,45,120,.22),rgba(139,63,245,.22))}
+.gerando i::before{content:"";position:absolute;left:50%;top:52%;transform:translate(-50%,-50%);
+  width:64%;aspect-ratio:1/1.15;
+  background:
+    radial-gradient(circle at 50% 27%, rgba(255,255,255,.28) 0 26%, transparent 27%),
+    radial-gradient(ellipse 62% 46% at 50% 104%, rgba(255,255,255,.28) 0 68%, transparent 69%);}
+.gerando i::after{content:"";position:absolute;inset:0;
+  background:linear-gradient(100deg,transparent 30%,rgba(255,255,255,.09) 50%,transparent 70%);
+  animation:varre 2.4s linear infinite}
+.gerando i:nth-child(2)::after{animation-delay:.5s}
+.gerando i:nth-child(3)::after{animation-delay:1s}
+@keyframes varre{from{transform:translateX(-100%)}to{transform:translateX(100%)}}
+@media (prefers-reduced-motion:reduce){.gerando i::after{animation:none}}
+.gerando-leg{text-align:center;font-size:11.5px;color:#8f8699;margin-top:9px}
+
+.passos{display:grid;gap:10px;margin-top:20px}
+.passo{display:grid;grid-template-columns:26px 1fr;gap:12px;align-items:start}
+.passo span{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;
+  background:rgba(255,45,120,.15);color:#ff5c96;font-size:12px;font-weight:800}
+.passo div{font-size:14px;line-height:1.5;color:#c7bdd1;padding-top:3px}
+.passo div b{color:#fff;font-weight:700}
 </style>
 </head>
 <body>
@@ -619,8 +653,20 @@ strong{color:#fff}
   <span class="eyebrow reveal d1">Studio Ju</span>
   <h1 class="reveal d1">Nova IA gratuita cria “modelos do job” realistas e está virando renda pra quem não quer aparecer.</h1>
   <p class="lead reveal d2">Não precisa saber editar, não precisa aparecer, não precisa gastar nada.</p>
-  <div class="chat reveal d3">e não, não é foto delas. é de uma mulher que <strong>não existe</strong>.</div>
-  <button class="cta reveal d4" onclick="irParaPergunta()">quero entender como funciona</button>
+  <div class="explica reveal d3">
+    <p>Você escreve como ela é — o rosto, o cabelo, a roupa, o lugar. Em poucos segundos as fotos ficam prontas. <b>E ninguém sabe que é você por trás.</b></p>
+    <div class="gerando" aria-hidden="true"><i></i><i></i><i></i></div>
+    <p class="gerando-leg">nenhuma dessas mulheres existe · todas foram criadas assim</p>
+    <p>Antes isso pedia estúdio, fotógrafo e alguém que soubesse editar. Hoje sai do celular, <b>de graça</b> — e é por isso que tanta gente está começando agora.</p>
+  </div>
+
+  <div class="passos reveal d4">
+    <div class="passo"><span>1</span><div><b>Você descreve</b> como ela é, numa frase</div></div>
+    <div class="passo"><span>2</span><div><b>As fotos ficam prontas</b> em segundos</div></div>
+    <div class="passo"><span>3</span><div><b>Ela aparece.</b> Você não.</div></div>
+  </div>
+
+  <button class="cta reveal d5" onclick="irParaPergunta()">quero entender como funciona</button>
 </section>
 </div>
 <script>
