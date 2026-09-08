@@ -32,7 +32,11 @@ module.exports = async (req, res) => {
   if (typeof corpo === "string") { try { corpo = JSON.parse(corpo); } catch { corpo = {}; } }
   corpo = corpo || {};
 
-  const sessao = limpo(corpo.s, 16);
+  // Sessoes de teste ganham prefixo proprio pra poderem ser apagadas sem
+  // levar trafego real junto. Aconteceu na madrugada de 08/09: limpei os
+  // registros dos meus testes e possivelmente apaguei visitas de verdade,
+  // porque nao havia como distinguir uma da outra.
+  const sessao = (corpo.teste ? "zzteste" : "") + limpo(corpo.s, 16);
   const indice = Math.min(Math.max(parseInt(corpo.i, 10) || 0, 0), 99);
   const fonte = limpo(corpo.f, 12) || "direto";
   const tela = limpoId(corpo.t, 24) || "tela";
