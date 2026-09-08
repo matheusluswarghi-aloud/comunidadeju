@@ -1994,6 +1994,11 @@ capturarOrigem();
 carregarImagens();
 document.getElementById("vagas").textContent = VAGAS_RESTANTES;
 updateProgress("lp");
+// A primeira tela nao passa por goToStep — ela ja vem montada no HTML — entao
+// sem esta linha o indice 0 nunca era registrado, e a base da retencao ficava
+// sendo a segunda tela. Justamente quem abre e sai sem responder nada, que e
+// o numero que mais importa, sumia da conta.
+registrarPasso(0, "lp");
 try{ history.replaceState({step:"lp"},"","#lp"); }catch(e){}
 </script>
 </body>
