@@ -684,7 +684,10 @@ strong{color:#fff}
       <div class="stu-lab"><span class="n">2</span> escolhe a cena</div>
       <div class="stu-chips" id="chipsCenario"></div>
 
-      <div class="stu-lab" style="margin-top:13px"><span class="n">3</span> o comando que ele executa</div>
+      <div class="stu-lab" style="margin-top:13px"><span class="n">3</span> escolhe a luz</div>
+      <div class="stu-chips" id="chipsLuz"></div>
+
+      <div class="stu-lab" style="margin-top:13px"><span class="n">4</span> o comando que ele executa</div>
       <div class="stu-prompt" id="stuPrompt"></div>
 
       <button class="stu-gerar" id="stuBtn" onclick="studioGerar()">✨ gerar foto · 10 créditos</button>
@@ -1269,7 +1272,6 @@ function lerOrigem(){
 // O Meta descarta um evento por tela (27 nomes distintos de baixo volume caem
 // fora do limite de eventos personalizados), entao a retencao do quiz e medida
 // aqui e guardada por nos. Um registro por tela alcancada, por sessao.
-const PASSOS_ENVIADOS = new Set();
 
 function sessaoQuiz(){
   try{
@@ -1284,35 +1286,58 @@ function sessaoQuiz(){
 
 // nao pode atrasar nem quebrar o quiz: sendBeacon nao bloqueia e sobrevive a
 // navegacao; qualquer erro aqui e ignorado de proposito
+// Acumula o progresso e manda o ESTADO da sessao, nao cada tela.
+//
+// A primeira versao gravava um registro por tela alcancada: 10 telas viravam
+// 10 escritas. No plano Hobby do Vercel Blob isso da ~6 sessoes por dia antes
+// de estourar a cota de escrita — e foi exatamente o que aconteceu em 08/09.
+// Agora sao 1 ou 2 escritas por sessao inteira.
+var PROGRESSO = { max: -1, tela: "", acoes: {} };
+var enviarTimer = null, ultimoEnviado = "";
+
 function registrarPasso(indice, id){
-  if(PASSOS_ENVIADOS.has(indice)) return;
-  PASSOS_ENVIADOS.add(indice);
+  if(indice >= 97){                       // 97-99 sao acoes, nao telas
+    PROGRESSO.acoes[indice] = id;
+  }else if(indice > PROGRESSO.max){
+    PROGRESSO.max = indice;
+    PROGRESSO.tela = id;
+  }else{
+    return;                               // voltou pra tras: nada novo a contar
+  }
+  agendarEnvio();
+}
+
+// espera ela parar de avancar antes de gravar; se sair antes, o pagehide manda
+function agendarEnvio(){
+  clearTimeout(enviarTimer);
+  enviarTimer = setTimeout(enviarProgresso, 4000);
+}
+
+function enviarProgresso(){
+  clearTimeout(enviarTimer);
+  if(PROGRESSO.max < 0) return;
   try{
+    const o = lerOrigem();
+    const camp = (o.utm_campaign || "").replace(/[^a-z0-9]/gi, "");
+    const ad = (o.utm_content || "").replace(/[^a-z0-9]/gi, "");
     const corpo = JSON.stringify({
       s: sessaoQuiz(),
-      i: indice,
-      t: id,
-      f: (lerOrigem().utm_source || "direto"),
-      // qual anuncio trouxe ela. leva+codigo porque o codigo sozinho repete
-      // entre levas: o AD01 da leva 11 nao e o AD01 da leva 12.
-      c: (function(){
-        var o = lerOrigem();
-        var camp = (o.utm_campaign || "").replace(/[^a-z0-9]/gi, "");
-        var ad = (o.utm_content || "").replace(/[^a-z0-9]/gi, "");
-        return ad ? (camp ? camp + "-" + ad : ad) : "";
-      })(),
-      // marca a sessao como teste: ?qa=1 na URL, ou sessionStorage pelos
-      // testes automatizados. Sessao marcada ganha prefixo zzteste e pode ser
-      // apagada sem levar trafego real junto.
+      i: PROGRESSO.max,
+      t: PROGRESSO.tela,
+      a: Object.keys(PROGRESSO.acoes).map(Number).sort(),
+      f: (o.utm_source || "direto"),
+      c: ad ? (camp ? camp + "-" + ad : ad) : "",
       teste: (function(){
         try{
-          if(new URLSearchParams(location.search).get("qa") === "1"){
+          if(new URLSearchParams(location.search).get("qa") === "1")
             sessionStorage.setItem("quiz_ju_teste","1");
-          }
           return sessionStorage.getItem("quiz_ju_teste") === "1";
         }catch(e){ return false; }
       })()
     });
+    if(corpo === ultimoEnviado) return;   // nada mudou desde o ultimo envio
+    ultimoEnviado = corpo;
+
     if(navigator.sendBeacon){
       navigator.sendBeacon("/api/passo", new Blob([corpo], {type:"application/json"}));
     }else{
@@ -1321,6 +1346,12 @@ function registrarPasso(indice, id){
     }
   }catch(e){}
 }
+
+// sair da pagina fecha a conta: sem isso quem abandona no meio some da curva
+window.addEventListener("pagehide", enviarProgresso);
+document.addEventListener("visibilitychange", function(){
+  if(document.visibilityState === "hidden") enviarProgresso();
+});
 
 // guarda no primeiro acesso e nao sobrescreve com vazio: se ela voltar pelo
 // historico ou recarregar sem os parametros, a origem original se mantem
@@ -1413,6 +1444,13 @@ const STU_CENARIO = [
 ];
 
 
+// A luz e a segunda escolha: muda o sufixo do arquivo e o comando na tela.
+// "-n" e a versao noturna de cada cena; se ela nao existir, cai na diurna.
+const STU_LUZ = [
+  ["dia",   "luz do dia",       "",   "luz natural de dia"],
+  ["noite", "luz quente da noite", "-n", "luz quente de abajur"]
+];
+
 let stuMontado = false, stuGerou = false, stuGerando = false, stuRodadas = 0;
 
 // preenche as fotos da modelo dentro de uma etapa especifica. o reveal roda antes
@@ -1429,7 +1467,9 @@ function montarStudio(){
   if(stuMontado) return;
   stuMontado = true;
   state.stuCenario = state.stuCenario || "quarto";
+  state.stuLuz = state.stuLuz || "dia";
   montarChips("chipsCenario", STU_CENARIO, "stuCenario");
+  montarChips("chipsLuz", STU_LUZ, "stuLuz");
   escreverPrompt();
 }
 
@@ -1455,9 +1495,10 @@ function acha(lista, k){ const r = lista.find(x => x[0] === k); return r || list
 
 function escreverPrompt(){
   const cena = acha(STU_CENARIO, state.stuCenario);
+  const luz  = acha(STU_LUZ, state.stuLuz);
   document.getElementById("stuPrompt").innerHTML =
     '<span class="pk">' + (state.nomeModelo || "sua modelo") + '</span>, ' +
-    cena[1] + ', ' + cena[3] +
+    cena[1] + ', ' + cena[3] + ', <span class="pk">' + luz[3] + '</span>' +
     ', <span class="pk">rosto travado</span>, vertical 4:5';
 }
 
@@ -1467,12 +1508,18 @@ function escreverPrompt(){
 function fotoDaCena(cb){
   const tipo   = state.modelo || "loira";
   const cena   = acha(STU_CENARIO, state.stuCenario);
-  const alvo   = "modelos/" + tipo + cena[2];
-  tentarCarregar(alvo, src => {
-    if(src) return cb(src);
-    if(!cena[2]) return cb(null);
-    tentarCarregar("modelos/" + tipo, base => cb(base));
-  });
+  // Tenta na ordem: cena+luz, depois so a cena, depois a foto base. Faltar
+  // um arquivo nunca quebra a demo, so cai pra opcao mais proxima.
+  const luz = acha(STU_LUZ, state.stuLuz);
+  const tentativas = [
+    "modelos/" + tipo + cena[2] + luz[2],
+    "modelos/" + tipo + cena[2],
+    "modelos/" + tipo
+  ];
+  (function proxima(i){
+    if(i >= tentativas.length) return cb(null);
+    tentarCarregar(tentativas[i], src => src ? cb(src) : proxima(i + 1));
+  })(0);
 }
 
 function studioGerar(){

@@ -693,6 +693,8 @@ function sessaoQuiz(){
   }catch(e){ return "anon" + Math.random().toString(36).slice(2, 8); }
 }
 
+// A raiz tem uma tela so: manda uma vez e pronto. Quem acumula progresso e
+// a pagina do quiz, em /pergunta.
 function registrarPasso(indice, id){
   try{
     const o = lerOrigem();

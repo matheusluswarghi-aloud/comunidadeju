@@ -1,22 +1,53 @@
-/* Registra que uma sessao chegou a uma tela do quiz.
+/* Registra ate onde a sessao chegou no quiz.
  *
- * Existe porque o Meta nao serve para isso: eventos personalizados por tela
- * (QZ_00_lp, QZ_01_...) sao descartados por serem muitos nomes distintos de
- * baixo volume, e a atribuicao do pixel ja provou nao casar com os cliques.
- * Aqui o dado e nosso, exato e imediato.
+ * Existe porque o Meta nao serve pra isso: eventos por tela sao descartados
+ * por serem muitos nomes distintos de baixo volume, e a atribuicao do pixel
+ * nao casa com os cliques. Aqui o dado e nosso, exato e imediato.
  *
- * Grava um blob vazio cujo NOME carrega tudo:
- *   quiz/<dia>/<sessao>~<indice>~<fonte>~<tela>~<criativo>
- * (separador ~ porque o id da tela tem underscore: studio_reveal)
- * assim o painel monta a curva so listando, sem baixar conteudo nenhum.
+ * Grava o ESTADO da sessao (indice maximo + acoes), nao cada tela. A primeira
+ * versao fazia uma escrita por tela e queimou a cota de escrita do Vercel Blob
+ * em um dia (08/09/2026): 10 telas viravam 10 escritas, e o plano Hobby da
+ * 2.000 por mes. Agora e uma escrita por sessao, sobrescrita no mesmo lugar.
  *
- * Sem dependencia: fala com a API do Blob por HTTP, porque o quiz e um site
- * estatico e nao vale adicionar build a ele.
+ * Storage: usa Upstash Redis quando configurado (feito pra contador, cota
+ * diaria alta) e cai no Blob quando nao ha Redis.
  */
-const API = "https://blob.vercel-storage.com";
+const BLOB = "https://blob.vercel-storage.com";
+
 const limpo = (v, max) => String(v || "").toLowerCase().replace(/[^a-z0-9]/g, "").slice(0, max);
-// o id da tela mantem o underscore, que faz parte do nome (studio_reveal)
 const limpoId = (v, max) => String(v || "").toLowerCase().replace(/[^a-z0-9_]/g, "").slice(0, max);
+
+async function noRedis(chave, valor) {
+  const url = process.env.KV_REST_API_URL, tok = process.env.KV_REST_API_TOKEN;
+  if (!url || !tok) return false;
+  // 40 dias: o painel olha no maximo 28
+  const r = await fetch(`${url}/set/${encodeURIComponent(chave)}?EX=3456000`, {
+    method: "POST",
+    headers: { authorization: `Bearer ${tok}`, "content-type": "application/json" },
+    body: JSON.stringify(valor)
+  });
+  if (!r.ok) throw new Error("redis HTTP " + r.status);
+  return true;
+}
+
+async function noBlob(chave, valor) {
+  const tok = process.env.BLOB_READ_WRITE_TOKEN;
+  if (!tok) throw new Error("sem storage configurado");
+  const r = await fetch(`${BLOB}/?pathname=${encodeURIComponent(chave)}`, {
+    method: "PUT",
+    headers: {
+      authorization: `Bearer ${tok}`,
+      "x-api-version": "9",
+      "x-add-random-suffix": "0",
+      "x-allow-overwrite": "1",
+      "x-content-type": "application/json",
+      "x-cache-control-max-age": "60"
+    },
+    body: JSON.stringify(valor)
+  });
+  if (!r.ok) throw new Error("blob HTTP " + r.status);
+  return true;
+}
 
 module.exports = async (req, res) => {
   res.setHeader("access-control-allow-origin", "*");
@@ -25,45 +56,29 @@ module.exports = async (req, res) => {
   if (req.method === "OPTIONS") return res.status(204).end();
   if (req.method !== "POST") return res.status(405).json({ erro: "use POST" });
 
-  const token = process.env.BLOB_READ_WRITE_TOKEN;
-  if (!token) return res.status(500).json({ erro: "falta BLOB_READ_WRITE_TOKEN" });
+  let c = req.body;
+  if (typeof c === "string") { try { c = JSON.parse(c); } catch { c = {}; } }
+  c = c || {};
 
-  let corpo = req.body;
-  if (typeof corpo === "string") { try { corpo = JSON.parse(corpo); } catch { corpo = {}; } }
-  corpo = corpo || {};
-
-  // Sessoes de teste ganham prefixo proprio pra poderem ser apagadas sem
-  // levar trafego real junto. Aconteceu na madrugada de 08/09: limpei os
-  // registros dos meus testes e possivelmente apaguei visitas de verdade,
-  // porque nao havia como distinguir uma da outra.
-  const sessao = (corpo.teste ? "zzteste" : "") + limpo(corpo.s, 16);
-  const indice = Math.min(Math.max(parseInt(corpo.i, 10) || 0, 0), 99);
-  const fonte = limpo(corpo.f, 12) || "direto";
-  const tela = limpoId(corpo.t, 24) || "tela";
-  // criativo que trouxe a visita, pra dar pra cortar a retencao por anuncio
-  // mantem o hifen: "leva11-ad09" le melhor que "leva11ad09"
-  const criativo = String(corpo.c || "").toLowerCase()
-                     .replace(/[^a-z0-9-]/g, "").slice(0, 28) || "sem";
+  // sessao de teste ganha prefixo proprio, pra poder ser apagada sem levar
+  // trafego real junto
+  const sessao = (c.teste ? "zzteste" : "") + limpo(c.s, 16);
   if (!sessao) return res.status(400).json({ erro: "falta a sessao" });
 
-  // o dia sai em horario de Brasilia, que e como ele le os numeros
   const dia = new Date(Date.now() - 3 * 3600 * 1000).toISOString().slice(0, 10);
-  const nome = `quiz/${dia}/${sessao}~${String(indice).padStart(2, "0")}~${fonte}~${tela}~${criativo}`;
+  const dados = {
+    i: Math.min(Math.max(parseInt(c.i, 10) || 0, 0), 99),
+    t: limpoId(c.t, 24) || "tela",
+    f: limpo(c.f, 12) || "direto",
+    c: String(c.c || "").toLowerCase().replace(/[^a-z0-9-]/g, "").slice(0, 28) || "sem",
+    a: Array.isArray(c.a) ? c.a.map(n => parseInt(n, 10)).filter(n => n >= 97 && n <= 99) : [],
+    em: Date.now()
+  };
 
   try {
-    const r = await fetch(`${API}/?pathname=${encodeURIComponent(nome)}`, {
-      method: "PUT",
-      headers: {
-        authorization: `Bearer ${token}`,
-        "x-api-version": "9",
-        "x-add-random-suffix": "0",
-        "x-allow-overwrite": "1",
-        "x-content-type": "text/plain",
-        "x-cache-control-max-age": "60"
-      },
-      body: "1"
-    });
-    if (!r.ok) throw new Error("blob HTTP " + r.status);
+    const chave = `quiz/${dia}/${sessao}`;
+    const usouRedis = await noRedis(chave, dados);
+    if (!usouRedis) await noBlob(chave, dados);
     res.setHeader("cache-control", "no-store");
     return res.status(204).end();
   } catch (e) {
