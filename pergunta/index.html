@@ -1592,7 +1592,9 @@ function responderTempo(min){
 
 /* ============ A CONTA: 3 MESES ============ */
 function montarConta(){
-  document.getElementById("mathPosts").textContent = postsPorSemana();
+  // o "mathPosts" vivia na frase sobre creditos, que saiu junto com aquela
+  // etapa. Como era a primeira linha daqui, o null derrubava a funcao inteira
+  // e os tres meses ficavam em R$ 0.
   const assin = assinantesNecessarios();
   const packs = packsPorMes();
   const rampa = [[.45,.60],[.75,.85],[1,1]];
