@@ -688,20 +688,23 @@ function sessaoQuiz(){
     if(!s){
       s = (Date.now().toString(36) + Math.random().toString(36).slice(2, 8)).slice(-14);
       sessionStorage.setItem("quiz_ju_sessao", s);
+      sessionStorage.setItem("quiz_ju_t0", String(Date.now()));   // inicio da sessao
     }
     return s;
   }catch(e){ return "anon" + Math.random().toString(36).slice(2, 8); }
 }
 
-// A raiz tem uma tela so: manda uma vez e pronto. Quem acumula progresso e
-// a pagina do quiz, em /pergunta.
-function registrarPasso(indice, id){
+// A raiz tem uma tela so: manda ao abrir e manda de novo no clique do botao
+// (acao 96). Quem acumula progresso e a pagina do quiz, em /pergunta.
+function registrarPasso(indice, id, acoes){
   try{
     const o = lerOrigem();
     const camp = (o.utm_campaign || "").replace(/[^a-z0-9]/gi, "");
     const ad = (o.utm_content || "").replace(/[^a-z0-9]/gi, "");
+    let t0 = 0;
+    try{ t0 = parseInt(sessionStorage.getItem("quiz_ju_t0"), 10) || 0; }catch(e){}
     const corpo = JSON.stringify({
-      s: sessaoQuiz(), i: indice, t: id,
+      s: sessaoQuiz(), i: indice, t: id, a: acoes || [], t0: t0,
       f: (o.utm_source || "direto"),
       c: ad ? (camp ? camp + "-" + ad : ad) : "",
       teste: (function(){
@@ -724,6 +727,9 @@ function registrarPasso(indice, id){
 // leva a origem junto na URL: se o localStorage falhar (aba anonima), a UTM
 // sobrevive a troca de pagina assim mesmo
 function irParaPergunta(){
+  // o clique e a acao 96: separa "nao clicou" de "clicou e saiu na primeira
+  // pergunta". sendBeacon sobrevive a troca de pagina.
+  registrarPasso(0, "lp", [96]);
   let destino = "/pergunta";
   try{
     const q = location.search;

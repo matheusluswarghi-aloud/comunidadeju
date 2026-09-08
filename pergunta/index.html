@@ -1280,23 +1280,26 @@ function sessaoQuiz(){
       s = (Date.now().toString(36) + Math.random().toString(36).slice(2, 8)).slice(-14);
       sessionStorage.setItem("quiz_ju_sessao", s);
     }
+    if(!sessionStorage.getItem("quiz_ju_t0")) sessionStorage.setItem("quiz_ju_t0", String(Date.now()));
     return s;
   }catch(e){ return "anon" + Math.random().toString(36).slice(2, 8); }
 }
 
 // nao pode atrasar nem quebrar o quiz: sendBeacon nao bloqueia e sobrevive a
 // navegacao; qualquer erro aqui e ignorado de proposito
-// Acumula o progresso e manda o ESTADO da sessao, nao cada tela.
+// Manda o ESTADO da sessao (indice maximo + acoes) a cada tela, NA HORA.
 //
-// A primeira versao gravava um registro por tela alcancada: 10 telas viravam
-// 10 escritas. No plano Hobby do Vercel Blob isso da ~6 sessoes por dia antes
-// de estourar a cota de escrita — e foi exatamente o que aconteceu em 08/09.
-// Agora sao 1 ou 2 escritas por sessao inteira.
+// Ja foi um arquivo por tela (estourou a cota do Blob em 08/09) e depois uma
+// gravacao so depois de 4s parada, com o pagehide como reserva. Essa segunda
+// versao perdia quem saia rapido no comeco: as primeiras telas passam em
+// menos de 4s e o navegador do Instagram nem sempre avisa que fechou. Quem
+// sumia assim ficava contado como "nem abriu o quiz", e a queda por tela
+// virava ou-tudo-ou-nada. Agora e um beacon por tela; o Redis aguenta.
 var PROGRESSO = { max: -1, tela: "", acoes: {} };
-var enviarTimer = null, ultimoEnviado = "";
+var ultimoEnviado = "";
 
 function registrarPasso(indice, id){
-  if(indice >= 97){                       // 97-99 sao acoes, nao telas
+  if(indice >= 96){                       // 96-99 sao acoes, nao telas
     PROGRESSO.acoes[indice] = id;
   }else if(indice > PROGRESSO.max){
     PROGRESSO.max = indice;
@@ -1304,26 +1307,22 @@ function registrarPasso(indice, id){
   }else{
     return;                               // voltou pra tras: nada novo a contar
   }
-  agendarEnvio();
-}
-
-// espera ela parar de avancar antes de gravar; se sair antes, o pagehide manda
-function agendarEnvio(){
-  clearTimeout(enviarTimer);
-  enviarTimer = setTimeout(enviarProgresso, 4000);
+  enviarProgresso();
 }
 
 function enviarProgresso(){
-  clearTimeout(enviarTimer);
   if(PROGRESSO.max < 0) return;
   try{
     const o = lerOrigem();
     const camp = (o.utm_campaign || "").replace(/[^a-z0-9]/gi, "");
     const ad = (o.utm_content || "").replace(/[^a-z0-9]/gi, "");
+    let t0 = 0;
+    try{ t0 = parseInt(sessionStorage.getItem("quiz_ju_t0"), 10) || 0; }catch(e){}
     const corpo = JSON.stringify({
       s: sessaoQuiz(),
       i: PROGRESSO.max,
       t: PROGRESSO.tela,
+      t0: t0,
       a: Object.keys(PROGRESSO.acoes).map(Number).sort(),
       f: (o.utm_source || "direto"),
       c: ad ? (camp ? camp + "-" + ad : ad) : "",
@@ -1347,7 +1346,7 @@ function enviarProgresso(){
   }catch(e){}
 }
 
-// sair da pagina fecha a conta: sem isso quem abandona no meio some da curva
+// reserva: se algum beacon se perdeu, sair da pagina manda o estado de novo
 window.addEventListener("pagehide", enviarProgresso);
 document.addEventListener("visibilitychange", function(){
   if(document.visibilityState === "hidden") enviarProgresso();
@@ -1992,10 +1991,11 @@ capturarOrigem();
 updateProgress("q_meta");
 carregarImagens();
 document.getElementById("vagas").textContent = VAGAS_RESTANTES;
-// A primeira tela nao passa por goToStep — ela ja vem montada no HTML — entao
-// sem esta linha o indice 0 nunca era registrado, e a base da retencao ficava
-// sendo a segunda tela. Justamente quem abre e sai sem responder nada, que e
-// o numero que mais importa, sumia da conta.
+// A primeira pergunta nao passa por goToStep — ela ja vem montada no HTML —
+// entao sem esta linha o indice 1 nunca era registrado: quem abria o quiz e
+// saia sem responder nada ficava igual a quem nem clicou na entrada. E o
+// numero que mais importa, e sumia da conta.
+registrarPasso(order.indexOf("q_meta"), "q_meta");
 try{ history.replaceState({step:"q_meta"},"","#q_meta"); }catch(e){}
 </script>
 </body>

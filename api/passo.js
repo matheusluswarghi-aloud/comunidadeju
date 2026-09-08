@@ -4,10 +4,12 @@
  * por serem muitos nomes distintos de baixo volume, e a atribuicao do pixel
  * nao casa com os cliques. Aqui o dado e nosso, exato e imediato.
  *
- * Grava o ESTADO da sessao (indice maximo + acoes), nao cada tela. A primeira
- * versao fazia uma escrita por tela e queimou a cota de escrita do Vercel Blob
- * em um dia (08/09/2026): 10 telas viravam 10 escritas, e o plano Hobby da
- * 2.000 por mes. Agora e uma escrita por sessao, sobrescrita no mesmo lugar.
+ * Grava o ESTADO da sessao (indice maximo + acoes), sobrescrito no mesmo
+ * lugar a cada tela. A primeira versao fazia um ARQUIVO por tela e queimou a
+ * cota de escrita do Vercel Blob em um dia (08/09/2026). Depois passou a
+ * esperar 4s parada antes de gravar, e isso perdia quem saia rapido no meio
+ * do quiz: o navegador do Instagram nem sempre avisa que a pagina fechou.
+ * Agora e uma gravacao por tela, na hora, em cima do mesmo registro.
  *
  * Storage: usa Upstash Redis quando configurado (feito pra contador, cota
  * diaria alta) e cai no Blob quando nao ha Redis.
@@ -17,14 +19,41 @@ const BLOB = "https://blob.vercel-storage.com";
 const limpo = (v, max) => String(v || "").toLowerCase().replace(/[^a-z0-9]/g, "").slice(0, max);
 const limpoId = (v, max) => String(v || "").toLowerCase().replace(/[^a-z0-9_]/g, "").slice(0, max);
 
+/* Funde com o que ja esta gravado antes de sobrescrever. Os beacons chegam
+   fora de ordem as vezes (o da entrada pode chegar depois do primeiro do
+   quiz), e a pagina do quiz pode ter perdido a origem que a entrada tinha.
+   Indice e o maior dos dois, acoes somam, inicio e o menor. Custa um GET a
+   mais por gravacao — com 100 sessoes/dia da uns 70 mil comandos/mes, de
+   500 mil que o plano tem. */
+function fundir(velho, novo) {
+  if (!velho) return novo;
+  const maior = novo.i >= velho.i ? novo : velho;
+  return {
+    i: Math.max(velho.i || 0, novo.i || 0),
+    t: maior.t,
+    f: novo.f !== "direto" ? novo.f : (velho.f || novo.f),
+    c: novo.c !== "sem" ? novo.c : (velho.c || novo.c),
+    a: [...new Set([...(velho.a || []), ...(novo.a || [])])].sort((x, y) => x - y),
+    t0: Math.min(velho.t0 || novo.t0, novo.t0 || velho.t0) || novo.t0,
+    em: novo.em
+  };
+}
+
 async function noRedis(chave, valor) {
   const url = process.env.KV_REST_API_URL, tok = process.env.KV_REST_API_TOKEN;
   if (!url || !tok) return false;
+  const cab = { authorization: `Bearer ${tok}`, "content-type": "application/json" };
+
+  let velho = null;
+  try {
+    const g = await fetch(`${url}/get/${encodeURIComponent(chave)}`, { headers: cab });
+    const j = await g.json();
+    if (j.result) velho = JSON.parse(j.result);
+  } catch { /* sem o antigo, grava o novo mesmo */ }
+
   // 40 dias: o painel olha no maximo 28
   const r = await fetch(`${url}/set/${encodeURIComponent(chave)}?EX=3456000`, {
-    method: "POST",
-    headers: { authorization: `Bearer ${tok}`, "content-type": "application/json" },
-    body: JSON.stringify(valor)
+    method: "POST", headers: cab, body: JSON.stringify(fundir(velho, valor))
   });
   if (!r.ok) throw new Error("redis HTTP " + r.status);
   return true;
@@ -71,7 +100,15 @@ module.exports = async (req, res) => {
     t: limpoId(c.t, 24) || "tela",
     f: limpo(c.f, 12) || "direto",
     c: String(c.c || "").toLowerCase().replace(/[^a-z0-9-]/g, "").slice(0, 28) || "sem",
-    a: Array.isArray(c.a) ? c.a.map(n => parseInt(n, 10)).filter(n => n >= 97 && n <= 99) : [],
+    // 96-99 sao acoes, nao telas: 96 clicou pra comecar (na entrada),
+    // 97 aplicou o cupom, 98 gerou no Studio, 99 clicou em comprar
+    a: Array.isArray(c.a) ? c.a.map(n => parseInt(n, 10)).filter(n => n >= 96 && n <= 99) : [],
+    // inicio da sessao, marcado pelo navegador: so aceita se for plausivel
+    t0: (function () {
+      const t = parseInt(c.t0, 10);
+      const agora = Date.now();
+      return t > agora - 7 * 86400e3 && t < agora + 60e3 ? t : agora;
+    })(),
     em: Date.now()
   };
 
