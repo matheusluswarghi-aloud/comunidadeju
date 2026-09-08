@@ -1379,6 +1379,7 @@ function registrarPasso(indice, id){
     const corpo = JSON.stringify({
       s: sessaoQuiz(),
       i: indice,
+      t: id,
       f: (lerOrigem().utm_source || "direto")
     });
     if(navigator.sendBeacon){
