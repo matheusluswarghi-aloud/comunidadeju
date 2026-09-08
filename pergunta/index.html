@@ -252,6 +252,7 @@ strong{color:#fff}
 .msg-body{background:rgba(255,255,255,.06);border-radius:4px 14px 14px 14px;padding:10px 13px;font-size:14.5px;color:#e8dff0}
 .msg-nome{font-size:12px;color:#ff8ab5;font-weight:700;margin-bottom:3px}
 
+.perk.destaque{border-color:rgba(255,45,120,.4);background:rgba(255,45,120,.06)}
 .perk{display:flex;gap:12px;align-items:flex-start;margin-bottom:14px}
 .perk .ic{font-size:22px;flex-shrink:0;line-height:1.3}
 .perk h4{font-size:16px;font-weight:800;margin-bottom:3px}
@@ -379,6 +380,15 @@ strong{color:#fff}
 
 
 /* ============ DEPOIMENTOS ESTILO ZAP ============ */
+/* carrossel: um depoimento por vez ocupando quase a largura toda, com a borda
+   do proximo aparecendo — sem isso ninguem descobre que da pra arrastar */
+#zapWrap{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;
+  -webkit-overflow-scrolling:touch;scrollbar-width:none;padding-bottom:2px}
+#zapWrap::-webkit-scrollbar{display:none}
+#zapWrap .zap{flex:0 0 86%;scroll-snap-align:center;margin:0}
+.zap-dots{display:flex;justify-content:center;gap:6px;margin-top:10px}
+.zap-dots i{width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,.2);transition:.25s}
+.zap-dots i.on{background:#3ddc84;width:16px;border-radius:3px}
 .zap-wrap{background:linear-gradient(165deg,#101a15,#0b120e);border:1px solid rgba(255,255,255,.08);
   border-radius:16px;padding:14px 12px 8px;margin:15px 0}
 .zap-topo{display:flex;align-items:center;gap:7px;font-size:11px;color:#6d7d74;font-weight:700;
@@ -698,30 +708,10 @@ strong{color:#fff}
   <div class="chat reveal d4">vídeo vende muito mais caro que foto. e a maioria das criadoras não tem.</div>
   <div class="chat reveal d5">e quando vc terminar, ele agenda os posts sozinho, no horário que mais vende. vc gera tudo domingo e a semana roda sem vc.</div>
   <div class="ph reveal d5 sm" data-img="studio/04-agendador"><span class="ico">📅</span><b>agendador de posts</b><span>print da tela de agendamento</span></div>
-  <button class="cta reveal d6" onclick="goToStep('creditos')">e quanto custa usar isso?</button>
+  <button class="cta reveal d6" onclick="goToStep('prova_ju')">e quanto dá pra ganhar?</button>
 </section>
 
 <!-- 14. CREDITOS -->
-<section class="step" id="creditos" data-step="13">
-  <span class="eyebrow reveal d1">seus créditos</span>
-  <h2 class="reveal d1">todo mês entram <span class="money">5.000 créditos</span> na sua conta</h2>
-  <p class="reveal d2">vc não paga por foto. já vem tudo dentro da mensalidade.</p>
-  <div class="card reveal d2">
-    <div class="cred-linha"><span>1 foto</span><b>10 créditos</b></div>
-    <div class="cred-linha"><span>1 vídeo de 5 segundos</span><b>100 créditos</b></div>
-  </div>
-  <div class="cred-ou reveal d3">então 5.000 dão</div>
-  <div class="reveal d3">
-    <div class="cred-opt"><span class="big" id="credFotos">0</span> fotos por mês</div>
-    <div class="cred-opt"><span class="big" id="credVideos">0</span> vídeos por mês</div>
-    <div class="cred-opt"><span class="big">300</span> fotos <b style="margin:0 4px">+</b> 20 vídeos</div>
-  </div>
-  <div class="chat reveal d4">pra vc ter noção: as meninas que mais vendem postam 3 ou 4 fotos por dia. isso dá umas 120 no mês.</div>
-  <div class="chat reveal d5">vc tem <strong>500</strong>. sobra pra testar, errar, refazer e ainda criar uma segunda modelo.</div>
-  <p class="muted reveal d5" style="font-size:12px">os créditos renovam todo mês. o que não usar não acumula pro mês seguinte.</p>
-  <button class="cta reveal d6" onclick="goToStep('prova_ju')">e quanto isso me paga?</button>
-</section>
-
 <!-- 12. PROVA DA JU -->
 <section class="step" id="prova_ju" data-step="14">
   <span class="eyebrow reveal d1">quanto entra</span>
@@ -801,19 +791,12 @@ strong{color:#fff}
   <span class="eyebrow reveal d1">a conta</span>
   <h2 class="reveal d1">a <span data-bind="nomeModelo"></span> pode te gerar isso nos 3 primeiros meses:</h2>
   <div class="card reveal d2">
-    <div class="calc-row"><span>assinantes no perfil dela</span><span class="v" data-bind="calcAssin"></span></div>
-    <div class="calc-row"><span>assinatura mensal</span><span class="v">R$ 29,90</span></div>
-    <div class="calc-row"><span>packs que vc vende no privado</span><span class="v" data-bind="calcPacks"></span></div>
-    <div class="calc-row"><span>valor médio do pack</span><span class="v">R$ 80,00</span></div>
-  </div>
-  <div class="card reveal d3">
     <div class="mes-row"><div><div class="mes-lab">mês 1</div><div class="mes-det" id="det1"></div></div><div class="mes-val" id="mes1">R$ 0</div></div>
     <div class="mes-row"><div><div class="mes-lab">mês 2</div><div class="mes-det" id="det2"></div></div><div class="mes-val" id="mes2">R$ 0</div></div>
     <div class="mes-row"><div><div class="mes-lab">mês 3</div><div class="mes-det" id="det3"></div></div><div class="mes-val" id="mes3">R$ 0</div></div>
     <div class="calc-total"><span>total em 3 meses</span><span class="v" id="mesTotal">R$ 0</span></div>
   </div>
   <div class="chat reveal d4">e isso é com <strong>uma</strong> modelo só. eu tenho três.</div>
-  <div class="chat reveal d4">e olha que <span id="mathPosts">28</span> posts por semana gastam menos de um terço dos seus créditos do mês.</div>
   <div class="chat reveal d5">quer dobrar? cria outra. o trabalho é o mesmo, vc só replica o que já funciona.</div>
   <button class="cta reveal d6" onclick="goToStep('q_sonho')">continua</button>
 </section>
@@ -845,18 +828,51 @@ strong{color:#fff}
     </div>
   </div>
   <div class="chat reveal d4">e o mais louco: ninguém na sua vida precisa saber de nada disso.</div>
-  <button class="cta reveal d5" onclick="goToStep('comunidade')">como eu entro?</button>
+  <button class="cta reveal d5" onclick="goToStep('compromisso')">como eu entro?</button>
 </section>
 
 <!-- 19. O CLUBE -->
+<!-- 21b. MICRO-COMPROMISSO -->
+<section class="step" id="compromisso" data-step="22">
+  <span class="eyebrow reveal d1">quase lá</span>
+  <h2 class="reveal d1">antes de te mostrar, preciso te falar uma coisa</h2>
+  <div class="card reveal d2">
+    <div class="scan-bar"><div class="scan-fill" id="vagaFill"></div></div>
+    <div class="scan-line" id="vg1"><span class="mark">✓</span> verificando vagas disponíveis na comunidade</div>
+    <div class="scan-line" id="vg2"><span class="mark">✓</span> conferindo turma da semana</div>
+    <div class="scan-line" id="vg3"><span class="mark">✓</span> vaga encontrada</div>
+  </div>
+  <div id="compromissoResult" style="display:none">
+    <div class="chat reveal d1">isso aqui não é pra qualquer uma, viu.</div>
+    <div class="chat reveal d2">é uma comunidade fechada e a vaga é limitada — se entrar todo mundo vira bagunça. quem tá lá dentro tá pra ganhar dinheiro.</div>
+    <div class="chat reveal d3"><strong>vc se comprometeria a aplicar o método?</strong></div>
+    <div class="opts reveal d4">
+      <button class="opt" onclick="responderCompromisso(true)">sim, eu me comprometo</button>
+      <button class="opt" onclick="responderCompromisso(false)">ainda não sei</button>
+    </div>
+  </div>
+</section>
+
 <section class="step" id="comunidade" data-step="22">
   <span class="eyebrow reveal d1">comunidade da ju</span>
-  <h2 class="reveal d1">isso aqui não é curso. é um clube fechado de meninas</h2>
+  <h2 class="reveal d1">é isso que te espera do outro lado</h2>
   <div class="online-badge reveal d2"><span class="dot"></span> <span id="onlineNum">0</span> meninas online agora</div>
-  <div class="perk reveal d2"><span class="ic">🕵️‍♀️</span><div><h4>vc entra anônima</h4><p>vc escolhe um apelido. ninguém lá dentro sabe seu nome, seu rosto, nem sua cidade. nem eu preciso saber.</p></div></div>
-  <div class="perk reveal d3"><span class="ic">💸</span><div><h4>a gente mostra os ganhos</h4><p>todo dia tem menina postando print do que entrou. vc vê exatamente o que tá funcionando e copia.</p></div></div>
-  <div class="perk reveal d4"><span class="ic">🔄</span><div><h4>estratégia atualizada toda semana</h4><p>o que funciona hoje muda rápido. quando muda, eu aviso lá dentro no mesmo dia. quem tá fora fica pra trás.</p></div></div>
-  <div class="perk reveal d5"><span class="ic">🤝</span><div><h4>não é qualquer uma que entra</h4><p>é comunidade fechada. tem que pagar pra entrar e a vaga é limitada. por isso lá dentro todo mundo troca de verdade, sem medo de espalhar o que funciona.</p></div></div>
+
+  <div class="perk reveal d2"><span class="ic">👯‍♀️</span><div><h4>+340 mulheres no mesmo método</h4>
+    <p>não é curso gravado. é um grupo fechado de gente que já tá faturando com isso — e que responde quando vc pergunta.</p></div></div>
+
+  <div class="perk reveal d3"><span class="ic">💸</span><div><h4>resultado postado todo dia</h4>
+    <p>print do que entrou, relato do que deu certo e o que não deu. vc vê a estratégia funcionando antes de tentar.</p></div></div>
+
+  <div class="perk reveal d4"><span class="ic">🔄</span><div><h4>estratégia atualizada</h4>
+    <p>o que funciona muda rápido. quando muda, sai lá dentro no mesmo dia — vc não fica testando sozinha o que já testaram por vc.</p></div></div>
+
+  <div class="perk destaque reveal d5"><span class="ic">✨</span><div><h4>StudioJu IA · 5.000 créditos liberados</h4>
+    <p>a ferramenta que cria a sua modelo já vem junto, com <b>5.000 créditos</b> na conta pra vc montar a sua e colocar pra vender <b>ainda hoje</b>.</p></div></div>
+
+  <div class="perk reveal d5"><span class="ic">🕵️‍♀️</span><div><h4>vc entra anônima</h4>
+    <p>escolhe um apelido. ninguém sabe seu nome, seu rosto nem sua cidade. nem eu preciso saber.</p></div></div>
+
   <button class="cta reveal d6" onclick="goToStep('dentro')">quero ver como é lá dentro</button>
 </section>
 
@@ -904,6 +920,7 @@ strong{color:#fff}
   <div class="zap-wrap reveal d3">
     <div class="zap-topo"><span class="pt"></span> mensagens das meninas · essa semana</div>
     <div id="zapWrap"></div>
+    <div class="zap-dots" id="zapDots"></div>
   </div>
 
   <div class="chat reveal d4">toda vez que chega uma dessas eu lembro de mim, tomando ônibus lotado achando que ia ser sempre assim.</div>
@@ -1005,12 +1022,12 @@ const CUPOM_MINUTOS = 15;    // 0 = o cupom nunca expira
 
 // depoimentos que chegam no zap da Ju. nomes trocados, elas sao anonimas.
 const ZAPS = [
-  {nome:"Duda", hora:"09:14", txt:"ju eu to tremendo aqui kkkkk acabei de receber a notificação do primeiro assinante"},
-  {nome:"Tati", hora:"11:02", txt:"amiga saquei essa semana. eu ganho 1.100 no meu trampo de 8h por dia viu", valor:"R$ 1.240"},
+  {nome:"Duda", hora:"09:14", txt:"ju to tremendo aqui kkkk chegou a notificação do primeiro assinante. eu nem acreditei que era real"},
+  {nome:"Tati", hora:"11:02", txt:"amiga saquei essa semana. eu ganho 1.100 no meu trampo de 8h por dia, e isso aqui eu fiz do sofá", valor:"R$ 1.240"},
   {nome:"Nina", hora:"14:47", audio:"0:34"},
-  {nome:"Bia",  hora:"19:23", txt:"gente eu tava com MUITO medo de ficar com cara de robô mas nossa, ficou real demais. mostrei pra minha irmã e ela perguntou quem era a menina 😭"},
-  {nome:"Rafa", hora:"21:56", txt:"paguei meu aluguel com a Lari esse mês kkkkkk minha modelo trabalha mais que eu", valor:"R$ 890"},
-  {nome:"Duda", hora:"23:11", txt:"ja to montando a segunda modelo. tem homem procurando coisa que vc nem imagina amiga"}
+  {nome:"Bia",  hora:"19:23", txt:"eu tinha MUITO medo de ficar com cara de robô. mostrei pra minha irmã e ela perguntou quem era a menina 😭"},
+  {nome:"Rafa", hora:"21:56", txt:"paguei meu aluguel esse mês com a Lari kkkkk minha modelo trabalha mais que eu e não reclama", valor:"R$ 890"},
+  {nome:"Duda", hora:"23:11", txt:"ja to montando a segunda. tem homem procurando coisa que vc nem imagina, e ninguém sabe que sou eu"}
 ];
 
 // feed de vendas: tipos de venda, sem nome de pessoa
@@ -1117,9 +1134,9 @@ const SONHO_TXT = {
    ========================================================== */
 const state = {};
 const order = ["lp","q_meta","analise","q_dor","q_trampo","espelho","historia","virada",
-               "studio_reveal","q_modelo","batismo","studio_sim","studio_video","creditos",
+               "studio_reveal","q_modelo","batismo","studio_sim","studio_video",
                "prova_ju","q_medo","quebra","depoimentos","q_tempo","matematica",
-               "q_sonho","projecao","comunidade","dentro","urgencia","oferta","fechamento"];
+               "q_sonho","projecao","compromisso","comunidade","dentro","urgencia","oferta","fechamento"];
 let current = "q_meta";   // a tela "lp" mora na raiz, em outra pagina
 let toastTimer = null;
 
@@ -1191,6 +1208,7 @@ function goToStep(id, push){
 
   stopToasts();
   if(id === "analise")     rodarAnalise();
+  if(id === "compromisso") rodarVagas();
   if(id === "studio_reveal") carregarModelo("studio_reveal");
   if(id === "studio_sim")  montarStudio();
   if(id === "studio_video") tocarTour();
@@ -1669,6 +1687,15 @@ function montarZaps(){
       '<div class="zap-hora">' + z.hora + ' <span class="ck">✓✓</span></div></div></div>';
   }).join("");
 
+  const dots = document.getElementById("zapDots");
+  if(dots){
+    dots.innerHTML = ZAPS.map((_, i) => '<i class="' + (i ? "" : "on") + '"></i>').join("");
+    wrap.addEventListener("scroll", () => {
+      const at = Math.round(wrap.scrollLeft / (wrap.scrollWidth / ZAPS.length));
+      dots.querySelectorAll("i").forEach((d, i) => d.classList.toggle("on", i === at));
+    }, {passive:true});
+  }
+
   wrap.querySelectorAll(".zap").forEach((z, i) =>
     setTimeout(() => z.classList.add("on"), 260 + i*420));
 }
@@ -1805,6 +1832,25 @@ function expirarCupom(){
   const box = document.getElementById("cupomTimer");
   box.classList.add("fim");
   box.innerHTML = "seu cupom de " + CUPOM_PCT + "% expirou";
+}
+
+/* ============ MICRO-COMPROMISSO ============ */
+// A barra nao "verifica" nada de verdade — e o tempo que faz a vaga parecer
+// escassa antes da pergunta. O compromisso fica no state e volta na oferta.
+let vagaRan = false;
+function rodarVagas(){
+  if(vagaRan) return; vagaRan = true;
+  const fill = document.getElementById("vagaFill");
+  let p = 0;
+  const t = setInterval(()=>{ p += 5; fill.style.width = Math.min(p,100) + "%"; if(p>=100) clearInterval(t); }, 95);
+  ["vg1","vg2","vg3"].forEach((id,i)=> setTimeout(()=> document.getElementById(id).classList.add("on"), 500 + i*680));
+  setTimeout(()=>{ document.getElementById("compromissoResult").style.display = "block"; }, 2400);
+}
+
+function responderCompromisso(sim){
+  state.compromisso = sim ? "sim" : "talvez";
+  saveState();
+  goToStep("comunidade");
 }
 
 /* ============ CONTADORES ============ */
