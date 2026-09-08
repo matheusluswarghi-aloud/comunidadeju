@@ -1337,7 +1337,9 @@ function rodarAnalise(){
   ids.forEach((id,i)=> setTimeout(()=> document.getElementById(id).classList.add("on"), 600 + i*620));
   setTimeout(()=>{
     document.getElementById("analiseResult").style.display = "block";
-    const mensal = FAIXAS[state.meta].semana * 4;
+    // mesmo fallback de assinantesNecessarios(): agora que esta pagina tem URL
+    // propria, da pra cair aqui pelo historico sem ter respondido a meta
+    const mensal = (FAIXAS[state.meta] || FAIXAS["1000"]).semana * 4;
     contarAte(document.getElementById("assinNum"), assinantesNecessarios(), 1500, "");
     setTimeout(()=> contarAte(document.getElementById("mensalNum"), mensal, 1400, "R$"), 700);
   }, 3100);
