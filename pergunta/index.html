@@ -449,6 +449,10 @@ strong{color:#fff}
   background:linear-gradient(135deg,#ff2d78,#ff5c96);color:#fff;border:none;cursor:pointer;
   font-family:inherit;box-shadow:0 10px 30px rgba(255,45,120,.5);letter-spacing:-.01em}
 .pop-cta:active{transform:scale(.985)}
+.cta-fantasma{display:block;width:100%;margin-top:10px;padding:15px;border-radius:14px;
+  background:transparent;border:1px solid rgba(255,255,255,.16);color:#c7bdd1;
+  font-family:inherit;font-size:15px;font-weight:600;cursor:pointer;letter-spacing:-.01em}
+.cta-fantasma:active{transform:scale(.985)}
 .pop-nao{display:block;width:100%;margin-top:13px;font-size:12px;color:#7a7185;
   background:none;border:none;cursor:pointer;font-family:inherit;text-decoration:underline}
 .confete{position:absolute;top:-8px;width:8px;height:13px;border-radius:2px;opacity:0;
@@ -844,11 +848,11 @@ strong{color:#fff}
   </div>
   <div id="compromissoResult" style="display:none">
     <div class="chat reveal d1">isso aqui não é pra qualquer uma, viu.</div>
-    <div class="chat reveal d2">é uma comunidade fechada e a vaga é limitada — se entrar todo mundo vira bagunça. quem tá lá dentro tá pra ganhar dinheiro.</div>
+    <div class="chat reveal d2">é uma comunidade fechada e a vaga é limitada. se entrar todo mundo vira bagunça, quem tá lá dentro tá pra ganhar dinheiro.</div>
     <div class="chat reveal d3"><strong>vc se comprometeria a aplicar o método?</strong></div>
-    <div class="opts reveal d4">
-      <button class="opt" onclick="responderCompromisso(true)">sim, eu me comprometo</button>
-      <button class="opt" onclick="responderCompromisso(false)">ainda não sei</button>
+    <div class="reveal d4">
+      <button class="cta" onclick="responderCompromisso(true)">sim, eu me comprometo</button>
+      <button class="cta-fantasma" onclick="responderCompromisso(false)">ainda não sei</button>
     </div>
   </div>
 </section>
@@ -859,19 +863,18 @@ strong{color:#fff}
   <div class="online-badge reveal d2"><span class="dot"></span> <span id="onlineNum">0</span> meninas online agora</div>
 
   <div class="perk reveal d2"><span class="ic">👯‍♀️</span><div><h4>+340 mulheres no mesmo método</h4>
-    <p>não é curso gravado. é um grupo fechado de gente que já tá faturando com isso — e que responde quando vc pergunta.</p></div></div>
+    <p>não é curso gravado. é um grupo fechado de gente que já tá faturando com isso, e que responde quando vc pergunta.</p></div></div>
 
   <div class="perk reveal d3"><span class="ic">💸</span><div><h4>resultado postado todo dia</h4>
     <p>print do que entrou, relato do que deu certo e o que não deu. vc vê a estratégia funcionando antes de tentar.</p></div></div>
 
   <div class="perk reveal d4"><span class="ic">🔄</span><div><h4>estratégia atualizada</h4>
-    <p>o que funciona muda rápido. quando muda, sai lá dentro no mesmo dia — vc não fica testando sozinha o que já testaram por vc.</p></div></div>
+    <p>o que funciona muda rápido. quando muda, sai lá dentro no mesmo dia. vc não fica testando sozinha o que já testaram por vc.</p></div></div>
 
   <div class="perk destaque reveal d5"><span class="ic">✨</span><div><h4>StudioJu IA · 5.000 créditos liberados</h4>
     <p>a ferramenta que cria a sua modelo já vem junto, com <b>5.000 créditos</b> na conta pra vc montar a sua e colocar pra vender <b>ainda hoje</b>.</p></div></div>
 
-  <div class="perk reveal d5"><span class="ic">🕵️‍♀️</span><div><h4>vc entra anônima</h4>
-    <p>escolhe um apelido. ninguém sabe seu nome, seu rosto nem sua cidade. nem eu preciso saber.</p></div></div>
+  
 
   <button class="cta reveal d6" onclick="goToStep('dentro')">quero ver como é lá dentro</button>
 </section>
@@ -910,7 +913,7 @@ strong{color:#fff}
       <li><span class="chk">✓</span><span><b>o método das modelos que vendem</b>que tipo de foto converte assinante, e o que só faz gastar crédito</span></li>
       <li><span class="chk">✓</span><span><b>como criar e marcar o perfil</b>certinho como criadora de IA, sem risco de bloqueio</span></li>
       <li><span class="chk">✓</span><span><b>as comunidades certas pra postar</b>onde pegar os primeiros assinantes na primeira semana</span></li>
-      <li><span class="chk">✓</span><span><b>o clube fechado, e vc entra anônima</b>com apelido. ninguém sabe quem vc é, nem eu</span></li>
+      <li><span class="chk">✓</span><span><b>o clube fechado com +340 mulheres</b>gente que já vive disso e responde quando vc pergunta</span></li>
       <li><span class="chk">✓</span><span><b>ganhos e estratégias compartilhadas todo dia</b>vc vê o que tá funcionando agora e copia</span></li>
       <li><span class="chk">✓</span><span><b>atualização toda vez que o jogo muda</b>vc nunca fica pra trás</span></li>
     </ul>
@@ -1117,7 +1120,7 @@ const MEDOS = {
   julgamento:{
     t:"medo de ser julgada?",
     a:"julgada por quem, amiga? ninguém sabe. vc não aparece em lugar nenhum dessa história.",
-    b:"e dentro da comunidade vc entra com apelido. nem as outras meninas sabem seu nome de verdade."
+    b:"e lá dentro tem sempre alguém acordada pra te responder, em qualquer horário."
   }
 };
 
