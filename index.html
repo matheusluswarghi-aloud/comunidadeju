@@ -551,6 +551,12 @@ strong{color:#fff}
 
 /* ============ PRECO COM CUPOM ============ */
 .preco-de{font-size:30px;font-weight:800;color:#9b91a6;letter-spacing:-.03em;line-height:1.1}
+/* antes do cupom o preco ja aparece riscado, grande: e a ancora.
+   depois de aplicar ele encolhe e da lugar ao preco novo. */
+.preco-de.ancora{text-decoration:line-through;text-decoration-color:#ff2d78;
+  text-decoration-thickness:3px;text-underline-offset:2px}
+.preco-de small{font-size:15px;font-weight:700;color:#8a8194;
+  text-decoration:none;display:inline-block;margin-left:2px}
 .preco-de.riscado{font-size:19px;text-decoration:line-through;text-decoration-color:#ff2d78;
   text-decoration-thickness:2px;color:#8a8194;transition:.4s}
 .preco-tag{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:800;
@@ -1025,18 +1031,18 @@ strong{color:#fff}
   <span class="eyebrow reveal d1">sua vaga</span>
   <h2 class="reveal d1">quanto custa entrar</h2>
   <div class="chat reveal d2">eu podia cobrar mensalidade, mas eu odeio ficar presa a assinatura e imagino que vc também.</div>
-  <div class="chat reveal d2">então é <strong>uma vez só</strong>. paga e é seu pra sempre, com os créditos entrando todo mês.</div>
+  <div class="chat reveal d2">é <strong>mensal</strong>, e vc cancela quando quiser. os 5.000 créditos entram todo mês.</div>
 
   <div class="offer-card reveal d3">
     <div class="center">
-      <div class="muted" id="precoLab">acesso vitalício</div>
-      <div class="preco-de" id="precoDe">R$ 497</div>
+      <div class="muted" id="precoLab">assinatura mensal</div>
+      <div class="preco-de ancora" id="precoDe">R$ 99<small>/mês</small></div>
       <div id="precoBloco" style="display:none">
-        <span class="preco-tag">🎁 cupom de <span id="tagPct">80%</span> aplicado</span>
-        <div class="price preco-novo"><small>R$</small><span id="precoPor">97</span></div>
-        <div class="muted">pagamento único · acesso imediato · pra sempre</div>
+        <span class="preco-tag">🎁 cupom de <span id="tagPct">50%</span> aplicado</span>
+        <div class="price preco-novo"><small>R$</small><span id="precoPor">49</span></div>
+        <div class="muted">no primeiro mês · depois R$ 99/mês · cancela quando quiser</div>
       </div>
-      <button class="resgatar" id="resgatar" onclick="resgatarCupom()">🎁 resgatar meu cupom de 80%</button>
+      <button class="resgatar" id="resgatar" onclick="resgatarCupom()">🎁 resgatar meu cupom de 50%</button>
       <div class="cupom-timer" id="cupomTimer" style="display:none">
         <span class="pulse"></span> seu cupom expira em <b id="cupomRelogio">15:00</b>
       </div>
@@ -1045,7 +1051,7 @@ strong{color:#fff}
         <div><b>7 dias de garantia</b>entrou, olhou tudo por dentro e achou que não é pra vc? me chama que eu devolvo tudo. sem pergunta, sem enrolação.</div>
       </div>
     </div>
-    <button class="cta" onclick="goToCheckout()">garantir meu acesso vitalício</button>
+    <button class="cta" onclick="goToCheckout()">garantir meu primeiro mês</button>
     <p class="cta-sub">vc cai direto no grupo e já recebe o acesso ao Studio</p>
   </div>
 
@@ -1061,7 +1067,7 @@ strong{color:#fff}
   <div class="chat reveal d5">então a barreira tem que existir. mas com o cupom isso sai por menos do que vc tira na primeira semana. é menos que um delivery de sexta.</div>
 
   <div class="card reveal d6" style="margin-top:16px">
-    <div class="obj"><div class="obj-q">é mensalidade mesmo?</div><p class="obj-a">não. vc paga uma vez e o acesso é vitalício. a comunidade, o Studio e os 5.000 créditos todo mês continuam seus, sem cobrança nova.</p></div>
+    <div class="obj"><div class="obj-q">é mensalidade mesmo?</div><p class="obj-a">é. R$ 99 por mês, e com o cupom o primeiro sai por R$ 49. do segundo mês em diante volta pros 99. vc cancela quando quiser no seu painel, sem multa e sem precisar falar comigo.</p></div>
     <div class="obj"><div class="obj-q">preciso aparecer em alguma foto?</div><p class="obj-a">nenhuma. em nenhum momento. o rosto do perfil é gerado do zero.</p></div>
     <div class="obj"><div class="obj-q">isso é permitido?</div><p class="obj-a">é. o privacy tem a categoria oficial de criadora de IA. vc marca lá e tá tudo certo.</p></div>
     <div class="obj"><div class="obj-q">preciso saber mexer com IA?</div><p class="obj-a">zero. vc já mexeu aqui em cima: escolhe a cena e clica em gerar. não tem comando pra decorar nem programa pra instalar, abre no celular igual instagram.</p></div>
@@ -1069,9 +1075,9 @@ strong{color:#fff}
     <div class="obj"><div class="obj-q">quanto tempo toma?</div><p class="obj-a">eu crio as imagens uma vez por semana e depois só posto e vendo no privado.</p></div>
   </div>
 
-  <button class="cta reveal d7" onclick="goToCheckout()">quero minha vaga vitalícia</button>
+  <button class="cta reveal d7" onclick="goToCheckout()">quero minha vaga</button>
   <p class="cta-sub reveal d7">te vejo lá dentro, amiga 💗</p>
-  <p class="disclaimer">os resultados citados são reais e foram obtidos pela criadora do método e por alunas da comunidade. eles não representam garantia de ganho: o resultado de cada pessoa depende de aplicação, dedicação e do mercado. conteúdo destinado exclusivamente a maiores de 18 anos. o acesso é vitalício mediante pagamento único, e inclui 5.000 créditos mensais no Ju Studio, que renovam a cada mês e não são cumulativos. o cupom de desconto é válido apenas durante esta sessão. o método ensina criação de personagens de inteligência artificial, sem uso de imagem de pessoas reais, e orienta a identificação do perfil como criadora de IA conforme as regras das plataformas.</p>
+  <p class="disclaimer">os resultados citados são reais e foram obtidos pela criadora do método e por alunas da comunidade. eles não representam garantia de ganho: o resultado de cada pessoa depende de aplicação, dedicação e do mercado. conteúdo destinado exclusivamente a maiores de 18 anos. o acesso é uma assinatura mensal de R$ 99, renovada automaticamente e cancelável a qualquer momento pelo próprio painel; o cupom de desconto reduz apenas o primeiro mês, e os seguintes são cobrados pelo valor cheio. inclui 5.000 créditos mensais no Ju Studio, que renovam a cada mês e não são cumulativos. o cupom de desconto é válido apenas durante esta sessão. o método ensina criação de personagens de inteligência artificial, sem uso de imagem de pessoas reais, e orienta a identificação do perfil como criadora de IA conforme as regras das plataformas.</p>
 </section>
 
 <!-- POP-UP DO CUPOM -->
@@ -1079,10 +1085,10 @@ strong{color:#fff}
   <div class="pop">
     <div id="confetes"></div>
     <span class="pop-eyebrow">espera aí</span>
-    <div class="pop-selo"><b><span id="popPct">80</span>%</b><span>OFF</span></div>
+    <div class="pop-selo"><b><span id="popPct">50</span>%</b><span>OFF</span></div>
     <h3>vc desbloqueou um desconto</h3>
     <p>de cada 10 meninas que começam esse teste, <b>7 largam no meio</b>. vc foi até o fim.</p>
-    <p>então eu vou fazer uma coisa que eu não faço pra todo mundo: <b>80% de desconto</b> no acesso vitalício, agora.</p>
+    <p>então eu vou fazer uma coisa que eu não faço pra todo mundo: <b>50% de desconto no primeiro mês</b>. de R$ 99 por <b>R$ 49</b>.</p>
     <p style="color:#ff8ab0;font-size:13px">esse cupom vale só nessa tela. se vc sair, ele vai embora.</p>
     <button class="pop-cta" onclick="aplicarCupom()">quero meu desconto 🎁</button>
     <button class="pop-nao" onclick="recusarCupom()">continuar sem o desconto</button>
@@ -1095,9 +1101,8 @@ strong{color:#fff}
 /* ==========================================================
    CONFIGURE AQUI
    ========================================================== */
-// Produto VITALICIO na PerfectPay: R$97 a vista, pagamento unico.
-// (o PPU38CQFK13 era a assinatura mensal antiga)
-const CHECKOUT_URL   = "https://go.perfectpay.com.br/PPU38CQFUMM";
+// Assinatura mensal na Hubla: R$99/mes, com 50% no primeiro mes via cupom.
+const CHECKOUT_URL   = "https://pay.hub.la/AUoeh8vPfa9SHq4HcIq2";
 const FATURAMENTO_30D = 34900;   // seu faturamento real dos ultimos 30 dias
 const VAGAS_TOTAL     = 50;      // tamanho da turma
 const VAGAS_RESTANTES = 14;      // atualize esse numero conforme for vendendo, e feche
@@ -1110,10 +1115,12 @@ const CREDITOS_MES = 5000;
 const CUSTO_FOTO   = 10;
 const CUSTO_VIDEO  = 100;
 
-// Oferta: acesso vitalico ancorado em R$497, com cupom de 80% na ultima etapa.
-const PRECO_CHEIO   = 497;
-const PRECO_CUPOM   = 97;    // 80% de 497 daria 99,40; 97 e o numero redondo do funil
-const CUPOM_PCT     = 80;
+// Oferta: assinatura de R$99/mes. O cupom da 50% no PRIMEIRO mes; do segundo
+// em diante volta a R$99. Isso precisa aparecer em todo lugar que fala do preco,
+// senao a cobranca do mes 2 vira reclamacao e chargeback.
+const PRECO_CHEIO   = 99;
+const PRECO_CUPOM   = 49;    // 50% de 99 daria 49,50; 49 e o numero redondo
+const CUPOM_PCT     = 50;
 const CUPOM_MINUTOS = 15;    // 0 = o cupom nunca expira
 
 // depoimentos que chegam no zap da Ju. nomes trocados, elas sao anonimas.
@@ -1317,7 +1324,7 @@ function goToStep(id, push){
   // o InitiateCheckout fica so na PerfectPay, pra nao poluir o evento que a
   // campanha otimiza. aqui a etapa de oferta so anima as vagas e as vendas.
   if(id === "oferta")     { montarZaps(); startToasts(7000); }
-  if(id === "fechamento") { animarVagas(); startToasts(8000); abrirCupom(); }
+  if(id === "fechamento") { animarVagas(); startToasts(8000); armarCupom(); }
 }
 
 // alguns navegadores do celular ignoram scrollTo com behavior, e o Safari
@@ -1764,17 +1771,36 @@ function montarZaps(){
 /* ============ CUPOM DE 80% ============ */
 let cupomAtivo = false, cupomTimer = null, popMostrado = false;
 
+// O popup espera ela ENCOSTAR na tela pra rolar. Aparecer sozinho no meio da
+// leitura interrompe quem ainda esta lendo o preco; no primeiro gesto de rolar
+// ela ja viu a ancora de R$99 e o desconto chega como resposta ao movimento.
+// O timeout e so rede de seguranca pra quem fica parada olhando.
+function armarCupom(){
+  if(cupomAtivo || popMostrado) return;
+  let armado = true;
+  const disparar = () => {
+    if(!armado) return;
+    armado = false;
+    ["touchstart","wheel","scroll","pointerdown"].forEach(ev =>
+      window.removeEventListener(ev, disparar));
+    abrirCupom();
+  };
+  ["touchstart","wheel","scroll","pointerdown"].forEach(ev =>
+    window.addEventListener(ev, disparar, {passive:true}));
+  setTimeout(disparar, 9000);
+}
+
 function abrirCupom(){
   if(cupomAtivo || popMostrado) return;
   popMostrado = true;
-  // ela vê o preço cheio antes: sem essa pausa não existe âncora pro desconto
+  // um respiro curto: o gesto dela termina antes do popup entrar
   setTimeout(() => {
     document.getElementById("popPct").textContent = CUPOM_PCT;
     soltarConfete();
     document.getElementById("popCupom").classList.add("on");
     pxEvento("CupomAberto",null,true);
     if(typeof fbq === "function") fbq("trackCustom","CupomAberto");
-  }, 1500);
+  }, 450);
 }
 
 function soltarConfete(){
@@ -1801,12 +1827,14 @@ function aplicarCupom(){
   if(typeof fbq === "function") fbq("trackCustom","CupomAplicado");
 
   const de = document.getElementById("precoDe");
-  document.getElementById("precoLab").textContent = "acesso vitalício, de";
+  document.getElementById("precoLab").textContent = "assinatura mensal, de";
+  // sai de ancora (grande e riscado) pra riscado (pequeno, ao lado do novo preco)
+  de.classList.remove("ancora");
   de.classList.add("riscado");
   document.getElementById("tagPct").textContent = CUPOM_PCT + "%";
   document.getElementById("precoPor").textContent = PRECO_CUPOM;
   document.getElementById("precoBloco").style.display = "block";
-  showToast("cupom de " + CUPOM_PCT + "% aplicado", "R$ " + PRECO_CUPOM, "agora");
+  showToast("cupom de " + CUPOM_PCT + "% aplicado", "R$ " + PRECO_CUPOM + " no 1º mês", "agora");
 
   if(CUPOM_MINUTOS > 0) rodarRelogio(CUPOM_MINUTOS * 60);
 }
@@ -1856,8 +1884,10 @@ function expirarCupom(){
   cupomAtivo = false;
   delete state.cupom; saveState();
   document.getElementById("precoBloco").style.display = "none";
-  document.getElementById("precoDe").classList.remove("riscado");
-  document.getElementById("precoLab").textContent = "acesso vitalício";
+  const de = document.getElementById("precoDe");
+  de.classList.remove("riscado");
+  de.classList.add("ancora");
+  document.getElementById("precoLab").textContent = "assinatura mensal";
   const box = document.getElementById("cupomTimer");
   box.classList.add("fim");
   box.innerHTML = "seu cupom de " + CUPOM_PCT + "% expirou";
