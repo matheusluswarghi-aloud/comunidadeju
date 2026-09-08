@@ -1306,12 +1306,9 @@ function goToStep(id, push){
   // um evento por etapa. o Meta nao quebra evento customizado por parametro, entao
   // sem o segundo nao da pra ver a queda etapa a etapa. o indice no nome mantem o
   // funil na ordem certa quando os eventos vem em lista.
-  const iEtapa = order.indexOf(id);
-  registrarPasso(iEtapa, id);
-  if(typeof fbq === "function"){
-    pxEvento("QuizStep",{step:id,index:iEtapa},true);
-    fbq("trackCustom","QuizStep",{step:id,index:iEtapa});
-  }
+  // O pixel nao acompanha mais o quiz: a retencao e medida por nos, tela a
+  // tela, em /api/passo. No Meta fica so o PageView.
+  registrarPasso(order.indexOf(id), id);
 
   stopToasts();
   if(id === "analise")     rodarAnalise();
@@ -1416,8 +1413,9 @@ function capturarOrigem(){
 }
 
 function goToCheckout(){
-  pxEvento("AddToCart");
-  if(typeof fbq === "function") fbq("track","AddToCart");
+  // indice 99 fica fora da sequencia das telas de proposito: nao e uma tela,
+  // e a intencao de compra. Sai no fim da curva, depois da ultima tela.
+  registrarPasso(99, "comprar");
   state.preco = cupomAtivo ? PRECO_CUPOM : PRECO_CHEIO;
   if(cupomAtivo) state.cupom = CUPOM_PCT + "OFF";
   const params = new URLSearchParams(state);
@@ -1576,8 +1574,7 @@ function studioGerar(){
   setTimeout(() => {
     try{ grid.scrollIntoView({behavior:"smooth", block:"center"}); }catch(e){}
   }, 420);
-  pxEvento("StudioGerou",{modelo:state.modelo || ""},true);
-  if(typeof fbq === "function") fbq("trackCustom","StudioGerou",{modelo:state.modelo || ""});
+  registrarPasso(98, "studio_gerou");
 
   fotoDaCena(src => {
     setTimeout(() => {
@@ -1812,8 +1809,7 @@ function abrirCupom(){
     document.getElementById("popPct").textContent = CUPOM_PCT;
     soltarConfete();
     document.getElementById("popCupom").classList.add("on");
-    pxEvento("CupomAberto",null,true);
-    if(typeof fbq === "function") fbq("trackCustom","CupomAberto");
+
   }, 450);
 }
 
@@ -1837,8 +1833,7 @@ function aplicarCupom(){
   if(cupomAtivo) return;
   cupomAtivo = true;
   state.cupom = CUPOM_PCT + "OFF"; saveState();
-  pxEvento("CupomAplicado",null,true);
-  if(typeof fbq === "function") fbq("trackCustom","CupomAplicado");
+  registrarPasso(97, "cupom_aplicado");
 
   const de = document.getElementById("precoDe");
   document.getElementById("precoLab").textContent = "assinatura mensal, de";
