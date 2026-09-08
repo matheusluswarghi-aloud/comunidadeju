@@ -1414,6 +1414,14 @@ function registrarPasso(indice, id){
       i: indice,
       t: id,
       f: (lerOrigem().utm_source || "direto"),
+      // qual anuncio trouxe ela. leva+codigo porque o codigo sozinho repete
+      // entre levas: o AD01 da leva 11 nao e o AD01 da leva 12.
+      c: (function(){
+        var o = lerOrigem();
+        var camp = (o.utm_campaign || "").replace(/[^a-z0-9]/gi, "");
+        var ad = (o.utm_content || "").replace(/[^a-z0-9]/gi, "");
+        return ad ? (camp ? camp + "-" + ad : ad) : "";
+      })(),
       // marca a sessao como teste: ?qa=1 na URL, ou sessionStorage pelos
       // testes automatizados. Sessao marcada ganha prefixo zzteste e pode ser
       // apagada sem levar trafego real junto.
